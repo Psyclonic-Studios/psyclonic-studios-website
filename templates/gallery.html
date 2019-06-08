@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+Gallery
+{% endblock %}
+{% block body %}
+<div class="gallery-container">
+    {% for artwork in artworks %}
+    <a href="/artwork/{{ artwork.id }}" class="gallery-item">
+            <img class="gallery-image" src="{{ artwork.image_urls | first }}" alt="{{ artwork.description }}">
+            <span class="gallery-title">{{ artwork.title }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}
