@@ -10,7 +10,7 @@ bucket = storage_client.get_bucket('psyclonic-studios-website.appspot.com')
 
 transaction = db.transaction()
 @firestore.transactional
-def get_artworks(transaction, size):
+def get_artwork_collection(transaction, size):
     artworks_query = content.where('_fl_meta_.schema', '==', 'artwork')
     artworks = []
     for artwork_ref in artworks_query.stream(transaction=transaction):
@@ -29,10 +29,43 @@ def get_artwork(transaction, id, size):
     artwork['image_urls'] = image_urls
     return artwork
 
+@firestore.transactional
+def get_series_collection(transaction, size):
+    series_query = content.where('_fl_meta_.schema', '==', 'series')
+    series_collection = []
+    for series_ref in series_query.stream(transaction=transaction):
+        series = series_ref.to_dict()
+        series_image_refs = series['seriesImages']
+        if series_image_refs:
+            series_image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in series_image_refs]
+            series['thumbnail_image'] = get_file_url(get_image_size_path(series_image_refs[0].get(transaction=transaction).to_dict(), size))
+        else:
+            artwork = series['artworks'][0].get(transaction=transaction).to_dict()
+            artwork_image = artwork['images'][0].get(transaction=transaction).to_dict()
+            artwork_image_url = get_file_url(get_image_size_path(artwork_image, size))
+            series['thumbnail_image'] = artwork_image_url
+        series_collection.append(series)
+    return series_collection
+
+@firestore.transactional
+def get_series(transaction, id, size):
+    series = content.document(id).get(transaction=transaction).to_dict()
+    # todo
+    #series_image_refs = series['seriesImages']
+    #series_image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
+    artworks_resolved = []
+    for artwork_ref in series['artworks']:
+        artwork = artwork_ref.get(transaction=transaction).to_dict()
+        image_refs = artwork['images']
+        image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
+        artwork['image_urls'] = image_urls
+        artworks_resolved.append(artwork)
+    series['artworks_resolved'] = artworks_resolved
+    return series
+
 def get_image_size_path(image_dict, size):
     filename = image_dict['file']
     sizes = image_dict['sizes']
-    print
     if size == 240:
         return os.path.join('sized', str(size), filename)
     else:
@@ -54,17 +87,14 @@ def get_file_url(path):
     blob = bucket.blob(os.path.join(flamelink_path, path))
     return blob.public_url
 
-def get_series():
-    return {
-            'title': 'The things',
-            'pieces': [
-                {
-                    'url': '1thing',
-                    'title': '1 thing'
-                    },
-                {
-                    'url': '2thing',
-                    'title': '2 thing',
-                    }
-                ]
-            }
+def get_image_size_path(image_dict, size):
+    filename = image_dict['file']
+    sizes = image_dict['sizes']
+    print
+    if size == 240:
+        return os.path.join('sized', str(size), filename)
+    else:
+        for s in sizes:
+            if s['width'] == size:
+                return os.path.join('sized', str(s['path']), filename)
+    return filename

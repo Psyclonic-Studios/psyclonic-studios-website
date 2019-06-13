@@ -12,21 +12,27 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route('/gallery', strict_slashes=False)
-def gallery_collection():
-    artworks = crud.get_artworks(crud.transaction, 375)
-    return render_template('gallery.html', artworks=artworks)
-
-@app.route('/gallery/<string:id>')
-def gallery(id):
-    ex = get_series()
-    return render_template('series.html', exhibition=ex)
+@app.route('/artwork', strict_slashes=False)
+def artwork_collection():
+    artworks = crud.get_artwork_collection(crud.transaction, 375)
+    return render_template('artwork_collection.html', artworks=artworks)
 
 @app.route('/artwork/<string:id>')
 def artwork(id):
     artwork = crud.get_artwork(crud.transaction, id, 667)
     number_of_images = len(artwork['image_urls'])
-    return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images+1)
+    return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images)
+
+@app.route('/series', strict_slashes=False)
+def series_collection():
+    series_collection = crud.get_series_collection(crud.transaction, 375)
+    return render_template('series_collection.html', series_collection=series_collection)
+
+@app.route('/series/<string:id>')
+def series(id):
+    series = crud.get_series(crud.transaction, id, 667)
+    number_of_tiles = len(series['artworks'])
+    return render_template('series.html', series=series, number_of_tiles=number_of_tiles)
 
 @app.route('/blog', strict_slashes=False)
 def blog_collection():

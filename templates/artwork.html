@@ -4,7 +4,6 @@ Gallery
 {% endblock %}
 {% block body %}
 <div class="artwork-container">
-    <div class="artwork-images-container" style="--num-tiles: {{ number_of_tiles }}">
         <div class="artwork-description-tile">
             <p>
                 <span class="artwork-title">"{{ artwork.title }}"</span> <span
@@ -18,11 +17,12 @@ Gallery
                 {%- endfor %}
             </p>
             <p class="artwork-description">
-                {{ artwork.description }}
+                {{ artwork.mediaDescription | safe }}
             </p>
         </div>
+    <div class="artwork-images-container" style="--num-tiles: {{ number_of_tiles }}">
         {% for image_url in artwork.image_urls %}
-        <img src="{{ image_url }}" alt="{{ artwork.description }}" class="artwork-image">
+        <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="artwork-image">
         {% endfor %}
     </div>
 </div>

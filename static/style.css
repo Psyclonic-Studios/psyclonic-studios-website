@@ -144,7 +144,7 @@ main {
 
 .artwork-images-container {
     display: grid;
-    grid-template-columns: 0px repeat(var(--num-tiles), max-content) 20px;
+    grid-template-columns: 20px repeat(var(--num-tiles), max-content) 20px;
     grid-template-rows: calc(100vh - 140px);
     grid-gap: var(--gallery-padding);
     overflow-x: auto;
@@ -163,9 +163,24 @@ main {
 }
 
 .artwork-description-tile {
-    padding: 8px;
-    border: black thick solid;
-    background: var(--tile-background)
+    padding: 8px 20px;
+}
+
+/* Series */
+.series-image {
+    height: 100%;
+    -o-object-fit: scale-down;
+    object-fit: scale-down;
+}
+
+.gallery-item:hover .series-image {
+    -webkit-filter: brightness(40%);
+    filter: brightness(40%);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 /* Gallery */

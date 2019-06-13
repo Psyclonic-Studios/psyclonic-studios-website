@@ -3,7 +3,23 @@
 {{ series.title }}
 {% endblock %}
 {% block body %}
-{% for piece in series.pieces %}
-<a href="{{ piece.url }}">{{ piece.title }}</a>
-{% endfor %}
+<div class="artwork-container">
+        <div class="artwork-description-tile">
+            <p>
+                <span class="artwork-title">"{{ series.title }}"</span> <span
+                    class="artwork-year">{{ series.year }}</span>
+            </p>
+            <p class="artwork-description">
+                {{ series.description | safe }}
+            </p>
+        </div>
+    <div class="artwork-images-container" style="--num-tiles: {{ number_of_tiles }}">
+        {% for artwork in series.artworks_resolved %}
+    <a href="/artwork/{{ artwork.id }}" class="gallery-item">
+        <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="series-image">
+            <span class="gallery-title">{{ artwork.title }}</span>
+    </a>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}
