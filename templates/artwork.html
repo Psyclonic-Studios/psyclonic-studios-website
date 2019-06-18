@@ -3,29 +3,26 @@
 Gallery
 {% endblock %}
 {% block body %}
-<div class="artwork-container">
-        <div class="gallery-horizontal-header">
-            <p>
-                <span class="artwork-title">"{{ artwork.title }}"</span> <span
-                    class="artwork-year">{{ artwork.year }}</span>
-            </p>
-            <p class="artwork-dimensions">
-                {% for dimension in artwork.dimensions -%}
-                <span class="artwork-dimension">{{ dimension.dimension }}</span>: <span
-                    class="artwork-measurement">{{ dimension.measurement }}</span>&nbsp;<span
-                    class="artwork-unit">{{ dimension.unit }}</span>{{ ", " if not loop.last }}
-                {%- endfor %}
-            </p>
-            <p class="artwork-description">
-                {{ artwork.mediaDescription | safe }}
-            </p>
-        </div>
-    <div class="gallery-horizontal-container" style="--num-tiles: {{ number_of_tiles }}">
-        {% for image_url in artwork.image_urls %}
-        <div class="gallery-horizontal-item">
-        <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+<div class="indent-page">
+    <p>
+        <span class="artwork-title">"{{ artwork.title }}"</span> <span class="artwork-year">{{ artwork.year }}</span>
+    </p>
+    <p class="artwork-dimensions">
+        {% for dimension in artwork.dimensions -%}
+        <span class="artwork-dimension">{{ dimension.dimension }}</span>: <span
+            class="artwork-measurement">{{ dimension.measurement }}</span>&nbsp;<span
+            class="artwork-unit">{{ dimension.unit }}</span>{{ ", " if not loop.last }}
+        {%- endfor %}
+    </p>
+    <p class="artwork-description">
+        {{ artwork.mediaDescription | safe }}
+    </p>
 </div>
-        {% endfor %}
+<div class="gallery-horizontal-container full-page" style="--num-tiles: {{ number_of_tiles }}">
+    {% for image_url in artwork.image_urls %}
+    <div class="gallery-horizontal-item">
+        <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
     </div>
+    {% endfor %}
 </div>
 {% endblock %}

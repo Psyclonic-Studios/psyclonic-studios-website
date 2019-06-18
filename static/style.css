@@ -8,7 +8,8 @@
     --soft-text: black;
     --tile-background: rgb(250, 124, 146, 0.5);
     --main-padding: 20px;
-    --gallery-padding: 2px;
+    --full-page-padding: 2px;
+    --indent-page-padding: 20px;
 }
 
 body {
@@ -22,7 +23,6 @@ body {
 }
 
 /* Hamburger */
-
 nav {
     background-color: var(--highlight-background);
 }
@@ -48,6 +48,15 @@ nav {
     color: var(--highlight-text);
 }
 
+.highlight, .highlight:link, .highlight:visited {
+    color: var(--highlight-text);
+}
+
+.highlight:hover {
+    background-color: var(--accent-background);
+}
+
+/*
 .menu-header:link,
 .menu-header:visited,
 .menu-item:link,
@@ -61,6 +70,7 @@ nav {
 .menu-icon:hover {
     background-color: var(--accent-background);
 }
+*/
 
 .menu-header {
     display: block;
@@ -75,7 +85,6 @@ nav {
     font-size: 29px;
     padding: 10px 20px;
     user-select: none;
-    color: var(--highlight-text);
 }
 
 .menu-btn {
@@ -93,21 +102,22 @@ footer {
     width: 100%;
     height: 60px;
     display: flex;
-    align-items: center;
 }
 
-.social-wrapper {
+.buttonize {
     display: flex;
-    flex: 1;
-    margin-left: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
 .social-icon-logo {
-    margin: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
 }
 
 .copyright {
-    margin-right: 20px;
+    margin-left: auto;
+    padding: 0px 20px;
 }
 
 /* Links */
@@ -137,16 +147,16 @@ main {
 }
 
 /* Artwork */
-.artwork-container {
-    padding: var(--gallery-padding);
-    width: calc(100vw-1*var(--gallery-padding));
+.full-page {
+    padding: var(--full-page-padding);
+    width: calc(100vw-1*var(--full-page-padding));
 }
 
 .gallery-horizontal-container {
     display: grid;
     grid-template-columns: repeat(var(--num-tiles), max-content);
     grid-template-rows: calc(100vh - 140px);
-    grid-gap: var(--gallery-padding);
+    grid-gap: var(--full-page-padding);
     overflow-y: hidden;
     overflow-x: auto;
     scroll-snap-type: x proximity;
@@ -171,13 +181,14 @@ main {
     display: grid;
     grid-template-columns: 20px repeat(var(--num-tiles), max-content) 20px;
     grid-template-rows: calc(100vh - 140px);
-    grid-gap: var(--gallery-padding);
+    grid-gap: var(--full-page-padding);
     overflow-x: auto;
     scroll-snap-type: x proximity;
 }
 
-.gallery-horizontal-header {
-    padding: 8px 20px;
+.indent-page {
+    padding-left: var(--indent-page-padding);
+    padding-right: var(--indent-page-padding);
 }
 
 /* Series */
@@ -190,11 +201,9 @@ main {
 /* Gallery grid */
 .gallery-grid-container {
     display: grid;
-    padding: var(--gallery-padding);
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: min-content;
-    grid-gap: var(--gallery-padding);
-    width: calc(100vw-1*var(--gallery-padding));
+    grid-gap: var(--full-page-padding);
 }
 
 .gallery-grid-item {
@@ -241,23 +250,9 @@ main {
     -ms-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
-/*
-.gallery-grid-item:hover .gallery-title {
-    visibility: visible;
-}
 
-.gallery-grid-item:hover > img {
-    -webkit-filter: brightness(40%);
-    filter: brightness(40%);
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-.gallery-title {
-    visibility: hidden;
+/* No-Hover */
+.no-hover-text {
     color: var(--highlight-text);
     font-size: 20px;
     position: absolute;
@@ -268,7 +263,17 @@ main {
     transform: translate(-50%, -50%);
     text-align: center;
 }
-*/
+
+.no-hover-container > .no-hover-image {
+    -webkit-filter: brightness(40%);
+    filter: brightness(40%);
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    -ms-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
+
 /* Artwork */
 .artwork-dimensions {
     color: grey;
@@ -284,12 +289,7 @@ main {
 
 .artwork-title {
     font-size: 1.2em;
-    /*
-    font-weight: bold;
-    font-style: italic;
-    */
 }
-
 
 @media (min-width: 720px) {
     .menu li {
@@ -312,10 +312,10 @@ main {
 
     .gallery-grid-container {
         display: grid;
-        padding: var(--gallery-padding);
+        padding: var(--full-page-padding);
         grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
         grid-auto-rows: min-content;
-        grid-gap: var(--gallery-padding);
-        width: calc(100vw-1*var(--gallery-padding));
+        grid-gap: var(--full-page-padding);
+        width: calc(100vw-1*var(--full-page-padding));
     }
 }

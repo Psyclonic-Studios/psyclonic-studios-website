@@ -3,23 +3,20 @@
 {{ series.title }}
 {% endblock %}
 {% block body %}
-<div class="artwork-container">
-        <div class="gallery-horizontal-header">
-            <p>
-                <span class="artwork-title">"{{ series.title }}"</span> <span
-                    class="artwork-year">{{ series.year }}</span>
-            </p>
-            <p class="artwork-description">
-                {{ series.description | safe }}
-            </p>
-        </div>
-    <div class="gallery-horizontal-container" style="--num-tiles: {{ number_of_tiles }}">
-        {% for artwork in series.artworks_resolved %}
+<div class="indent-page">
+    <p>
+        <span class="artwork-title">"{{ series.title }}"</span> <span class="artwork-year">{{ series.year }}</span>
+    </p>
+    <p class="artwork-description">
+        {{ series.description | safe }}
+    </p>
+</div>
+<div class="gallery-horizontal-container full-page" style="--num-tiles: {{ number_of_tiles }}">
+    {% for artwork in series.artworks_resolved %}
     <a href="/artwork/{{ artwork.id }}" class="gallery-horizontal-item hover-container">
         <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="hover-image">
-            <span class="hover-text">{{ artwork.title }}</span>
+        <span class="hover-text">{{ artwork.title }}</span>
     </a>
-        {% endfor %}
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}

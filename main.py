@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request
 from datetime import datetime
 from server import crud
 
@@ -10,11 +10,11 @@ def index():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('about.html', about=crud.get_about())
 
 @app.route('/artwork', strict_slashes=False)
 def artwork_collection():
-    artworks = crud.get_artwork_collection(crud.transaction, 375)
+    artworks = crud.get_artwork_collection(crud.transaction, 375, args=request.args)
     return render_template('artwork_collection.html', artworks=artworks)
 
 @app.route('/artwork/<string:id>')
@@ -25,7 +25,7 @@ def artwork(id):
 
 @app.route('/series', strict_slashes=False)
 def series_collection():
-    series_collection = crud.get_series_collection(crud.transaction, 375)
+    series_collection = crud.get_series_collection(crud.transaction, 375, args=request.args)
     return render_template('series_collection.html', series_collection=series_collection)
 
 @app.route('/series/<string:id>')
@@ -36,13 +36,17 @@ def series(id):
 
 @app.route('/blog', strict_slashes=False)
 def blog_collection():
-    posts = crud.get_posts()
-    return render_template('posts.html', posts=posts)
+    blog_collection = crud.get_blog_collection(crud.transaction, 375, args=request.args)
+    return render_template('blog_collection.html', blog_collection=blog_collection)
 
 @app.route('/blog/<string:id>')
 def blog(id):
-    post = crud.get_post(id)
-    return render_template('post.html', post=post)
+    blog = crud.get_blog(id)
+    return render_template('blog.html', blog=blog)
+
+@app.route('/legal',strict_slashes=False)
+def legal():
+    return render_template('legal.html', legal=crud.get_legal())
 
 @app.template_filter('format_date')
 def format_date(datetime_str):

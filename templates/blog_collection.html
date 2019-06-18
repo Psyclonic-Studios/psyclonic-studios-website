@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}
+Posts
+{% endblock %}
+{% block body %}
+<div class="gallery-grid-container full-page">
+    {% for blog in blog_collection %}
+    <a href="/blog/{{ blog.id }}" class="gallery-grid-item no-hover-container">
+        <img class="no-hover-image" src="{{ blog.thumbnail_image }}" alt="{{ blog.title }}">
+        <span class="no-hover-text">{{ blog.title }}<br><br>{{ blog.date | format_date }}</span>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
 Psyclonic Studios Website*.json
 *.pyc
 *__pycache__*
+.vscode

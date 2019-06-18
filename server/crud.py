@@ -10,8 +10,9 @@ bucket = storage_client.get_bucket('psyclonic-studios-website.appspot.com')
 
 transaction = db.transaction()
 @firestore.transactional
-def get_artwork_collection(transaction, size):
+def get_artwork_collection(transaction, size, args):
     artworks_query = content.where('_fl_meta_.schema', '==', 'artwork')
+    artworks_query = sort_query(artworks_query, args)
     artworks = []
     for artwork_ref in artworks_query.stream(transaction=transaction):
         artwork = artwork_ref.to_dict()
@@ -30,8 +31,9 @@ def get_artwork(transaction, id, size):
     return artwork
 
 @firestore.transactional
-def get_series_collection(transaction, size):
+def get_series_collection(transaction, size, args):
     series_query = content.where('_fl_meta_.schema', '==', 'series')
+    series_query = sort_query(series_query, args)
     series_collection = []
     for series_ref in series_query.stream(transaction=transaction):
         series = series_ref.to_dict()
@@ -63,25 +65,36 @@ def get_series(transaction, id, size):
     series['artworks_resolved'] = artworks_resolved
     return series
 
-def get_image_size_path(image_dict, size):
-    filename = image_dict['file']
-    sizes = image_dict['sizes']
-    if size == 240:
-        return os.path.join('sized', str(size), filename)
-    else:
-        for s in sizes:
-            if s['width'] == size:
-                return os.path.join('sized', str(s['path']), filename)
-    return filename
+@firestore.transactional
+def get_blog_collection(transaction, size, args):
+    blog_collection_query = content.where('_fl_meta_.schema', '==', 'posts').where('status', '==', 'published')
+    blog_collection_query = sort_query(blog_collection_query, args)
+    blog_collection = []
+    for blog_ref in blog_collection_query.stream(transaction=transaction):
+        blog = blog_ref.to_dict()
+        blog_thumbnail_ref = blog['thumbnail'][0]
+        blog_thumbnail = get_file_url(get_image_size_path(blog_thumbnail_ref.get().to_dict(), size))
+        print(blog_thumbnail)
+        blog['thumbnail_image'] = blog_thumbnail
+        blog_collection.append(blog)
+    return blog_collection
 
-def get_posts():
-    posts = content.where('_fl_meta_.schema', '==', 'posts').where('status', '==', 'published')
-    return map(lambda post: post.to_dict(), posts.stream())
-
-def get_post(id):
+def get_blog(id):
     post = content.document(id)
     return post.get().to_dict()
 
+def get_about():
+    about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)
+    about_component = next(about_component_query.stream()).to_dict()
+    about = about_component['content']
+    return about
+
+def get_legal():
+    legal_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Legal').limit(1)
+    legal_component = next(legal_component_query.stream()).to_dict()
+    legal = legal_component['content']
+    return legal
+    
 def get_file_url(path):
     flamelink_path = 'flamelink/media'
     blob = bucket.blob(os.path.join(flamelink_path, path))
@@ -98,3 +111,15 @@ def get_image_size_path(image_dict, size):
             if s['width'] == size:
                 return os.path.join('sized', str(s['path']), filename)
     return filename
+
+def sort_query(query, args):
+    sort_by = args.get('sort_by','')
+    sort_direction = args.get('sort_direction','')
+    if sort_by:
+        if sort_direction == 'descending':
+            query = query.order_by(sort_by, direction=firestore.Query.DESCENDING)
+        elif sort_direction == 'ascending':
+            query = query.order_by(sort_by, direction=firestore.Query.ASCENDING)
+        else:
+            query = artworks_query.order_by(sort_by)
+    return query

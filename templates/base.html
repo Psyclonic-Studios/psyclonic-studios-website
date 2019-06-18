@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>{% block title %}{% endblock %} - Psyclonic Studios</title>
-    {% block head %}
-    {% endblock %}
-    <meta name="viewport" content="width=device-width"/>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
-    {% include 'nav.html' %}
-    <main>
-      {% block body %}{% endblock %}
-    </main>
-    {% include 'footer.html' %}
-  </body>
+<head>
+  <title>{% block title %}{% endblock %} - Psyclonic Studios</title>
+  {% block head %}
+  {% endblock %}
+  <meta name="viewport" content="width=device-width" />
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  {% include 'nav.html' %}
+  <main>
+    {% block body %}{% endblock %}
+  </main>
+  {% include 'footer.html' %}
+</body>
+
 </html>
