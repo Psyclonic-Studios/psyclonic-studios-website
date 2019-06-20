@@ -56,22 +56,6 @@ nav {
     background-color: var(--accent-background);
 }
 
-/*
-.menu-header:link,
-.menu-header:visited,
-.menu-item:link,
-.menu-item:visited {
-    color: var(--highlight-text);
-}
-
-.menu-header:hover,
-.menu-item:hover,
-.menu-btn:hover,
-.menu-icon:hover {
-    background-color: var(--accent-background);
-}
-*/
-
 .menu-header {
     display: block;
     float: left;
@@ -100,7 +84,7 @@ footer {
     background: var(--highlight-background);
     color: var(--highlight-text);
     width: 100%;
-    height: 60px;
+    height: 50px;
     display: flex;
 }
 
