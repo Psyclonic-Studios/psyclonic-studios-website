@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}
+Subscribe
+{% endblock %}
+{% block body %}
+<div class="indent-page">
+    <form action="/subscribe" method="POST">
+        <div>
+            <label for="subscribe">
+                Enter your email address to receive updates on my work, promotions, events, and maybe some fungi!
+                <!--joke-->
+            </label>
+        </div>
+        <div>
+            <input id="subscribe" type="text" name="email_address">
+            <button type="submit">Subscribe</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

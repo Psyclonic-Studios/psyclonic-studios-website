@@ -95,6 +95,10 @@ def get_legal():
     legal = legal_component['content']
     return legal
     
+def post_email_address(email):
+    subscribers = db.collection('subscribers')
+    subscribers.document(email).set({'events':True,'newsletter': True}, merge=True)
+
 def get_file_url(path):
     flamelink_path = 'flamelink/media'
     blob = bucket.blob(os.path.join(flamelink_path, path))

@@ -48,6 +48,16 @@ def blog(id):
 def legal():
     return render_template('legal.html', legal=crud.get_legal())
 
+@app.route('/subscribe')
+def subscribe():
+    return render_template('subscribe.html')
+
+@app.route('/subscribe',methods=['POST'])
+def add_subscriber():
+    email = request.form.get('email_address')
+    crud.post_email_address(email)
+    return render_template('subscribe_success.html')
+
 @app.template_filter('format_date')
 def format_date(datetime_str):
     date = datetime.strptime(datetime_str, '%Y-%m-%dT%H:%M:%S%z')
