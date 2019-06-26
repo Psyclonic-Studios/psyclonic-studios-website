@@ -74,7 +74,6 @@ def get_blog_collection(transaction, size, args):
         blog = blog_ref.to_dict()
         blog_thumbnail_ref = blog['thumbnail'][0]
         blog_thumbnail = get_file_url(get_image_size_path(blog_thumbnail_ref.get().to_dict(), size))
-        print(blog_thumbnail)
         blog['thumbnail_image'] = blog_thumbnail
         blog_collection.append(blog)
     return blog_collection
@@ -107,7 +106,6 @@ def get_file_url(path):
 def get_image_size_path(image_dict, size):
     filename = image_dict['file']
     sizes = image_dict['sizes']
-    print
     if size == 240:
         return os.path.join('sized', str(size), filename)
     else:
@@ -125,5 +123,5 @@ def sort_query(query, args):
         elif sort_direction == 'ascending':
             query = query.order_by(sort_by, direction=firestore.Query.ASCENDING)
         else:
-            query = artworks_query.order_by(sort_by)
+            query = query.order_by(sort_by)
     return query

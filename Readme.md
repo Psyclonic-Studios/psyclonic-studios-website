@@ -16,4 +16,7 @@
     - [ ] signup page
 - [ ] contact page
 - [ ] about page CV
-- [ ] 
+- [ ] fix blog styling
+- [ ] fix footer
+    - [ ] gridify: icons, subscribe, copyright
+    - [ ] on mobile put copyright at bottom

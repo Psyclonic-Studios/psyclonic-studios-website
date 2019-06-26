@@ -54,7 +54,7 @@ def subscribe():
 
 @app.route('/subscribe',methods=['POST'])
 def add_subscriber():
-    email = request.form.get('email_address')
+    email = request.form.get('email')
     crud.post_email_address(email)
     return render_template('subscribe_success.html')
 
