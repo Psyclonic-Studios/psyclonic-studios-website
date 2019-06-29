@@ -18,9 +18,9 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     display: flex;
-    min-height: 100vh;
     flex-direction: column;
     font-size: var(--font-size);
+    min-height: 100vh;
 }
 
 /* Hamburger */
@@ -87,8 +87,31 @@ footer {
     background: var(--highlight-background);
     color: var(--highlight-text);
     width: 100%;
-    height: 50px;
+    height: 150px;
+    display: grid;
+    grid-template-areas: 
+        "social"
+        "subscribe"
+        "copyright";
+}
+
+.subscribe {
+    grid-area: subscribe;
+    width: 100%;
+    justify-self: center;
+}
+
+.copyright {
+    grid-area: copyright;
+    width: 100%;
+    justify-self: center;
+}
+
+.social {
+    grid-area: social;
     display: flex;
+    width: 80%;
+    justify-self: center;
 }
 
 .buttonize {
@@ -98,18 +121,10 @@ footer {
 }
 
 .social-icon-logo {
-    padding-right: 10px;
-    padding-left: 10px;
-}
-
-.subscribe {
-    margin-left: auto;
     margin-right: auto;
-    padding: 0px 10px;
-}
-
-.copyright {
-    padding: 0px 10px;
+    margin-left: auto;
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
 /* Input */
@@ -163,6 +178,7 @@ main {
     padding: 0;
     margin: 0;
     flex: 1;
+    min-height: calc(90vh - 50px);
 }
 
 /* Artwork */
@@ -292,6 +308,38 @@ main {
 
 .artwork-title {
     font-size: 1.2em;
+}
+
+@media (min-width: 560px) {
+    footer {
+        height: 50px;
+        grid-template-areas: 
+            "social subscribe copyright";
+    }
+
+    .subscribe {
+        padding: 0px 10px;
+        justify-self: center;
+        width: auto;
+    }
+
+    .social {
+        justify-self: start;
+        width: auto;
+    }
+
+    .copyright {
+        padding: 0px 10px;
+        justify-self: end;
+        width: auto;
+    }
+
+    .social-icon-logo {
+        margin-right: 0;
+        margin-left: 0;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
 }
 
 @media (min-width: 720px) {
