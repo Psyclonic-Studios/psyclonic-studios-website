@@ -7,9 +7,9 @@
     - [ ] media
     - [ ] tags
 ## Todo
-- [ ] style subscribe button like the nav buttons
-- [ ] style the subscribe input box
-- [ ] add vertical indent class
+- [x] style subscribe button like the nav buttons
+- [x] style the subscribe input box
+- [x] add vertical indent class
 - [ ] style pages
     - [ ] home page
     - [ ] signup success page
@@ -17,6 +17,6 @@
 - [ ] contact page
 - [ ] about page CV
 - [ ] fix blog styling
-- [ ] fix footer
-    - [ ] gridify: icons, subscribe, copyright
-    - [ ] on mobile put copyright at bottom
+- [x] fix footer
+    - [x] gridify: icons, subscribe, copyright
+    - [x] on mobile put copyright at bottom
