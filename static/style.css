@@ -7,6 +7,7 @@
     --accent-text: rgb(133, 113, 26);
     --soft-text: black;
     --tile-background: rgb(250, 124, 146, 0.5);
+    --light-accent: rgb(245, 150, 166);
     --main-padding: 20px;
     --full-page-padding: 2px;
     --indent-page-padding: 20px;
@@ -166,7 +167,7 @@ a {
 
 a:link,
 a:visited {
-    color: var(--accent-text);
+    color: var(--light-accent);
 }
 
 a:hover {
@@ -291,6 +292,11 @@ main {
     -o-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     transition: all 0.2s ease;
+}
+
+.no-hover-container:hover>.no-hover-image {
+    -webkit-filter: brightness(60%);
+    filter: brightness(60%);
 }
 
 /* Artwork */
