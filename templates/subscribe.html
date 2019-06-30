@@ -4,14 +4,8 @@ Subscribe
 {% endblock %}
 {% block body %}
 <div class="indent-page">
+    {{ subscribe | safe }}
     <form action="/subscribe" method="POST">
-        <div>
-            <p>
-                Enter your email address to receive announcements about my exhibitions, events, creations, promotions,
-                and other things I think you would like to know about!
-                <!--joke-->
-            </p>
-        </div>
         <div>
             <input id="subscribe" class="user-input email-input" type="email" name="email" placeholder="Email">
             <button type="submit" class="submit highlight">Subscribe</button>

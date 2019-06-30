@@ -16,7 +16,10 @@
     - [ ] signup page
 - [ ] contact page
 - [ ] about page CV
-- [ ] fix blog styling
+- [x] fix blog styling
 - [x] fix footer
     - [x] gridify: icons, subscribe, copyright
     - [x] on mobile put copyright at bottom
+- [ ] small arrow on right indicating scroll for the horizontal gallery
+- [ ] artwork prices
+- [ ] 

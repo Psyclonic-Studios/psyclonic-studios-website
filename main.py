@@ -41,7 +41,7 @@ def blog_collection():
 
 @app.route('/blog/<string:id>')
 def blog(id):
-    blog = crud.get_blog(id)
+    blog = crud.get_blog(crud.transaction, id, 667)
     return render_template('blog.html', blog=blog)
 
 @app.route('/legal',strict_slashes=False)
@@ -50,7 +50,7 @@ def legal():
 
 @app.route('/subscribe')
 def subscribe():
-    return render_template('subscribe.html')
+    return render_template('subscribe.html', subscribe=crud.get_subscribe())
 
 @app.route('/subscribe',methods=['POST'])
 def add_subscriber():

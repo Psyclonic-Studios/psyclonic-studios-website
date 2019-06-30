@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
 {% block title %}
-Gallery
+{{ artwork.title }}
 {% endblock %}
 {% block body %}
 <div class="indent-page">
-    <p>
-        <span class="artwork-title">"{{ artwork.title }}"</span> <span class="artwork-year">{{ artwork.year }}</span>
-    </p>
+    <h1>{{ artwork.title }} - {{ artwork.year }}</h1>
     <p class="artwork-dimensions">
         {% for dimension in artwork.dimensions -%}
         <span class="artwork-dimension">{{ dimension.dimension }}</span>: <span

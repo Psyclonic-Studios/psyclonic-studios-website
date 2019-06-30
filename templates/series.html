@@ -4,9 +4,7 @@
 {% endblock %}
 {% block body %}
 <div class="indent-page">
-    <p>
-        <span class="artwork-title">"{{ series.title }}"</span> <span class="artwork-year">{{ series.year }}</span>
-    </p>
+    <h1>{{ series.title }} - {{ series.year }}</h1>
     <p class="artwork-description">
         {{ series.description | safe }}
     </p>

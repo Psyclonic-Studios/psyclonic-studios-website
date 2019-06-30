@@ -4,7 +4,10 @@ Gallery
 {% endblock %}
 {% block body %}
 <div class="indent-page">
-    <a href="/artwork">Artworks</a> | Series
+    <h1>Gallery</h1>
+    <p>
+        Series | <a href="/artwork">Individual Artworks</a>
+    </p>
 </div>
 <div class="gallery-grid-container full-page">
     {% for series in series_collection %}

@@ -73,14 +73,17 @@ def get_blog_collection(transaction, size, args):
     for blog_ref in blog_collection_query.stream(transaction=transaction):
         blog = blog_ref.to_dict()
         blog_thumbnail_ref = blog['thumbnail'][0]
-        blog_thumbnail = get_file_url(get_image_size_path(blog_thumbnail_ref.get().to_dict(), size))
+        blog_thumbnail = get_file_url(get_image_size_path(blog_thumbnail_ref.get(transaction=transaction).to_dict(), size))
         blog['thumbnail_image'] = blog_thumbnail
         blog_collection.append(blog)
     return blog_collection
 
-def get_blog(id):
-    post = content.document(id)
-    return post.get().to_dict()
+@firestore.transactional
+def get_blog(transcation, id, size):
+    blog = content.document(id).get(transaction=transaction).to_dict()
+    thumbnail_ref = blog['thumbnail'][0]
+    blog['thumbnail_image'] = get_file_url(get_image_size_path(thumbnail_ref.get(transaction=transaction).to_dict(), size))
+    return blog
 
 def get_about():
     about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)
@@ -93,6 +96,12 @@ def get_legal():
     legal_component = next(legal_component_query.stream()).to_dict()
     legal = legal_component['content']
     return legal
+
+def get_subscribe():
+    subscribe_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Subscribe').limit(1)
+    subscribe_component = next(subscribe_component_query.stream()).to_dict()
+    subscribe = subscribe_component['content']
+    return subscribe
     
 def post_email_address(email):
     subscribers = db.collection('subscribers')

@@ -1,8 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}
-Posts
+Blog
 {% endblock %}
 {% block body %}
+<div class="indent-page">
+    <h1>Blog</h1>
+</div>
 <div class="gallery-grid-container full-page">
     {% for blog in blog_collection %}
     <a href="/blog/{{ blog.id }}" class="gallery-grid-item no-hover-container">
