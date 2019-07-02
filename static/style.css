@@ -219,6 +219,7 @@ main {
     height: 100%;
     display: block;
     position: relative;
+    scroll-snap-align: center;
 }
 
 .gallery-horizontal-item img {
