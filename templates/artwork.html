@@ -16,11 +16,16 @@
         {{ artwork.mediaDescription | safe }}
     </p>
 </div>
-<div class="gallery-horizontal-container full-page" style="--num-tiles: {{ number_of_tiles }}">
-    {% for image_url in artwork.image_urls %}
-    <div class="gallery-horizontal-item">
-        <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+<div class="gallery-horizontal-container">
+    <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_tiles }}">
+        {% for image_url in artwork.image_urls %}
+        <div class="gallery-horizontal-item">
+            <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
+    <span class="scroll-button previous"></span>
+    <span class="scroll-button next"></span>
 </div>
+<script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>
 {% endblock %}
