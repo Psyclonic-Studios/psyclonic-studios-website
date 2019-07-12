@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', home_image=crud.get_home_image(crud.transaction, 999))
 
 @app.route('/about')
 def about():

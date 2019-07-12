@@ -14,6 +14,8 @@
     - [ ] home page
     - [ ] signup success page
     - [ ] signup page
+    - [ ] artwork page
+      - [ ] redbubble
 - [ ] contact page
 - [ ] about page CV
 - [x] fix blog styling

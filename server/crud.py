@@ -85,6 +85,14 @@ def get_blog(transcation, id, size):
     blog['thumbnail_image'] = get_file_url(get_image_size_path(thumbnail_ref.get(transaction=transaction).to_dict(), size))
     return blog
 
+@firestore.transactional
+def get_home_image(transaction, size):
+    home_image_query = content.where('_fl_meta_.schema', '==', 'websiteImages').where('position', '==', 'Home').limit(1)
+    home_image = next(home_image_query.stream(transaction=transaction)).to_dict()
+    image_ref = home_image['image'][0]
+    home_image['url'] = get_file_url(get_image_size_path(image_ref.get(transaction=transaction).to_dict(), size))
+    return home_image
+
 def get_about():
     about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)
     about_component = next(about_component_query.stream()).to_dict()
