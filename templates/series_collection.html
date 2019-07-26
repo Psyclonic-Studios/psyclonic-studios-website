@@ -5,9 +5,10 @@ Gallery
 {% block body %}
 <div class="indent-page">
     <h1>Gallery</h1>
-    <p>
-        Series | <a href="/artwork">Individual Artworks</a>
-    </p>
+    <select class="select-css">
+        <option>Artworks</option>
+        <option selected>Series</option>
+    </select>
 </div>
 <div class="gallery-grid-container full-page">
     {% for series in series_collection %}

@@ -7,9 +7,7 @@
     - [ ] media
     - [ ] tags
 ## Todo
-- [x] style subscribe button like the nav buttons
-- [x] style the subscribe input box
-- [x] add vertical indent class
+- [ ] style select button like the nav buttons
 - [ ] style pages
     - [ ] home page
     - [ ] signup success page
@@ -18,10 +16,5 @@
       - [ ] redbubble
 - [ ] contact page
 - [ ] about page CV
-- [x] fix blog styling
-- [x] fix footer
-    - [x] gridify: icons, subscribe, copyright
-    - [x] on mobile put copyright at bottom
-- [x] small arrow on right indicating scroll for the horizontal gallery
-    - [x] scroll on click
+- [ ] do the header sizing properly
 - [ ] artwork prices
