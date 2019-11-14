@@ -1,9 +1,12 @@
 :root {
-    --highlight-background: #01ABAA;
-    --accent-background: rgb(250, 124, 146);
+    /*--highlight-background: #01abaa;*/
+    --highlight-background: #c0f1c0;
+    /*--accent-background: #fa7c92;*/
+    --accent-background: #741343;
     --grey-background: rgb(214, 215, 216);
     --soft-background: white;
-    --highlight-text: #C7D8C6;
+    /*--highlight-text: #C7D8C6;*/
+    --highlight-text: #19aaaa;
     --accent-text: rgb(133, 113, 26);
     --soft-text: black;
     --tile-background: rgb(250, 124, 146, 0.5);
@@ -129,15 +132,64 @@ footer {
 }
 
 /* Home */
-.home-image {
-    display: block;
+.home-container {
+}
+
+.home-container::after {
+    background-image: linear-gradient(to top right, rgba(0, 0, 0, 0.9) 0, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.2) 100%);
+    content: '';
     width: 100%;
+    height: calc(100vh - 110px - 2*var(--full-page-padding));
+    margin-top: -calc(100vh - 110px - 2*var(--full-page-padding));
+    position: relative;
+    display: block;
+}
+.home-image {
+    position: absolute;
+    display: block;
+    width: calc(100vw - 2*var(--full-page-padding));
     height: calc(100vh - 110px - 2*var(--full-page-padding));
     object-position: 50%;
     -o-object-fit: cover;
     object-fit: cover;
+    animation:fade 16s infinite;
+    -webkit-animation:fade 16s infinite;
 }
 
+@-webkit-keyframes fade {
+    0% {opacity: 0;}
+    20% {opacity: 1;}
+    33% {opacity: 1;}
+    53% {opacity: 0;}
+    100% {opacity: 0;}
+}
+@keyframes fade {
+    0% {opacity: 0;}
+    10% {opacity: 1;}
+    25% {opacity: 1;}
+    33% {opacity: 0;}
+    100% {opacity: 0;}
+}
+
+.slider-1 {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+}
+
+.slider-2 {
+    -webkit-animation-delay: -4s;
+    animation-delay: -4s;
+}
+
+.slider-3 {
+    -webkit-animation-delay: -8s;
+    animation-delay: -8s;
+}
+
+.slider-4 {
+    -webkit-animation-delay: -12s;
+    animation-delay: -12s;
+}
 /* Select */
 select {
 	font-size: var(--font-size);
