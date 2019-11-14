@@ -18,3 +18,6 @@
 - [ ] about page CV
 - [ ] do the header sizing properly
 - [ ] artwork prices
+- [ ] send emails
+  - [ ] sales
+  - [ ] updates to subscribers
