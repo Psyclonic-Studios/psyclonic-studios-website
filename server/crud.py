@@ -86,12 +86,13 @@ def get_blog(transcation, id, size):
     return blog
 
 @firestore.transactional
-def get_home_image(transaction, size):
-    home_image_query = content.where('_fl_meta_.schema', '==', 'websiteImages').where('position', '==', 'Home').limit(1)
-    home_image = next(home_image_query.stream(transaction=transaction)).to_dict()
-    image_ref = home_image['image'][0]
-    home_image['url'] = get_file_url(get_image_size_path(image_ref.get(transaction=transaction).to_dict(), size))
-    return home_image
+def get_home_images(transaction, size):
+    home_images_query = content.where('_fl_meta_.schema', '==', 'websiteImages').where('position', '==', 'Home').limit(1)
+    home_images = next(home_images_query.stream(transaction=transaction)).to_dict()
+    image_refs = home_images['images']
+    image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
+    home_images['image_urls'] = image_urls
+    return home_images
 
 def get_about():
     about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)

@@ -133,9 +133,20 @@ footer {
 
 /* Home */
 .home-container {
+    position: relative;
 }
 
-.home-container::after {
+.home-text-holder {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.home-text-holder p {
+    color: var(--highlight-background);
+}
+
+.home-image-holder::after {
     background-image: linear-gradient(to top right, rgba(0, 0, 0, 0.9) 0, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.2) 100%);
     content: '';
     width: 100%;
@@ -144,6 +155,7 @@ footer {
     position: relative;
     display: block;
 }
+
 .home-image {
     position: absolute;
     display: block;
