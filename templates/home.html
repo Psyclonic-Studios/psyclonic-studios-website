@@ -5,12 +5,13 @@ Home
 {% block body %}
 <div class="full-page home-container">
     <div class="home-image-holder">
-    {% for url in home_images %}
+        {% for url in home_images %}
         <img src="{{ url }}" class="home-image slider-{{loop.index}}">
-    {% endfor %}
+        {% endfor %}
     </div>
     <div class="home-text-holder">
-        <p>This is some thing about Psyclonic studios</p>
+        <img src="{{ url_for('static', filename='img/psyclonic-logo.png') }}" class="home-logo">
+        <p class="home-text">This is some thing about Psyclonic studios</p>
     </div>
 </div>
 {% endblock %}

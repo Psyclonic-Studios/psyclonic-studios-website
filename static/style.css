@@ -74,16 +74,21 @@ nav {
 .menu-header {
     display: block;
     float: left;
-    font-size: 34px;
-    padding: 0 20px;
+    font-size: 30px;
+    padding: 0 10px 0 0;
     height: var(--header-height);
+}
+
+.header-logo {
+    height: calc(var(--header-height) - 5px);
+    padding: 0 5px 0 5px;
 }
 
 .menu-icon {
     cursor: pointer;
     float: right;
-    font-size: 34px;
-    padding: 0 20px;
+    font-size: 30px;
+    padding: 0 15px;
     height: var(--header-height);
     user-select: none;
 }
@@ -148,16 +153,23 @@ footer {
 
 .home-text-holder {
     position: absolute;
-    bottom: 20px;
+    top: 50px;
     left: 20px;
 }
 
-.home-text-holder p {
+.home-text {
     color: var(--home-text);
 }
 
+.home-logo {
+    width: 20vw;
+    margin-right: 10px;
+    float: left;
+    filter: invert(50%);
+}
+
 .home-image-holder::after {
-    background-image: linear-gradient(to top right, rgba(0, 0, 0, 0.9) 0, rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.2) 100%);
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1) 0, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%);
     content: '';
     width: 100%;
     height: calc(100vh - 110px - 2*var(--full-page-padding));
@@ -507,6 +519,11 @@ main {
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
     text-align: center;
+}
+
+/* About */
+.about-page img {
+    padding: 5px 10px;
 }
 
 @media (min-width: 560px) {
