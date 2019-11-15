@@ -1,20 +1,26 @@
 :root {
     --highlight-background: #c0f1c0;
     --accent-background: #741343;
-    --grey-background: rgb(214, 215, 216);
     --soft-background: white;
-    --tile-background: rgb(250, 124, 146, 0.5);
 
     --highlight-text: #19aaaa;
-    --accent-text: rgb(133, 113, 26);
     --soft-text: black;
     --home-text: var(--accent-background);
 
     --light-accent: rgb(245, 150, 166);
+
+    --header-height: 60px;
+    --footer-height: 150px;
+
     --main-padding: 20px;
     --full-page-padding: 2px;
     --indent-page-padding: 20px;
     --font-size: 20px;
+}
+@media (min-width: 560px) {
+    :root {
+        --footer-height: 50px;
+    }
 }
 
 body {
@@ -30,6 +36,7 @@ body {
 /* Hamburger */
 nav {
     background-color: var(--highlight-background);
+    min-height: var(--header-height);
 }
 
 .menu {
@@ -49,7 +56,8 @@ nav {
 
 .menu-item {
     display: block;
-    padding: 20px;
+    padding: 0 15px;
+    height: var(--header-height);
     color: var(--highlight-text);
 }
 
@@ -67,14 +75,16 @@ nav {
     display: block;
     float: left;
     font-size: 34px;
-    padding: 10px 20px;
+    padding: 0 20px;
+    height: var(--header-height);
 }
 
 .menu-icon {
     cursor: pointer;
     float: right;
-    font-size: 29px;
-    padding: 10px 20px;
+    font-size: 34px;
+    padding: 0 20px;
+    height: var(--header-height);
     user-select: none;
 }
 
@@ -534,10 +544,6 @@ main {
 @media (min-width: 720px) {
     .menu li {
         float: left;
-    }
-
-    .menu-item {
-        padding: 18px 15px;
     }
 
     .menu {
