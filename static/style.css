@@ -15,6 +15,7 @@
     --main-padding: 20px;
     --full-page-padding: 2px;
     --indent-page-padding: 20px;
+    --indent-page-width: 800px;
     --font-size: 20px;
 }
 @media (min-width: 560px) {
@@ -75,11 +76,12 @@ nav {
     display: block;
     float: left;
     font-size: 30px;
-    padding: 0 10px 0 0;
+    padding: 0 10px 0 10px;
     height: var(--header-height);
 }
 
 .header-logo {
+    display: none;
     height: calc(var(--header-height) - 5px);
     padding: 0 5px 0 5px;
 }
@@ -307,9 +309,21 @@ a:hover {
     color: var(--accent-background);
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
     font-weight: normal;
+}
+
+h1 {
     font-size: 30px;
+}
+h2 {
+    font-size: 26px;
+}
+h3 {
+    font-size: 23px;
+}
+h4 {
+    font-size: 20px;
 }
 
 .italic {
@@ -333,6 +347,9 @@ main {
 .indent-page {
     padding-left: var(--indent-page-padding);
     padding-right: var(--indent-page-padding);
+    max-width: var(--indent-page-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .gallery-horizontal-container {
@@ -524,6 +541,17 @@ main {
 /* About */
 .about-page img {
     padding: 5px 10px;
+}
+
+/* media queries */
+@media (min-width: 400px) {
+    .header-logo {
+        display: inline;
+    }
+
+    .menu-header {
+        padding: 0 10px 0 0;
+    }
 }
 
 @media (min-width: 560px) {
