@@ -34,10 +34,18 @@ def series(id):
     number_of_tiles = len(series['artworks'])
     return render_template('series.html', series=series, number_of_tiles=number_of_tiles)
 
-@app.route('/blog', strict_slashes=False)
-def blog_collection():
-    blog_collection = crud.get_blog_collection(crud.transaction, 375, args=request.args)
-    return render_template('blog_collection.html', blog_collection=blog_collection)
+#@app.route('/blog', strict_slashes=False)
+#def blog_collection():
+#    blog_collection = crud.get_blog_collection(crud.transaction, 375, args=request.args)
+#    return render_template('blog_collection.html', blog_collection=blog_collection)
+
+#@app.route('/workshop')
+#def workshop_collection():
+#    pass
+#
+#@app.route('/garage')
+#def garage_collection():
+#    pass
 
 @app.route('/blog/<string:id>')
 def blog(id):
