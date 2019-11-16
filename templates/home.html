@@ -9,9 +9,9 @@ Home
         <img src="{{ url }}" class="home-image slider-{{loop.index}}">
         {% endfor %}
     </div>
-    <div class="home-text-holder">
         <img src="{{ url_for('static', filename='img/psyclonic-logo.png') }}" class="home-logo">
-        <p class="home-text">This is some thing about Psyclonic studios</p>
+    <div class="home-text-holder">
+        {{ home_text | safe }}
     </div>
 </div>
 {% endblock %}

@@ -155,15 +155,20 @@ footer {
 
 .home-text-holder {
     position: absolute;
-    top: 70px;
-    left: 50px;
+    top: 170px;
+    left: 110px;
+    max-width: calc(100vw - 140px);
+    color: var(--home-text);
 }
 
-.home-text {
+.home-text-holder p {
     color: var(--home-text);
 }
 
 .home-logo {
+    position: absolute;
+    top: 70px;
+    left: 50px;
     width: 200px;
     margin-right: 10px;
     float: left;

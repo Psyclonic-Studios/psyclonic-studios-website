@@ -94,6 +94,12 @@ def get_home_images(transaction, size):
     home_images['image_urls'] = image_urls
     return home_images
 
+def get_home_text():
+    home_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Home').limit(1)
+    home_component = next(home_component_query.stream()).to_dict()
+    home = home_component['content']
+    return home
+
 def get_about():
     about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)
     about_component = next(about_component_query.stream()).to_dict()
