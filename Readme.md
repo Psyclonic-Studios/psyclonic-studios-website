@@ -16,6 +16,7 @@
     - [ ] signup success page
     - [ ] signup page
     - [ ] artwork page
+      - [ ] width CROSS height
       - [ ] redbubble
 - [ ] contact page
 - [ ] about page CV
