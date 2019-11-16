@@ -6,17 +6,20 @@
     - [ ] price
     - [ ] media
     - [ ] tags
+- course creation
+  - [ ] udemy
+  - [ ] skillshare
 ## Todo
 - [ ] style select button like the nav buttons
 - [ ] style pages
-    - [ ] home page
+    - [x] home page
     - [ ] signup success page
     - [ ] signup page
     - [ ] artwork page
       - [ ] redbubble
 - [ ] contact page
 - [ ] about page CV
-- [ ] do the header sizing properly
+- [x] do the header sizing properly
 - [ ] artwork prices
 - [ ] send emails
   - [ ] sales
