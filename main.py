@@ -5,12 +5,18 @@ from server import crud
 app = Flask(__name__)
 
 @app.route('/')
-def index():
+def home():
     return render_template('home.html', home_images=crud.get_home_images(crud.transaction, 999)['image_urls'], home_text=crud.get_home_text())
 
 @app.route('/about')
 def about():
     return render_template('about.html', about=crud.get_about())
+
+@app.route('/support')
+def support():
+    support_products = crud.get_support_products(crud.transaction, 667, request.args)
+    number_of_products = len(support_products)
+    return render_template('support.html', support_text=crud.get_support_text(), support_products=support_products, number_of_products=number_of_products)
 
 @app.route('/artwork', strict_slashes=False)
 def artwork_collection():

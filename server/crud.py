@@ -112,6 +112,29 @@ def get_legal():
     legal = legal_component['content']
     return legal
 
+@firestore.transactional
+def get_support_products(transaction, size, args):
+    support_products_query = content.where('_fl_meta_.schema', '==', 'supportProducts').where('available', '==', True)
+    support_products_query = sort_query(support_products_query, args)
+    support_products = []
+    for product_ref in support_products_query.stream(transaction=transaction):
+        product = product_ref.to_dict()
+        print(product)
+        product_artwork_image_ref = product['artworkImage'][0]
+        product_artwork_image_url = get_file_url(get_image_size_path(product_artwork_image_ref.get(transaction=transaction).to_dict(), size))
+        product['artwork_image_url'] = product_artwork_image_url
+        product_image_ref = product['productImage'][0]
+        product_image_url = get_file_url(get_image_size_path(product_image_ref.get(transaction=transaction).to_dict(), size))
+        product['product_image_url'] = product_image_url
+        support_products.append(product)
+    return support_products
+
+def get_support_text():
+    support_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Support').limit(1)
+    support_component = next(support_component_query.stream()).to_dict()
+    support = support_component['content']
+    return support
+
 def get_subscribe():
     subscribe_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Subscribe').limit(1)
     subscribe_component = next(subscribe_component_query.stream()).to_dict()
@@ -138,7 +161,9 @@ def get_image_size_path(image_dict, size):
                 return os.path.join('sized', str(s['path']), filename)
     return filename
 
-def sort_query(query, args):
+def sort_query(query, args=None):
+    if args is None:
+        return query
     sort_by = args.get('sort_by','')
     sort_direction = args.get('sort_direction','')
     if sort_by:
