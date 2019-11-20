@@ -1,0 +1,61 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "fl_content",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "_fl_meta_.schema",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "title",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "fl_content",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "_fl_meta_.schema",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "title",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "fl_content",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "_fl_meta_.schema",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "fl_content",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "_fl_meta_.schema",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "year",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}
