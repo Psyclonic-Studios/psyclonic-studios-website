@@ -1,6 +1,10 @@
 from google.cloud import firestore
 from google.cloud import storage
 import os
+import stripe
+
+STRIPE_TEST_KEY = "***REMOVED***"
+stripe.api_key = STRIPE_TEST_KEY
 
 db = firestore.Client()
 content = db.collection('fl_content')
@@ -8,7 +12,7 @@ content = db.collection('fl_content')
 storage_client = storage.client.Client()
 bucket = storage_client.get_bucket('psyclonic-studios-website.appspot.com')
 
-transaction = db.transaction()
+TRANSACTION = db.transaction()
 @firestore.transactional
 def get_artwork_collection(transaction, size, args):
     artworks_query = content.where('_fl_meta_.schema', '==', 'artwork')
@@ -79,7 +83,7 @@ def get_blog_collection(transaction, size, args):
     return blog_collection
 
 @firestore.transactional
-def get_blog(transcation, id, size):
+def get_blog(transaction, id, size):
     blog = content.document(id).get(transaction=transaction).to_dict()
     thumbnail_ref = blog['thumbnail'][0]
     blog['thumbnail_image'] = get_file_url(get_image_size_path(thumbnail_ref.get(transaction=transaction).to_dict(), size))
@@ -113,26 +117,60 @@ def get_legal():
     return legal
 
 @firestore.transactional
-def get_support_products(transaction, size, args):
-    support_products_query = content.where('_fl_meta_.schema', '==', 'supportProducts').where('available', '==', True)
-    support_products_query = sort_query(support_products_query, args)
-    support_products = []
-    for product_ref in support_products_query.stream(transaction=transaction):
+def get_contribute_products(transaction, size, args):
+    contribute_products_query = content.where('_fl_meta_.schema', '==', 'supportProducts').where('available', '==', True)
+    contribute_products_query = sort_query(contribute_products_query, args)
+    contribute_products = []
+    for product_ref in contribute_products_query.stream(transaction=transaction):
         product = product_ref.to_dict()
-        print(product)
+        product['sku'] = f'sku_{product["id"]}'
         product_artwork_image_ref = product['artworkImage'][0]
         product_artwork_image_url = get_file_url(get_image_size_path(product_artwork_image_ref.get(transaction=transaction).to_dict(), size))
         product['artwork_image_url'] = product_artwork_image_url
         product_image_ref = product['productImage'][0]
         product_image_url = get_file_url(get_image_size_path(product_image_ref.get(transaction=transaction).to_dict(), size))
         product['product_image_url'] = product_image_url
-        support_products.append(product)
-    return support_products
+        contribute_products.append(product)
+    return contribute_products
 
-def get_support_text():
-    support_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Support').limit(1)
-    support_component = next(support_component_query.stream()).to_dict()
-    support = support_component['content']
+def sync_contribute_products_to_stripe(stripe_product_id):
+    contribute_products = get_contribute_products(TRANSACTION, 375, None)
+    products = {product['sku']: product for product in contribute_products}
+    stripe_skus = stripe.SKU.list(product=stripe_product_id, limit=100)['data']
+    stripe_sku_list = [sku['id'] for sku in stripe_skus]
+    existing_skus = filter(lambda sku: sku in stripe_sku_list, products.keys())
+    new_skus = filter(lambda sku: sku not in stripe_sku_list, products.keys())
+    
+    for sku in existing_skus:
+        product = products[sku]
+        stripe.SKU.modify(
+            sku,
+            currency='aud',
+            inventory={'type': 'infinite'},
+            active=product['available'],
+            price=int(product['basePrice'] * 100),
+            image=product['product_image_url'],
+            product=stripe_product_id,
+            attributes={'name': product['title']}
+        )
+
+    for sku in new_skus:
+        product = products[sku]
+        stripe.SKU.create(
+            id=product['sku'],
+            currency='aud',
+            inventory={'type': 'infinite'},
+            active=product['available'],
+            price=int(product['basePrice'] * 100),
+            image=product['product_image_url'],
+            product=stripe_product_id,
+            attributes={'name': product['title']}
+        )
+    
+def get_contribute_text():
+    contribute_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Contribute').limit(1)
+    contribute = next(contribute_query.stream()).to_dict()
+    support = contribute['content']
     return support
 
 def get_subscribe():

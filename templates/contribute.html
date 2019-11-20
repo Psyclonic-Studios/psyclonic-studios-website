@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block title %}
+Contribute to Psyclonic Studios
+{% endblock %}
+{% block body %}
+<div class="indent-page support-page">
+    {{ support_text | safe }}
+</div>
+<div class="gallery-grid-container indent-page">
+    {% for product in contribute_products %}
+    <div class="gallery-grid-item contribute-products">
+        <img src="{{ product.artwork_image_url }}" alt="{{ product.title }}">
+        <span class="contribute-products-price">{{ product.basePrice | format_money }}</span>
+        <div class="quantity-container">
+            <button class="quantity-adder subtract" type="button" onclick="addToQuantity('{{ product.sku }}', -1)">-</button>
+            <span class="quantity" id="{{ product.sku }}">0</span>
+            <button class="quantity-adder add" type="button" onclick="addToQuantity('{{ product.sku }}', 1)">+</button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<p class="total-cost" style="text-align: center;">$<span id="cost">0</span></p>
+
+<button
+  style="background-color:#6772E5;color:#FFF;padding:8px 12px;border:0;border-radius:4px;font-size:1em"
+  id="checkout-button"
+  role="link"
+>
+  Checkout
+</button>
+
+<div id="error-message"></div>
+<script>
+  let products = {
+    {% for product in contribute_products %}
+    {{ product.sku }}: {
+      price: {{ product.basePrice }},
+      quantity: 0,
+    },
+  {% endfor %}
+  }
+</script>
+<script src="https://js.stripe.com/v3"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='contribute.js') }}"></script>
+{% endblock %}
