@@ -2,10 +2,20 @@
 <html>
 
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-144212153-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-144212153-1');
+  </script>
+
   <title>Psyclonic Studios | {% block title %}{% endblock %}</title>
   {% block head %}
   {% endblock %}
-  <meta name="viewport" content="width=device-width"/>
+  <meta name="viewport" content="width=device-width" />
 
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
