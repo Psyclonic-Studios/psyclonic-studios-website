@@ -1,12 +1,16 @@
-const costElement = document.getElementById("cost")
+const checkoutButton = document.getElementById("checkout-button");
 
-function addToQuantity(sku, amount) {
+function addToQuantity(sku, amount, hasDisplay = true) {
   const product = products[sku];
   product.quantity += amount;
   if (product.quantity < 0) product.quantity = 0;
-  const productQuantityDisplay = document.getElementById(sku);
-  productQuantityDisplay.textContent = product.quantity
+  if (hasDisplay) updateQuantityDisplay(sku);
   updateCost();
+}
+
+function updateQuantityDisplay(sku) {
+  const productQuantityDisplay = document.getElementById(sku);
+  productQuantityDisplay.textContent = products[sku].quantity;
 }
 
 function updateCost() {
@@ -14,7 +18,7 @@ function updateCost() {
     for(let [sku, product] of Object.entries(products)) {
       totalCost += product.quantity * product.price;
     }
-    costElement.textContent = String(totalCost);
+    checkoutButton.textContent = "Checkout " + totalCost.toLocaleString('en-AU', {currency: 'AUD', currencyDisplay: 'symbol', style: 'currency'});
 }
 
 (function() {
@@ -23,7 +27,7 @@ function updateCost() {
   var checkoutButton = document.getElementById('checkout-button');
   checkoutButton.addEventListener('click', function () {
     stripe.redirectToCheckout({
-      items: Object.keys(products).map(sku => { return {sku: sku, quantity: products[sku].quantity} }),
+      items: Object.keys(products).filter(sku => products[sku].quantity > 0).map(sku => { return {sku: sku, quantity: products[sku].quantity} }),
       successUrl: 'https://www.psyclonicstudios.com.au/success',
       cancelUrl: 'https://www.psyclonicstudios.com.au/canceled',
     })

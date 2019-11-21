@@ -167,6 +167,11 @@ def sync_contribute_products_to_stripe(stripe_product_id):
             attributes={'name': product['title']}
         )
     
+def get_donation_skus():
+    donation_product_id = 'prod_GDQq6Q0F7xFAkj'
+    donation_skus = stripe.SKU.list(product=donation_product_id)['data']
+    return sorted(donation_skus, key=lambda sku: sku['price'])
+
 def get_contribute_text():
     contribute_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Contribute').limit(1)
     contribute = next(contribute_query.stream()).to_dict()
@@ -179,9 +184,22 @@ def get_subscribe():
     subscribe = subscribe_component['content']
     return subscribe
     
+def get_subscribe_success():
+    subscribe_success_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Subscribe success').limit(1)
+    subscribe_success_component = next(subscribe_success_component_query.stream()).to_dict()
+    subscribe_success = subscribe_success_component['content']
+    return subscribe_success
+
 def post_email_address(email):
     subscribers = db.collection('subscribers')
     subscribers.document(email).set({'events':True,'newsletter': True}, merge=True)
+
+def get_payment_success():
+    payment_success_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Payment success').limit(1)
+    payment_success_component = next(payment_success_component_query.stream()).to_dict()
+    payment_success = payment_success_component['content']
+    return payment_success
+
 
 def get_file_url(path):
     flamelink_path = 'flamelink/media'

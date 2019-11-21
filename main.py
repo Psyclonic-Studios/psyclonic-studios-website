@@ -15,9 +15,10 @@ def about():
 
 @app.route('/contribute')
 def contribute():
-    contribute_products = crud.get_contribute_products(crud.TRANSACTION, 375, request.args)
+    contribute_products = crud.get_contribute_products(crud.TRANSACTION, 667, request.args)
     number_of_products = len(contribute_products)
-    return render_template('contribute.html', support_text=crud.get_contribute_text(), contribute_products=contribute_products, number_of_products=number_of_products)
+    donation_skus = crud.get_donation_skus()
+    return render_template('contribute.html', support_text=crud.get_contribute_text(), contribute_products=contribute_products, number_of_products=number_of_products, donation_skus=donation_skus)
 
 @app.route('/refresh_contribute_products')
 def refresh_contribute_products():
@@ -76,7 +77,11 @@ def subscribe():
 def add_subscriber():
     email = request.form.get('email')
     crud.post_email_address(email)
-    return render_template('subscribe_success.html')
+    return render_template('subscribe_success.html', thankyou_text=crud.get_subscribe_success())
+
+@app.route('/payment_success')
+def subscribe():
+    return render_template('payment_success.html', subscribe=crud.get_payment_success())
 
 @app.template_filter('format_date')
 def format_date(datetime_str):
