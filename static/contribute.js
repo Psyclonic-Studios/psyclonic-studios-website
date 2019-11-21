@@ -28,8 +28,8 @@ function updateCost() {
   checkoutButton.addEventListener('click', function () {
     stripe.redirectToCheckout({
       items: Object.keys(products).filter(sku => products[sku].quantity > 0).map(sku => { return {sku: sku, quantity: products[sku].quantity} }),
-      successUrl: 'https://www.psyclonicstudios.com.au/success',
-      cancelUrl: 'https://www.psyclonicstudios.com.au/canceled',
+      successUrl: 'https://www.psyclonicstudios.com.au/payment_success',
+      cancelUrl: 'https://www.psyclonicstudios.com.au/contribute',
     })
     .then(function (result) {
       if (result.error) {

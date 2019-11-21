@@ -80,8 +80,8 @@ def add_subscriber():
     return render_template('subscribe_success.html', thankyou_text=crud.get_subscribe_success())
 
 @app.route('/payment_success')
-def subscribe():
-    return render_template('payment_success.html', subscribe=crud.get_payment_success())
+def payment_success():
+    return render_template('payment_success.html', thankyou_text=crud.get_payment_success())
 
 @app.template_filter('format_date')
 def format_date(datetime_str):
