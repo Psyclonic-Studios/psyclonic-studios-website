@@ -3,8 +3,22 @@ from google.cloud import storage
 import os
 import stripe
 
-STRIPE_TEST_KEY = "***REMOVED***"
-stripe.api_key = STRIPE_TEST_KEY
+STRIPE_TEST = {
+    'key': '***REMOVED***',
+    'contribution_product_id': 'prod_GChtVcVgeZduno',
+    'donation_product_id': 'prod_GDQq6Q0F7xFAkj',
+    'shipping_product_id': 'prod_GDmkm9fxl6YvCn',
+    'shipping_sku_id': 'sku_GDmkWeFhQhk5HQ'
+}
+STRIPE_LIVE = {
+    'key': '***REMOVED***',
+    'contribution_product_id': 'prod_GDmdnMMP7iFtRg',
+    'donation_product_id': 'prod_GDmaVS6aamK9mF',
+    'shipping_product_id': 'prod_GDmiu3gS8LOGJs',
+    'shipping_sku_id': 'sku_GDmiuiOgMvdxmQ'
+}
+STRIPE_DATA = STRIPE_TEST
+stripe.api_key = STRIPE_DATA['key']
 
 db = firestore.Client()
 content = db.collection('fl_content')
@@ -133,10 +147,11 @@ def get_contribute_products(transaction, size, args):
         contribute_products.append(product)
     return contribute_products
 
-def sync_contribute_products_to_stripe(stripe_product_id):
+def sync_contribute_products_to_stripe():
+    contribution_product_id = STRIPE_DATA['contribution_product_id']
     contribute_products = get_contribute_products(TRANSACTION, 375, None)
     products = {product['sku']: product for product in contribute_products}
-    stripe_skus = stripe.SKU.list(product=stripe_product_id, limit=100)['data']
+    stripe_skus = stripe.SKU.list(product=contribution_product_id, limit=100)['data']
     stripe_sku_list = [sku['id'] for sku in stripe_skus]
     existing_skus = filter(lambda sku: sku in stripe_sku_list, products.keys())
     new_skus = filter(lambda sku: sku not in stripe_sku_list, products.keys())
@@ -150,7 +165,7 @@ def sync_contribute_products_to_stripe(stripe_product_id):
             active=product['available'],
             price=int(product['basePrice'] * 100),
             image=product['product_image_url'],
-            product=stripe_product_id,
+            product=contribution_product_id,
             attributes={'name': product['title']}
         )
 
@@ -163,14 +178,18 @@ def sync_contribute_products_to_stripe(stripe_product_id):
             active=product['available'],
             price=int(product['basePrice'] * 100),
             image=product['product_image_url'],
-            product=stripe_product_id,
+            product=contribution_product_id,
             attributes={'name': product['title']}
         )
     
 def get_donation_skus():
-    donation_product_id = 'prod_GDQq6Q0F7xFAkj'
+    donation_product_id = STRIPE_DATA['donation_product_id']
     donation_skus = stripe.SKU.list(product=donation_product_id)['data']
     return sorted(donation_skus, key=lambda sku: sku['price'])
+
+def get_shipping_sku():
+    shipping_sku = stripe.SKU.retrieve(STRIPE_DATA['shipping_sku_id'])
+    return shipping_sku
 
 def get_contribute_text():
     contribute_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Contribute').limit(1)

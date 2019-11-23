@@ -17,10 +17,10 @@ Contribute to Psyclonic Studios
         </div>
         <div class="quantity-container">
           <button class="highlight quantity-button" type="button"
-            onclick="addToQuantity('{{ product.sku }}', -1)">-</button>
+            onclick="addProduct('{{ product.sku }}', -1)">-</button>
           <span class="quantity" id="{{ product.sku }}">0</span>
           <button class="highlight quantity-button" type="button"
-            onclick="addToQuantity('{{ product.sku }}', 1)">+</button>
+            onclick="addProduct('{{ product.sku }}', 1)">+</button>
         </div>
       </div>
     </div>
@@ -31,12 +31,23 @@ Contribute to Psyclonic Studios
 </div>
 <div class="contribution">
   {% for donation in donation_skus %}
-    <button class="highlight submit" onclick="addToQuantity('{{ donation.id }}', 1, false)">+{{ (donation.price / 100) | format_money }}</button>
+    <button class="highlight" onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
   {% endfor %}
 </div>
 <div class="checkout">
 
-  <span id="cost"></span>
+  <select id="shipping-select" required>
+    <option selected value="" disabled>
+      Select shipping region
+    </option>
+    <option value="0">
+      Within Australia
+    </option>
+    <option value="1">
+      Outside Australia
+    </option>
+  </select>
+  <span id="shipping-message"></span>
 
   <button class="highlight submit" id="checkout-button" role="link">
     Checkout
@@ -45,19 +56,30 @@ Contribute to Psyclonic Studios
 
 <div id="error-message"></div>
 <script>
-  let products = {
+  const products = {
     {% for product in contribute_products %}
       {{ product.sku }}: {
+        id: '{{ product.sku }}',
         price: {{ product.basePrice }},
         quantity: 0
       },
     {% endfor %}
+  }
+  const donations = {
     {% for donation in donation_skus %}
       {{ donation.id }}: {
+        id: '{{ donation.id }}',
         price: {{ donation.price / 100 }},
         quantity: 0
       },
     {% endfor %}
+  }
+  const shipping = {
+    {{ shipping_sku.id }}: {
+      id: '{{ shipping_sku.id }}',
+      price: {{ shipping_sku.price / 100 }},
+      quantity: 0
+    }
   }
 </script>
 <script src="https://js.stripe.com/v3"></script>

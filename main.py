@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect
+from flask import Flask, render_template, url_for, request, redirect, jsonify
 from datetime import datetime
 from babel import numbers
 from server import crud
@@ -18,11 +18,11 @@ def contribute():
     contribute_products = crud.get_contribute_products(crud.TRANSACTION, 667, request.args)
     number_of_products = len(contribute_products)
     donation_skus = crud.get_donation_skus()
-    return render_template('contribute.html', support_text=crud.get_contribute_text(), contribute_products=contribute_products, number_of_products=number_of_products, donation_skus=donation_skus)
+    return render_template('contribute.html', support_text=crud.get_contribute_text(), contribute_products=contribute_products, number_of_products=number_of_products, donation_skus=donation_skus, shipping_sku=crud.get_shipping_sku())
 
 @app.route('/refresh_contribute_products')
 def refresh_contribute_products():
-    crud.sync_contribute_products_to_stripe('prod_GChtVcVgeZduno')
+    crud.sync_contribute_products_to_stripe()
     return ('', 204)
 
 @app.route('/artwork', strict_slashes=False)
