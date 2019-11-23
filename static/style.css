@@ -452,8 +452,8 @@ button {
 
 .gallery-horizontal {
     display: grid;
-    grid-template-columns: repeat(var(--num-tiles), fit-content(90vw));
-    grid-template-rows: calc(100vh - 140px);
+    grid-template-columns: var(--grid-gap) repeat(var(--num-tiles), fit-content(90vw)) var(--grid-gap);
+    grid-template-rows: calc(80vh);
     grid-gap: var(--grid-gap);
     overflow-y: hidden;
     overflow-x: auto;
@@ -520,9 +520,8 @@ button {
 @media (min-width: 720px) {
     .gallery-grid-container {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         grid-auto-rows: min-content;
-        width: calc(100vw-1*var(--full-page-padding));
     }
 }
 

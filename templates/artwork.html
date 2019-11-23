@@ -18,11 +18,13 @@
 </div>
 <div class="gallery-horizontal-container">
     <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_tiles }}">
+    <div class="horizontal-gutter-item"></div>
         {% for image_url in artwork.image_urls %}
         <div class="gallery-horizontal-item">
             <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
         </div>
         {% endfor %}
+    <div class="horizontal-gutter-item"></div>
     </div>
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>

@@ -3,11 +3,12 @@
 Contribute to Psyclonic Studios
 {% endblock %}
 {% block body %}
-<div class="indent-page support-page">
+<div class="text-page support-page">
   {{ support_text | safe }}
 </div>
 <div class="gallery-horizontal-container">
   <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_products }}">
+    <div></div>
     {% for product in contribute_products %}
     <div class="gallery-horizontal-item contribute-product">
       <img src="{{ product.artwork_image_url }}" alt="{{ product.title }}">
@@ -25,6 +26,7 @@ Contribute to Psyclonic Studios
       </div>
     </div>
     {% endfor %}
+    <div></div>
   </div>
   <span class="scroll-button previous"></span>
   <span class="scroll-button next"></span>
