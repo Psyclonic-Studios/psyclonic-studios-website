@@ -16,10 +16,10 @@ Contribute to Psyclonic Studios
           {{ product.basePrice | format_money }}
         </div>
         <div class="quantity-container">
-          <button class="highlight quantity-button" type="button"
+          <button class="highlight highlight-border hover-accent button-narrow" type="button"
             onclick="addProduct('{{ product.sku }}', -1)">-</button>
           <span class="quantity" id="{{ product.sku }}">0</span>
-          <button class="highlight quantity-button" type="button"
+          <button class="highlight highlight-border hover-accent button-narrow" type="button"
             onclick="addProduct('{{ product.sku }}', 1)">+</button>
         </div>
       </div>
@@ -31,7 +31,7 @@ Contribute to Psyclonic Studios
 </div>
 <div class="contribution">
   {% for donation in donation_skus %}
-    <button class="highlight" onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
+    <button class="highlight highlight-border hover-accent button-narrow" onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
   {% endfor %}
 </div>
 <div class="checkout">
@@ -49,7 +49,7 @@ Contribute to Psyclonic Studios
   </select>
   <span id="shipping-message"></span>
 
-  <button class="highlight submit" id="checkout-button" role="link">
+  <button class="highlight highlight-background hover-accent button-wide" id="checkout-button" role="link">
     Checkout
   </button>
 </div>
