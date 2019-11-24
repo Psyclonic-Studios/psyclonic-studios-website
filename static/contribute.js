@@ -47,9 +47,10 @@ function updateCost() {
 })();
 
 (function() {
-  const stripe_test = 'pk_test_54LxtB4vZjsleKrRO5zqpuV1';
+  const stripeTest = 'pk_test_54LxtB4vZjsleKrRO5zqpuV1';
+  const stripeLive = 'pk_live_JLuWhpvRiItMchspr5Vv5Kia';
 
-  var stripe = Stripe(stripe_test);
+  var stripe = Stripe(stripeLive);
 
   var checkoutButton = document.getElementById('checkout-button');
   checkoutButton.addEventListener('click', function () {

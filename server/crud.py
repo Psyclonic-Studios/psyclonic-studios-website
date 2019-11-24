@@ -17,7 +17,7 @@ STRIPE_LIVE = {
     'shipping_product_id': 'prod_GDmiu3gS8LOGJs',
     'shipping_sku_id': 'sku_GDmiuiOgMvdxmQ'
 }
-STRIPE_DATA = STRIPE_TEST
+STRIPE_DATA = STRIPE_LIVE
 stripe.api_key = STRIPE_DATA['key']
 
 db = firestore.Client()
