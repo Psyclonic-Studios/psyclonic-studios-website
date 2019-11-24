@@ -3,10 +3,10 @@
 Blog
 {% endblock %}
 {% block body %}
-<div class="indent-page">
+<div class="medium-page">
     <h1>Blog</h1>
 </div>
-<div class="gallery-grid-container full-page">
+<div class="gallery-grid-container wide-page">
     {% for blog in blog_collection %}
     <a href="/blog/{{ blog.id }}" class="gallery-grid-item no-hover-container">
         <img class="no-hover-image" src="{{ blog.thumbnail_image }}" alt="{{ blog.title }}">

@@ -3,11 +3,11 @@
 Contribute to Psyclonic Studios
 {% endblock %}
 {% block body %}
-<div class="text-page support-page">
+<div class="narrow-page support-page">
   {{ support_text | safe }}
 </div>
 <div class="gallery-horizontal-container">
-  <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_products }}">
+  <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_products }}">
     <div></div>
     {% for product in contribute_products %}
     <div class="gallery-horizontal-item contribute-product">
@@ -30,14 +30,18 @@ Contribute to Psyclonic Studios
   </div>
   <span class="scroll-button previous"></span>
   <span class="scroll-button next"></span>
+  <span id="product-error-message" class="error-message"></span>
 </div>
-<div class="contribution">
+<div id="contribution" class="narrow-page">
+  <span>Select contribution amount</span>
+  <div id="contribution-amounts">
   {% for donation in donation_skus %}
     <button class="highlight highlight-border hover-accent button-narrow" onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
   {% endfor %}
+  </div>
 </div>
-<div class="checkout">
-
+<div id="shipping">
+  <span>Shipping:</span>
   <select id="shipping-select" required>
     <option selected value="" disabled>
       Select shipping region
@@ -50,7 +54,8 @@ Contribute to Psyclonic Studios
     </option>
   </select>
   <span id="shipping-message"></span>
-
+</div>
+<div id="checkout">
   <button class="highlight highlight-background hover-accent button-wide" id="checkout-button" role="link">
     Checkout
   </button>

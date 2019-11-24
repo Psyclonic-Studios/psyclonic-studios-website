@@ -3,14 +3,14 @@
 Gallery
 {% endblock %}
 {% block body %}
-<div class="indent-page">
+<div class="medium-page">
     <h1>Gallery</h1>
     <select class="select-css">
         <option>Artworks</option>
         <option selected>Series</option>
     </select>
 </div>
-<div class="gallery-grid-container full-page">
+<div class="gallery-grid-container wide-page">
     {% for series in series_collection %}
     <a href="/series/{{ series.id }}" class="gallery-grid-item hover-container">
         <img class="hover-image" src="{{ series.thumbnail_image }}" alt="{{ series.description }}">

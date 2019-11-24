@@ -1,5 +1,7 @@
 const checkoutButton = document.getElementById("checkout-button");
 const shippingSelect = document.getElementById('shipping-select');
+const shippingMessageElement = document.getElementById('shipping-message');
+const productErrorMessageElement = document.getElementById("product-error-message");
 
 function addProduct(sku, amount) {
   const product = products[sku];
@@ -19,6 +21,7 @@ function addDonation(sku, amount) {
 function updateQuantityDisplay(sku) {
   const productQuantityDisplay = document.getElementById(sku);
   productQuantityDisplay.textContent = products[sku].quantity;
+  productErrorMessageElement.textContent = "";
 }
 
 function updateCost() {
@@ -31,14 +34,14 @@ function updateCost() {
 
 (function updateShipping() {
   shippingSelect.addEventListener('change', (event) => {
+    shippingMessageElement.classList.remove('error-message');
     const internationalShipping = parseInt(event.target.value);
     Object.values(shipping)[0].quantity = internationalShipping;
     updateCost();
-    const shippingMessageElement = document.getElementById('shipping-message');
     if(internationalShipping) {
       shippingMessageElement.textContent = "+$5.00 international shipping";
     } else {
-      shippingMessageElement.textContent = "";
+      shippingMessageElement.textContent = "Free shipping";
     }
   });
 })();
@@ -54,15 +57,17 @@ function updateCost() {
     const donationLineItems = Object.values(donations).filter(sku => sku.quantity > 0).map(sku => { return {sku: sku.id, quantity: sku.quantity} })
     const shippingLineItems = Object.values(shipping).filter(sku => sku.quantity > 0).map(sku => { return {sku: sku.id, quantity: sku.quantity} })
     const lineItems = productLineItems.concat(donationLineItems, shippingLineItems);
-    console.log(lineItems);
+    let invalid = false;
     if(shippingSelect.value == '') {
-      alert('Select shipping region');
-      return;
+      shippingMessageElement.textContent = "Please select shipping region";
+      shippingMessageElement.classList.add('error-message');
+      invalid = true;
     }
     if(productLineItems.length == 0) {
-      alert('Select postcards');
-      return;
+      productErrorMessageElement.textContent = "Please choose a card";
+      invalid = true;
     }
+    if(invalid) return;
     stripe.redirectToCheckout({
       items: lineItems,
       successUrl: 'https://www.psyclonicstudios.com.au/payment_success',

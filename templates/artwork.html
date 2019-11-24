@@ -3,7 +3,7 @@
 {{ artwork.title }}
 {% endblock %}
 {% block body %}
-<div class="indent-page">
+<div class="medium-page">
     <h1>{{ artwork.title }} - {{ artwork.year }}</h1>
     <p class="artwork-dimensions">
         {% for dimension in artwork.dimensions -%}
@@ -17,7 +17,7 @@
     </p>
 </div>
 <div class="gallery-horizontal-container">
-    <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_tiles }}">
+    <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
     <div class="horizontal-gutter-item"></div>
         {% for image_url in artwork.image_urls %}
         <div class="gallery-horizontal-item">

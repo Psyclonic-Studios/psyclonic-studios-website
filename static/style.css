@@ -14,9 +14,9 @@
     --footer-height: 150px;
 
     --main-padding: 20px;
-    --full-page-padding: 2px;
-    --indent-page-padding: 20px;
-    --text-page-width: 800px;
+    --wide-page-padding: 2px;
+    --medium-page-padding: 20px;
+    --narrow-page-width: 800px;
     --grid-gap: 10px;
 
     --font-size: 20px;
@@ -70,6 +70,25 @@
 .button-narrow {
     border-radius: 2px;
     font-size: var(--font-size);
+}
+
+.wide-page {
+    padding-left: var(--wide-page-padding);
+    padding-right: var(--wide-page-padding);
+    width: calc(100vw-1*var(--wide-page-padding));
+}
+
+.medium-page {
+    padding-left: var(--medium-page-padding);
+    padding-right: var(--medium-page-padding);
+}
+
+.narrow-page {
+    padding-left: var(--medium-page-padding);
+    padding-right: var(--medium-page-padding);
+    max-width: var(--narrow-page-width);
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .italic {
@@ -347,8 +366,8 @@ footer {
     background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1) 0, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%);
     content: '';
     width: 100%;
-    height: calc(100vh - 110px - 2*var(--full-page-padding));
-    margin-top: -calc(100vh - 110px - 2*var(--full-page-padding));
+    height: calc(100vh - 110px - 2*var(--wide-page-padding));
+    margin-top: -calc(100vh - 110px - 2*var(--wide-page-padding));
     position: relative;
     display: block;
 }
@@ -356,8 +375,8 @@ footer {
 .home-image {
     position: absolute;
     display: block;
-    width: calc(100vw - 2*var(--full-page-padding));
-    height: calc(100vh - 110px - 2*var(--full-page-padding));
+    width: calc(100vw - 2*var(--wide-page-padding));
+    height: calc(100vh - 110px - 2*var(--wide-page-padding));
     object-position: 50%;
     -o-object-fit: cover;
     object-fit: cover;
@@ -427,27 +446,9 @@ button {
 }
 
 /* Artwork */
-.full-page {
-    padding: var(--full-page-padding);
-    width: calc(100vw-1*var(--full-page-padding));
-}
-
-.indent-page {
-    padding-left: var(--indent-page-padding);
-    padding-right: var(--indent-page-padding);
-}
-
-.text-page {
-    padding-left: var(--indent-page-padding);
-    padding-right: var(--indent-page-padding);
-    padding-bottom: var(--indent-page-padding);
-    max-width: var(--text-page-width);
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .gallery-horizontal-container {
     position: relative;
+    margin-bottom: var(--medium-page-padding);
 }
 
 .gallery-horizontal {
@@ -472,10 +473,6 @@ button {
 
 .gallery-horizontal-item img {
     height: 100%;
-    /*
-    -o-object-fit: scale-down;
-    object-fit: scale-down;
-    */
     -o-object-fit: cover;
     object-fit: cover;
 }
@@ -515,7 +512,8 @@ button {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: min-content;
     grid-gap: var(--grid-gap);
-    padding: var(--grid-gap);
+    padding-left: var(--grid-gap);
+    padding-right: var(--grid-gap);
 }
 @media (min-width: 720px) {
     .gallery-grid-container {
@@ -616,7 +614,7 @@ button {
 
 /* Blog */
 .blog-header {
-    width: calc(100vw - 2*var(--full-page-padding));
+    width: calc(100vw - 2*var(--wide-page-padding));
     height: 30vh;
 }
 
@@ -640,7 +638,7 @@ button {
     text-align: center;
 }
 
-/* Support */
+/* contribute */
 .contribute-product-buttons {
     background-color: rgba(255, 255, 255, 0.3);
     border-radius: 5px;
@@ -654,20 +652,53 @@ button {
     padding: 10px 0;
 }
 
-
 .quantity-container {
     margin-top: 10px;
 }
 
-.contribution {
+#contribution {
     text-align: center;
     margin-top: 20px;
     margin-bottom: 20px;
 }
 
-.checkout {
+#contribution-amounts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    margin: 10px;
+}
+@media (min-width: 1080px) {
+    #contribution-amounts {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
+#shipping {
     text-align: center;
-    margin-bottom: 20px;
+    margin: 20px;
+}
+
+#shipping-message {
+    font-size: 0.8em;
+    display: block;
+    margin-top: 5px;
+}
+
+#product-error-message {
+    text-align: center;
+    display: block;
+    font-size: 0.8em;
+    margin-top: 5px;
+}
+
+.error-message {
+    color: red;
+}
+
+#checkout {
+    text-align: center;
+    margin-bottom: 40px;
 }
 /* About */
 .about-page img {

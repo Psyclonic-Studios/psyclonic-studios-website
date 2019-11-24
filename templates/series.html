@@ -3,14 +3,14 @@
 {{ series.title }}
 {% endblock %}
 {% block body %}
-<div class="indent-page">
+<div class="narrow-page">
     <h1>{{ series.title }} - {{ series.year }}</h1>
     <p class="artwork-description">
         {{ series.description | safe }}
     </p>
 </div>
 <div class="gallery-horizontal-container">
-    <div class="gallery-horizontal full-page" style="--num-tiles: {{ number_of_tiles }}">
+    <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
     <div></div>
         {% for artwork in series.artworks_resolved %}
         <a href="/artwork/{{ artwork.id }}" class="gallery-horizontal-item hover-container">
