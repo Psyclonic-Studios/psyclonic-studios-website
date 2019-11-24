@@ -2,6 +2,9 @@
 {% block title %}
 Legal
 {% endblock %}
+{% block head %}
+<meta name="description" content="{{ legal | truncate(160, True) }}">
+{% endblock %}
 {% block body %}
 <div class="narrow-page">
     {{ legal | safe }}

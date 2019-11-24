@@ -2,6 +2,9 @@
 {% block title %}
 {{ series.title }}
 {% endblock %}
+{% block head %}
+<meta name="description" content="{{ series.description | truncate(160, True) }}">
+{% endblock %}
 {% block body %}
 <div class="narrow-page">
     <h1>{{ series.title }} - {{ series.year }}</h1>

@@ -2,6 +2,9 @@
 {% block title %}
 Contribute to Psyclonic Studios
 {% endblock %}
+{% block head %}
+<meta name="description" content="{{ support_text | truncate(160, True) }}">
+{% endblock %}
 {% block body %}
 <div class="narrow-page support-page">
   {{ support_text | safe }}

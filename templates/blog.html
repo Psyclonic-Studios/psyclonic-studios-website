@@ -2,6 +2,10 @@
 {% block title %}
 {{ blog.title }}
 {% endblock %}
+{% block head %}
+<meta name="description" content="{{ blog.description | truncate(160, True) }}">
+<meta name="author" content="{{ blog.author }}">
+{% endblock %}
 {% block body %}
 <div class="wide-page blog-header" style="position: relative">
     <img class="blog-header-image" src="{{ blog.thumbnail_image }}" alt="{{ blog.title }}">

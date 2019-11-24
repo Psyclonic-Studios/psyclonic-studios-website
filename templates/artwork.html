@@ -2,6 +2,9 @@
 {% block title %}
 {{ artwork.title }}
 {% endblock %}
+{% block head %}
+<meta name="description" content="{{ (artwork.title + ', ' artwork.mediaDescription) | truncate(160, True) }}">
+{% endblock %}
 {% block body %}
 <div class="medium-page">
     <h1>{{ artwork.title }} - {{ artwork.year }}</h1>

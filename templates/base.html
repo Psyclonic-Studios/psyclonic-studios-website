@@ -8,13 +8,14 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'UA-144212153-1');
   </script>
+  <!-- End gtag.js -->
 
-  <title>Psyclonic Studios | {% block title %}{% endblock %}</title>
+  <title>{% block title %}{% endblock %} | Psyclonic Studios</title>
   {% block head %}
   {% endblock %}
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width" />
 
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
