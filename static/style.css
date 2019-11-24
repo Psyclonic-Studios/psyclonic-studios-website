@@ -75,12 +75,13 @@
 .wide-page {
     padding-left: var(--wide-page-padding);
     padding-right: var(--wide-page-padding);
-    width: calc(100vw-1*var(--wide-page-padding));
+    width: calc(100% - 2*var(--wide-page-padding));
 }
 
 .medium-page {
     padding-left: var(--medium-page-padding);
     padding-right: var(--medium-page-padding);
+    width: calc(100% - 2*var(--medium-page-padding));
 }
 
 .narrow-page {
@@ -89,11 +90,6 @@
     max-width: var(--narrow-page-width);
     margin-left: auto;
     margin-right: auto;
-}
-
-.pad-above-and-below {
-    padding-top: var(--wide-page-padding);
-    padding-bottom: var(--wide-page-padding);
 }
 
 .italic {
@@ -184,7 +180,9 @@ main {
     padding: 0;
     margin: 0;
     flex: 1;
-    min-height: calc(100vh - var(--header-height) - var(--footer-height));
+    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 2*var(--wide-page-padding));
+    padding-top: var(--wide-page-padding);
+    padding-bottom: var(--wide-page-padding);
 }
 
 /* header */
@@ -240,12 +238,12 @@ nav {
 
 #header-logo {
     display: none;
-    height: calc(var(--header-height) - 5px);
-    padding: 0 5px 0 5px;
 }
 @media (min-width: 430px) {
     #header-logo {
-        display: inline;
+        display: inline-block;
+        height: calc(var(--header-height) - 10px);
+        padding: 10px 5px;
     }
 }
 
@@ -371,17 +369,21 @@ footer {
     background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1) 0, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%);
     content: '';
     width: 100%;
-    height: calc(100vh - var(--footer-height) - var(--header-height));
-    margin-top: -calc(100vh - var(--footer-height) - var(--header-height));
+    height: calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
+    margin-top: -calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
     position: relative;
     display: block;
+    padding: 0;
+    margin: 0;
 }
 
 .home-image {
     position: absolute;
     display: block;
-    width: calc(100vw - 2*var(--wide-page-padding));
-    height: calc(100vh - var(--footer-height) - var(--header-height));
+    padding: 0;
+    margin: 0;
+    width: calc(100% - 2*var(--wide-page-padding));
+    height: calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
     object-position: 50%;
     -o-object-fit: cover;
     object-fit: cover;
