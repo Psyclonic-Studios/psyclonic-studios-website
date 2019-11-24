@@ -4,14 +4,14 @@ Home
 {% endblock %}
 {% block body %}
 <div class="wide-page home-container">
+    <img src="{{ url_for('static', filename='img/psyclonic-logo.png') }}" class="home-logo">
+    <div class="home-text-holder">
+        {{ home_text | safe }}
+    </div>
     <div class="home-image-holder">
         {% for url in home_images %}
         <img src="{{ url }}" class="home-image slider-{{loop.index}}">
         {% endfor %}
-    </div>
-        <img src="{{ url_for('static', filename='img/psyclonic-logo.png') }}" class="home-logo">
-    <div class="home-text-holder">
-        {{ home_text | safe }}
     </div>
 </div>
 {% endblock %}

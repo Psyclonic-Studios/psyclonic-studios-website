@@ -91,6 +91,11 @@
     margin-right: auto;
 }
 
+.pad-above-and-below {
+    padding-top: var(--wide-page-padding);
+    padding-bottom: var(--wide-page-padding);
+}
+
 .italic {
     font-style: italic;
 }
@@ -342,10 +347,11 @@ footer {
 /* Home */
 .home-text-holder {
     position: absolute;
-    top: 170px;
-    left: 110px;
+    margin-top: 170px;
+    margin-left: 110px;
     max-width: calc(100vw - 140px);
     color: var(--home-text);
+    z-index: 1;
 }
 
 .home-text-holder p {
@@ -354,20 +360,19 @@ footer {
 
 .home-logo {
     position: absolute;
-    top: 70px;
-    left: 50px;
+    margin-top: 70px;
+    margin-left: 50px;
     width: 200px;
-    margin-right: 10px;
-    float: left;
     filter: invert(50%);
+    z-index: 1;
 }
 
 .home-image-holder::after {
     background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1) 0, rgba(0,0,0,0.8) 40%, rgba(0,0,0,0.2) 100%);
     content: '';
     width: 100%;
-    height: calc(100vh - 110px - 2*var(--wide-page-padding));
-    margin-top: -calc(100vh - 110px - 2*var(--wide-page-padding));
+    height: calc(100vh - var(--footer-height) - var(--header-height));
+    margin-top: -calc(100vh - var(--footer-height) - var(--header-height));
     position: relative;
     display: block;
 }
@@ -376,7 +381,7 @@ footer {
     position: absolute;
     display: block;
     width: calc(100vw - 2*var(--wide-page-padding));
-    height: calc(100vh - 110px - 2*var(--wide-page-padding));
+    height: calc(100vh - var(--footer-height) - var(--header-height));
     object-position: 50%;
     -o-object-fit: cover;
     object-fit: cover;
