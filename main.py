@@ -60,6 +60,12 @@ def artwork(slug, id):
     canonical_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
     return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images, canonical_url=canonical_url)
 
+@sitemap.register_generator
+def sitemap_artwork():
+    artworks = crud.get_artwork_collection(crud.TRANSACTION, 375, args=None)
+    for artwork in artworks:
+        yield 'artwork', {'slug': slugify_title(artwork['title']), 'id': artwork['id']}
+
 @app.route('/series', strict_slashes=False)
 def series_collection():
     series_collection = crud.get_series_collection(crud.TRANSACTION, 375, args=request.args)
@@ -76,6 +82,12 @@ def series(slug, id):
     number_of_tiles = len(series['artworks'])
     canonical_url = url_for('series', slug=slugify_title(series["title"]), id=id, _external=True)
     return render_template('series.html', series=series, number_of_tiles=number_of_tiles, canonical_url=canonical_url)
+
+@sitemap.register_generator
+def sitemap_series():
+    series_collection = crud.get_series_collection(crud.TRANSACTION, 375, args=None)
+    for series in series_collection:
+        yield 'series', {'slug': slugify_title(series['title']), 'id': series['id']}
 
 #@app.route('/blog', strict_slashes=False)
 #def blog_collection():
@@ -99,9 +111,17 @@ def series(slug, id):
 def legal():
     return render_template('legal.html', legal=crud.get_legal())
 
+@sitemap.register_generator
+def sitemap_legal():
+    yield 'legal', {}
+
 @app.route('/subscribe')
 def subscribe():
     return render_template('subscribe.html', subscribe=crud.get_subscribe())
+
+@sitemap.register_generator
+def sitemap_subscribe():
+    yield 'subscribe', {}
 
 @app.route('/subscribe',methods=['POST'])
 def add_subscriber():
