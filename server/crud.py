@@ -43,6 +43,8 @@ def get_artwork_collection(transaction, size, args):
 @firestore.transactional
 def get_artwork(transaction, id, size):
     artwork = content.document(id).get(transaction=transaction).to_dict()
+    if not artwork:
+        return None
     image_refs = artwork['images']
     image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
     artwork['image_urls'] = image_urls
@@ -73,6 +75,8 @@ def get_series(transaction, id, size):
     # todo
     #series_image_refs = series['seriesImages']
     #series_image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
+    if not series:
+        return None
     artworks_resolved = []
     for artwork_ref in series['artworks']:
         artwork = artwork_ref.get(transaction=transaction).to_dict()

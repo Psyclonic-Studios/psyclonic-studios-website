@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, redirect, jsonify
+from flask import Flask, render_template, url_for, request, redirect, jsonify, abort
 from flask_sitemap import Sitemap
 from datetime import datetime
 from babel import numbers
@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
 
+app.config['SITEMAP_URL_SCHEME'] = 'https'
 sitemap = Sitemap(app=app)
 
 @app.route('/')
@@ -56,6 +57,8 @@ def sitemap_artwork_collection():
 @app.route('/artwork/<slug>/<string:id>')
 def artwork(slug, id):
     artwork = crud.get_artwork(crud.TRANSACTION, id, 667)
+    if artwork is None:
+        abort(404)
     number_of_images = len(artwork['image_urls'])
     canonical_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
     return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images, canonical_url=canonical_url)
@@ -79,6 +82,8 @@ def sitemap_series_collection():
 @app.route('/series/<slug>/<string:id>')
 def series(slug, id):
     series = crud.get_series(crud.TRANSACTION, id, 667)
+    if series is None:
+        abort(404)
     number_of_tiles = len(series['artworks'])
     canonical_url = url_for('series', slug=slugify_title(series["title"]), id=id, _external=True)
     return render_template('series.html', series=series, number_of_tiles=number_of_tiles, canonical_url=canonical_url)
@@ -137,6 +142,10 @@ def payment_success():
 def format_date(datetime_str):
     date = datetime.strptime(datetime_str, '%Y-%m-%dT%H:%M:%S%z')
     return date.strftime('%Y %b')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('404.html'), 404
 
 @app.template_filter('format_money')
 def format_money(money_str):
