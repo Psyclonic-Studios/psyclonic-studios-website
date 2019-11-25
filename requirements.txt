@@ -5,3 +5,5 @@ google-cloud-firestore==1.1.0
 google-cloud-storage==1.15.0
 stripe==2.40.0
 grpcio==1.20.1
+Flask-Sitemap==0.3.0
+python-slugify==4.0.0
