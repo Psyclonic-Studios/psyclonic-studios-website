@@ -3,7 +3,7 @@
 {{ blog.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ blog.description | truncate(160, True) }}">
+<meta name="description" content="{{ blog.description | striptags | truncate(160, True) }}">
 <meta name="author" content="{{ blog.author }}">
 {% endblock %}
 {% block body %}

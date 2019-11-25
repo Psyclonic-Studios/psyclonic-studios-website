@@ -3,7 +3,7 @@
 Subscribe Success
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ thankyou_text | truncate(160, True) }}">
+<meta name="description" content="{{ thankyou_text | striptags | truncate(160, True) }}">
 {% endblock %}
 {% block body %}
 <div class="narrow-page">

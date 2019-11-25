@@ -3,7 +3,8 @@
 {{ artwork.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ (artwork.title + ', ' artwork.mediaDescription) | truncate(160, True) }}">
+<meta name="description" content="{{ (artwork.title + ', ' + artwork.mediaDescription) | striptags | truncate(160, True) }}">
+<link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
 <div class="medium-page">

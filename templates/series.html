@@ -3,7 +3,8 @@
 {{ series.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ series.description | truncate(160, True) }}">
+<meta name="description" content="{{ series.description | striptags | truncate(160, True) }}">
+<link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
 <div class="narrow-page">
@@ -16,7 +17,7 @@
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
     <div></div>
         {% for artwork in series.artworks_resolved %}
-        <a href="/artwork/{{ artwork.id }}" class="gallery-horizontal-item hover-container">
+        <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-container">
             <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="hover-image">
             <span class="hover-text">{{ artwork.title }}</span>
         </a>

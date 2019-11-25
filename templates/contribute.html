@@ -3,7 +3,7 @@
 Contribute to Psyclonic Studios
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ support_text | truncate(160, True) }}">
+<meta name="description" content="{{ support_text | striptags | truncate(160, True) }}">
 {% endblock %}
 {% block body %}
 <div class="narrow-page support-page">

@@ -15,7 +15,7 @@ Gallery
 </div>
 <div class="gallery-grid-container wide-page">
     {% for series in series_collection %}
-    <a href="/series/{{ series.id }}" class="gallery-grid-item hover-container">
+    <a href="/series/{{ series.title | slugify }}/{{ series.id }}" class="gallery-grid-item hover-container">
         <img class="hover-image" src="{{ series.thumbnail_image }}" alt="{{ series.description }}">
         <span class="hover-text">{{ series.title }}</span>
     </a>
