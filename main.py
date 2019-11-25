@@ -90,10 +90,10 @@ def series(slug, id):
 #def garage_collection():
 #    pass
 
-@app.route('/blog/<string:id>')
-def blog(id):
-    blog = crud.get_blog(crud.TRANSACTION, id, 667)
-    return render_template('blog.html', blog=blog)
+#@app.route('/blog/<string:id>')
+#def blog(id):
+#    blog = crud.get_blog(crud.TRANSACTION, id, 667)
+#    return render_template('blog.html', blog=blog)
 
 @app.route('/legal',strict_slashes=False)
 def legal():
