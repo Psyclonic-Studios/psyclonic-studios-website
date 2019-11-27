@@ -12,9 +12,9 @@ Blog
 </div>
 <div class="gallery-grid-container wide-page">
     {% for blog in blog_collection %}
-    <a href="/blog/{{ blog.id }}" class="gallery-grid-item no-hover-container">
-        <img class="no-hover-image" src="{{ blog.thumbnail_image }}" alt="{{ blog.title }}">
-        <span class="no-hover-text">{{ blog.title }}<br><br>{{ blog.date | format_date }}</span>
+    <a href="/blog/{{ blog.id }}" class="gallery-grid-item no-hover-darken-container">
+        <img class="no-hover-darken" src="{{ blog.thumbnail_image }}" alt="{{ blog.title }}">
+        <span class="no-blur-text-overlay">{{ blog.title }}<br><br>{{ blog.date | format_date }}</span>
     </a>
     {% endfor %}
 </div>

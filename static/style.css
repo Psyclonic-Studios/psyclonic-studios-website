@@ -477,6 +477,11 @@ button {
     margin-right: auto;
 }
 
+.gallery-horizontal:before,
+.gallery-horizontal:after {
+    content: ' ';
+}
+
 .gallery-horizontal-item {
     padding: 0;
     margin: 0;
@@ -555,24 +560,20 @@ button {
 }
 
 /* Hover */
-.hover-text {
-    visibility: hidden;
-    color: var(--primary-colour);
-    font-size: 20px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+.blur-text-overlay {
+    background-color: rgba(255, 255, 255, 0.3);
+    line-height: 1; 
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    position: relative;
+    bottom: 100px;
     text-align: center;
+    padding: 10px 0;
+    color: var(--text-colour);
+    display: block;
 }
 
-.hover-container:hover>.hover-text {
-    visibility: visible;
-}
-
-.hover-container:hover>.hover-image {
+.hover-darken-container:hover>.hover-darken {
     -webkit-filter: brightness(40%);
     filter: brightness(40%);
     -webkit-transition: all 0.2s ease;
@@ -580,50 +581,11 @@ button {
     -o-transition: all 0.2s ease;
     -ms-transition: all 0.2s ease;
     transition: all 0.2s ease;
-}
-
-/* No-Hover */
-.no-hover-text {
-    color: var(--primary-colour);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    text-align: center;
-}
-
-.no-hover-container>.no-hover-image {
-    -webkit-filter: brightness(40%);
-    filter: brightness(40%);
-    -webkit-transition: all 0.2s ease;
-    -moz-transition: all 0.2s ease;
-    -o-transition: all 0.2s ease;
-    -ms-transition: all 0.2s ease;
-    transition: all 0.2s ease;
-}
-
-.no-hover-container:hover>.no-hover-image {
-    -webkit-filter: brightness(60%);
-    filter: brightness(60%);
 }
 
 /* Artwork */
-.artwork-dimensions {
-    color: grey;
-}
-
-.artwork-media {
-    font-size: 0.75em;
-}
-
-.artwork-artist {
-    font-weight: bold;
-}
-
-.artwork-title {
-    font-size: 1.2em;
+.artwork-media-description {
+    float: right;
 }
 
 /* Blog */
@@ -653,19 +615,6 @@ button {
 }
 
 /* contribute */
-.contribute-product-buttons {
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    line-height: 1; 
-    -webkit-backdrop-filter: blur(10px);
-     backdrop-filter: blur(10px);
-
-    position: relative;
-    bottom: 100px;
-    text-align: center;
-    padding: 10px 0;
-}
-
 .quantity-container {
     margin-top: 10px;
 }
@@ -714,6 +663,7 @@ button {
     text-align: center;
     margin-bottom: 40px;
 }
+
 /* About */
 .about-page img {
     padding: 0 10px;

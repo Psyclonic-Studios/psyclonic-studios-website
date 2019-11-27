@@ -15,9 +15,9 @@ Gallery
 </div>
 <div class="gallery-grid-container wide-page">
     {% for artwork in artworks %}
-    <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-grid-item hover-container">
-        <img class="hover-image" src="{{ artwork.image_urls | first }}" alt="{{ artwork.description }}">
-        <span class="hover-text">{{ artwork.title }}</span>
+    <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-grid-item hover-darken-container">
+        <img class="hover-darken" src="{{ artwork.image_urls | first }}" alt="{{ artwork.description }}">
+        <span class="blur-text-overlay">{{ artwork.title }}</span>
     </a>
     {% endfor %}
 </div>

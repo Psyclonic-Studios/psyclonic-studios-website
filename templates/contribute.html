@@ -11,12 +11,11 @@ Contribute to Psyclonic Studios
 </div>
 <div class="gallery-horizontal-container">
   <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_products }}">
-    <div></div>
     {% for product in contribute_products %}
-    <div class="gallery-horizontal-item contribute-product">
+    <div class="gallery-horizontal-item">
       <img src="{{ product.artwork_image_url }}" alt="{{ product.title }}">
-      <div class="contribute-product-buttons">
-        <div class="contribute-product-price">
+      <div class="blur-text-overlay">
+        <div>
           {{ product.basePrice | format_money }}
         </div>
         <div class="quantity-container">
@@ -29,7 +28,6 @@ Contribute to Psyclonic Studios
       </div>
     </div>
     {% endfor %}
-    <div></div>
   </div>
   <span class="scroll-button previous"></span>
   <span class="scroll-button next"></span>

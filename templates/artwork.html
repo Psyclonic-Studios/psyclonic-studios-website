@@ -3,36 +3,34 @@
 {{ artwork.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ (artwork.title + ', ' + artwork.mediaDescription) | striptags | truncate(160, True) }}">
+<meta name="description" content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
 <div class="narrow-page">
-    <h1>{{ artwork.title }} - {{ artwork.year }}</h1>
+    <h1>{{ artwork.title }} ({{ artwork.year }})</h1>
+    <div class="artwork-media-description">
+        {{ artwork.mediaDescription | safe }}
+    </div>
     <p class="artwork-dimensions">
-        {%- for dimension in artwork.dimensions -%}
-        <span class="artwork-dimension">{{ dimension.dimension }}</span>{{ "×" if not loop.last }}
-        {%- endfor -%}
-        &nbsp;
         {%- for dimension in artwork.dimensions -%}
         <span
             class="artwork-measurement">{{ dimension.measurement }}</span><span
             class="artwork-unit">{{ dimension.unit }}</span>{{ "×" if not loop.last }}
         {%- endfor -%}
-    </p>
-    <p class="artwork-description">
-        {{ artwork.mediaDescription | safe }}
+        &nbsp;
+        {%- for dimension in artwork.dimensions -%}
+        <span class="artwork-dimension">{{ dimension.dimension | first }}</span>{{ "×" if not loop.last }}
+        {%- endfor -%}
     </p>
 </div>
 <div class="gallery-horizontal-container">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
-    <div class="horizontal-gutter-item"></div>
         {% for image_url in artwork.image_urls %}
         <div class="gallery-horizontal-item">
             <img src="{{ image_url }}" alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
         </div>
         {% endfor %}
-    <div class="horizontal-gutter-item"></div>
     </div>
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>

@@ -3,26 +3,24 @@
 {{ series.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ series.description | striptags | truncate(160, True) }}">
+<meta name="description" content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ' - ' ~ series.description) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
 <div class="narrow-page">
-    <h1>{{ series.title }} - {{ series.year }}</h1>
+    <h1>{{ series.title }} ({{ series.year }})</h1>
     <p class="artwork-description">
         {{ series.description | safe }}
     </p>
 </div>
 <div class="gallery-horizontal-container">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
-    <div></div>
         {% for artwork in series.artworks_resolved %}
-        <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-container">
-            <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="hover-image">
-            <span class="hover-text">{{ artwork.title }}</span>
+        <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-darken-container">
+            <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="hover-darken">
+            <span class="blur-text-overlay">{{ artwork.title }}</span>
         </a>
         {% endfor %}
-    <div></div>
     </div>
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>
