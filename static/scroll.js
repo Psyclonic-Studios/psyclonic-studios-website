@@ -1,3 +1,4 @@
+const galleryContainer = document.querySelector('.gallery-horizontal-container');
 const gallery = document.querySelector('.gallery-horizontal');
 const numTiles = gallery.children.length;
 const scrollNext = document.querySelector('.scroll-button.next');

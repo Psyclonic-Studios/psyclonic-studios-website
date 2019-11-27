@@ -1,9 +1,9 @@
 :root {
     --soft-background: white;
 
-    --primary-colour: #19aaaa;
-    --secondary-colour: #c0f1c0;
-    --accent-colour: #741343;
+    --primary-colour: #ffb951;
+    --secondary-colour: linear-gradient(to right, #494949, #797979 50%, #515151 100%);
+    --accent-colour: #888888;
 
     --text-colour: black;
     --home-text: var(--accent-colour);
@@ -187,7 +187,7 @@ main {
 
 /* header */
 nav {
-    background-color: var(--secondary-colour);
+    background: var(--secondary-colour);
     min-height: var(--header-height);
 }
 
@@ -456,6 +456,8 @@ button {
 .gallery-horizontal-container {
     position: relative;
     margin-bottom: var(--medium-page-padding);
+    display: grid;
+    justify-content: center;
 }
 
 .gallery-horizontal {
@@ -466,6 +468,8 @@ button {
     overflow-y: hidden;
     overflow-x: auto;
     scroll-snap-type: x proximity;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .gallery-horizontal-item {
