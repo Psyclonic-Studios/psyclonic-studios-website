@@ -1,9 +1,9 @@
 :root {
     --soft-background: white;
 
-    --primary-colour: #e2a54a;
-    --secondary-colour: linear-gradient(to right, #494949, #797979 50%, #494949 100%);
-    --accent-colour: #888888;
+    --primary-colour: #ffb13b;
+    --secondary-colour: #696969;
+    --accent-colour: #494949;
     /*
     --primary-colour: #19aaaa;
     --secondary-colour: #c0f1c0;
@@ -11,7 +11,7 @@
     */
 
     --text-colour: black;
-    --home-text: var(--accent-colour);
+    --home-text: var(--primary-colour);
 
     --light-accent: rgb(245, 150, 166);
 
