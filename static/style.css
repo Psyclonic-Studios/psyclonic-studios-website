@@ -523,8 +523,6 @@ button {
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: min-content;
     grid-gap: var(--grid-gap);
-    padding-left: var(--grid-gap);
-    padding-right: var(--grid-gap);
 }
 @media (min-width: 720px) {
     .gallery-grid-container {

@@ -13,7 +13,7 @@ Gallery
         <option selected>Series</option>
     </select>
 </div>
-<div class="gallery-grid-container wide-page">
+<div class="gallery-grid-container medium-page">
     {% for series in series_collection %}
     <a href="/series/{{ series.title | slugify }}/{{ series.id }}" class="gallery-grid-item hover-container">
         <img class="hover-image" src="{{ series.thumbnail_image }}" alt="{{ series.description }}">
