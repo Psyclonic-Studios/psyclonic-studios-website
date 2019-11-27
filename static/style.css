@@ -1,8 +1,8 @@
 :root {
     --soft-background: white;
 
-    --primary-colour: #ffb951;
-    --secondary-colour: linear-gradient(to right, #494949, #797979 50%, #515151 100%);
+    --primary-colour: #e2a54a;
+    --secondary-colour: linear-gradient(to right, #494949, #797979 50%, #494949 100%);
     --accent-colour: #888888;
 
     --text-colour: black;
