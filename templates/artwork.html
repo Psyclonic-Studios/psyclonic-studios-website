@@ -8,7 +8,7 @@
 {% endblock %}
 {% block body %}
 <div class="narrow-page">
-    <h1>{{ artwork.title }} ({{ artwork.year }})</h1>
+    <h1 class="artwork-title">{{ artwork.title }} <span class="artwork-year">[{{ artwork.year }}]</span></h1>
     <div class="artwork-media-description">
         {{ artwork.mediaDescription | safe }}
     </div>
@@ -18,10 +18,9 @@
             class="artwork-measurement">{{ dimension.measurement }}</span><span
             class="artwork-unit">{{ dimension.unit }}</span>{{ "×" if not loop.last }}
         {%- endfor -%}
-        &nbsp;
-        {%- for dimension in artwork.dimensions -%}
-        <span class="artwork-dimension">{{ dimension.dimension | first }}</span>{{ "×" if not loop.last }}
-        {%- endfor -%}
+        &nbsp;({%- for dimension in artwork.dimensions -%}
+        <span class="artwork-dimension">{{ dimension.dimension | first | lower }}</span>{{ "×" if not loop.last }}
+        {%- endfor -%})
     </p>
 </div>
 <div class="gallery-horizontal-container">
