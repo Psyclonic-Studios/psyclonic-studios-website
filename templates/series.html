@@ -7,11 +7,11 @@
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
-<div class="narrow-page medium-vertical-margins">
-    <h1 class="artwork-title">{{ series.title }} ({{ series.year }})</h1>
-    <p class="artwork-description">
+<div class="narrow-page medium-vertical-margins center">
+    <h1 class="artwork-title">{{ series.title }} <span class="artwork-year">[{{ series.year }}]</span></h1>
+    <div>
         {{ series.description | safe }}
-    </p>
+    </div>
 </div>
 <div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
