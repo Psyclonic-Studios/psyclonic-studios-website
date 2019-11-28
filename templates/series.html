@@ -7,13 +7,13 @@
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
-<div class="narrow-page">
+<div class="narrow-page medium-vertical-margins">
     <h1 class="artwork-title">{{ series.title }} ({{ series.year }})</h1>
     <p class="artwork-description">
         {{ series.description | safe }}
     </p>
 </div>
-<div class="gallery-horizontal-container">
+<div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
         {% for artwork in series.artworks_resolved %}
         <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-darken-container">

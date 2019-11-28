@@ -6,7 +6,7 @@ Subscribe
 <meta name="description" content="{{ subscribe | striptags | truncate(160, True) }}">
 {% endblock %}
 {% block body %}
-<div class="narrow-page">
+<div class="narrow-page medium-vertical-margins">
     {{ subscribe | safe }}
     <form action="/subscribe" method="POST">
         <div>

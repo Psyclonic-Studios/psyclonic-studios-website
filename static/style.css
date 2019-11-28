@@ -77,6 +77,10 @@
     justify-content: center;
 }
 
+.center {
+    text-align: center;
+}
+
 .button-wide {
     padding: 10px 15px;
     font-size: var(--font-size);
@@ -105,6 +109,11 @@
     max-width: var(--narrow-page-width);
     margin-left: auto;
     margin-right: auto;
+}
+
+.medium-vertical-margins {
+    margin-top: var(--medium-page-padding);
+    margin-bottom: var(--medium-page-padding);
 }
 
 .italic {
@@ -519,7 +528,6 @@ button {
 /* Artwork */
 .gallery-horizontal-container {
     position: relative;
-    margin-bottom: var(--medium-page-padding);
     display: grid;
     justify-content: center;
 }
@@ -644,18 +652,6 @@ button {
 }
 
 /* Artwork */
-.artwork-title {
-    text-align: center;
-}
-
-.artwork-media-description {
-    text-align: center;
-}
-
-.artwork-dimensions {
-    text-align: center;
-}
-
 .artwork-year {
     font-size: 0.7em;
 }
@@ -691,28 +687,16 @@ button {
     margin-top: 10px;
 }
 
-#contribution {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 #contribution-amounts {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 10px;
-    margin: 10px;
 }
 
 @media (min-width: 1080px) {
     #contribution-amounts {
         grid-template-columns: repeat(6, 1fr);
     }
-}
-
-#shipping {
-    text-align: center;
-    margin: 20px;
 }
 
 #shipping-message {
@@ -722,7 +706,6 @@ button {
 }
 
 #product-error-message {
-    text-align: center;
     display: block;
     font-size: 0.8em;
     margin-top: 5px;
@@ -733,7 +716,6 @@ button {
 }
 
 #checkout {
-    text-align: center;
     margin-bottom: 40px;
 }
 

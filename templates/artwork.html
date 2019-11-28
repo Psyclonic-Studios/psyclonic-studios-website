@@ -7,12 +7,12 @@
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
-<div class="narrow-page">
-    <h1 class="artwork-title">{{ artwork.title }} <span class="artwork-year">[{{ artwork.year }}]</span></h1>
-    <div class="artwork-media-description">
+<div class="narrow-page center medium-vertical-margins">
+    <h1>{{ artwork.title }} <span class="artwork-year">[{{ artwork.year }}]</span></h1>
+    <div>
         {{ artwork.mediaDescription | safe }}
     </div>
-    <p class="artwork-dimensions">
+    <p>
         {%- for dimension in artwork.dimensions -%}
         <span
             class="artwork-measurement">{{ dimension.measurement }}</span><span
@@ -23,7 +23,7 @@
         {%- endfor -%})
     </p>
 </div>
-<div class="gallery-horizontal-container">
+<div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
         {% for image_url in artwork.image_urls %}
         <div class="gallery-horizontal-item">

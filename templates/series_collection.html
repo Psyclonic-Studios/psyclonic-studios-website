@@ -6,14 +6,14 @@ Gallery
 <meta name="description" content="Series by Psyclonic Studios (Anne-Maree Hunter)">
 {% endblock %}
 {% block body %}
-<div class="medium-page">
+<div class="narrow-page medium-vertical-margins center">
     <h1>Gallery</h1>
     <select class="select-css">
         <option>Artworks</option>
         <option selected>Series</option>
     </select>
 </div>
-<div class="gallery-grid-container medium-page">
+<div class="gallery-grid-container medium-page medium-vertical-margins">
     {% for series in series_collection %}
     <a href="/series/{{ series.title | slugify }}/{{ series.id }}" class="gallery-grid-item hover-darken-container">
         <img class="hover-darken" src="{{ series.thumbnail_image }}" alt="{{ series.description }}">

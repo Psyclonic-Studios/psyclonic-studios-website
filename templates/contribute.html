@@ -6,10 +6,10 @@ Contribute to Psyclonic Studios
 <meta name="description" content="{{ support_text | striptags | truncate(160, True) }}">
 {% endblock %}
 {% block body %}
-<div class="narrow-page support-page">
+<div class="narrow-page medium-vertical-margins">
   {{ support_text | safe }}
 </div>
-<div class="gallery-horizontal-container">
+<div class="gallery-horizontal-container medium-vertical-margins">
   <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_products }}">
     {% for product in contribute_products %}
     <div class="gallery-horizontal-item">
@@ -31,17 +31,18 @@ Contribute to Psyclonic Studios
   </div>
   <span class="scroll-button previous"></span>
   <span class="scroll-button next"></span>
-  <span id="product-error-message" class="error-message"></span>
+  <span id="product-error-message" class="error-message center"></span>
 </div>
-<div id="contribution" class="narrow-page">
+<div id="contribution" class="narrow-page medium-vertical-margins center">
   <span>Select contribution amount</span>
-  <div id="contribution-amounts">
-  {% for donation in donation_skus %}
-    <button class="highlight highlight-border hover-accent button-narrow" onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
-  {% endfor %}
+  <div id="contribution-amounts" class="medium-vertical-margins">
+    {% for donation in donation_skus %}
+    <button class="highlight highlight-border hover-accent button-narrow"
+      onclick="addDonation('{{ donation.id }}', 1)">+{{ (donation.price / 100) | format_money }}</button>
+    {% endfor %}
   </div>
 </div>
-<div id="shipping">
+<div id="shipping" class="medium-vertical-margins center">
   <span>Shipping:</span>
   <select id="shipping-select" required>
     <option selected value="" disabled>
@@ -56,12 +57,11 @@ Contribute to Psyclonic Studios
   </select>
   <span id="shipping-message"></span>
 </div>
-<div id="checkout">
+<div id="checkout" class="medium-vertical-margins center">
   <button class="highlight highlight-background hover-accent button-wide" id="checkout-button" role="link">
     Checkout
   </button>
 </div>
-
 <div id="error-message"></div>
 <script>
   const products = {
