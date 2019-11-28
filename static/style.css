@@ -2,16 +2,19 @@
     --soft-background: white;
 
     --primary-colour: #ff7300;
+    /*
+    --primary-colour-dark: #49B68F;
+    --primary-colour-dark: #629F1E;
+    */
     --secondary-colour: #505050;
     --secondary-colour-dark: #303030;
     --secondary-colour-light: #606060;
     --secondary-colour-gradient: linear-gradient(to right, var(--secondary-colour-dark), var(--secondary-colour-light) 50%, var(--secondary-colour-dark) 100%);
     --accent-colour: #04213b;
+    --accent-colour-light: #70BFCD;
 
     --text-colour: black;
     --home-text: var(--primary-colour);
-
-    --light-accent: rgb(245, 150, 166);
 
     --header-height: 60px;
     --footer-height: 150px;
@@ -21,6 +24,7 @@
     --medium-page-padding: 20px;
     --narrow-page-width: 800px;
     --grid-gap: 10px;
+    --main-height: calc(100vh - 2*var(--wide-page-padding));
 
     --font-size: 20px;
 
@@ -38,6 +42,12 @@
         --font-size: 23px;
         --header-height: 80px;
         --footer-height: 60px;
+    }
+}
+
+@media (min-height: 560px) {
+    :root {
+        --main-height: calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
     }
 }
 
@@ -133,11 +143,11 @@ a {
 
 a:link,
 a:visited {
-    color: var(--light-accent);
+    color: var(--accent-colour-light);
 }
 
 a:hover {
-    color: var(--accent-colour);
+    color: var(--primary-colour);
 }
 
 /* Select */
@@ -193,7 +203,7 @@ main {
     padding: 0;
     margin: 0;
     flex: 1;
-    min-height: calc(100vh - var(--header-height) - var(--footer-height) - 2*var(--wide-page-padding));
+    min-height: var(--main-height);
     padding-top: var(--wide-page-padding);
     padding-bottom: var(--wide-page-padding);
     word-wrap: break-word;
@@ -394,8 +404,8 @@ footer {
     background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 1) 0, rgba(0, 0, 0, 0.8) 40%, rgba(0, 0, 0, 0.2) 100%);
     content: '';
     width: 100%;
-    height: calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
-    margin-top: -calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
+    height: var(--main-height);
+    margin-top: -var(--main-height);
     position: relative;
     display: block;
     padding: 0;
@@ -408,7 +418,7 @@ footer {
     padding: 0;
     margin: 0;
     width: calc(100% - 2*var(--wide-page-padding));
-    height: calc(100vh - var(--footer-height) - var(--header-height) - 2*var(--wide-page-padding));
+    height: var(--main-height);
     object-position: 50%;
     -o-object-fit: cover;
     object-fit: cover;
