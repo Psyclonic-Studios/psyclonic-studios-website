@@ -7,11 +7,6 @@
     --secondary-colour-light: #606060;
     --secondary-colour-gradient: linear-gradient(to right, var(--secondary-colour-dark), var(--secondary-colour-light) 50%, var(--secondary-colour-dark) 100%);
     --accent-colour: #04213b;
-    /*
-    --primary-colour: #19aaaa;
-    --secondary-colour: #c0f1c0;
-    --accent-colour: #741343;
-    */
 
     --text-colour: black;
     --home-text: var(--primary-colour);
