@@ -26,7 +26,9 @@ content = db.collection('fl_content')
 storage_client = storage.client.Client()
 bucket = storage_client.get_bucket('psyclonic-studios-website.appspot.com')
 
-TRANSACTION = db.transaction()
+def transaction():
+    return db.transaction()
+
 @firestore.transactional
 def get_artwork_collection(transaction, size, args):
     artworks_query = content.where('_fl_meta_.schema', '==', 'artwork')

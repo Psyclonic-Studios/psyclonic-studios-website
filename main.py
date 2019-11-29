@@ -12,9 +12,15 @@ app.jinja_env.lstrip_blocks = True
 app.config['SITEMAP_URL_SCHEME'] = 'https'
 sitemap = Sitemap(app=app)
 
+@app.after_request
+def add_header(response):
+    response.cache_control.public = True
+    response.cache_control.max_age = 31536000
+    return response
+
 @app.route('/')
 def home():
-    return render_template('home.html', home_images=crud.get_home_images(crud.TRANSACTION, 999)['image_urls'], home_text=crud.get_home_text())
+    return render_template('home.html', home_images=crud.get_home_images(crud.transaction(), 999)['image_urls'], home_text=crud.get_home_text())
 
 @sitemap.register_generator
 def sitemap_home():
@@ -30,7 +36,7 @@ def sitemap_about():
 
 @app.route('/contribute')
 def contribute():
-    contribute_products = crud.get_contribute_products(crud.TRANSACTION, 667, request.args)
+    contribute_products = crud.get_contribute_products(crud.transaction(), 667, request.args)
     number_of_products = len(contribute_products)
     donation_skus = crud.get_donation_skus()
     return render_template('contribute.html', support_text=crud.get_contribute_text(), contribute_products=contribute_products, number_of_products=number_of_products, donation_skus=donation_skus, shipping_sku=crud.get_shipping_sku())
@@ -46,7 +52,7 @@ def refresh_contribute_products():
 
 @app.route('/artwork', strict_slashes=False)
 def artwork_collection():
-    artworks = crud.get_artwork_collection(crud.TRANSACTION, 375, args=request.args)
+    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=request.args)
     return render_template('artwork_collection.html', artworks=artworks)
 
 @sitemap.register_generator
@@ -56,7 +62,7 @@ def sitemap_artwork_collection():
 @app.route('/artwork/<string:id>', defaults={'slug': None})
 @app.route('/artwork/<slug>/<string:id>')
 def artwork(slug, id):
-    artwork = crud.get_artwork(crud.TRANSACTION, id, 667)
+    artwork = crud.get_artwork(crud.transaction(), id, 667)
     if artwork is None:
         abort(404)
     number_of_images = len(artwork['image_urls'])
@@ -65,13 +71,13 @@ def artwork(slug, id):
 
 @sitemap.register_generator
 def sitemap_artwork():
-    artworks = crud.get_artwork_collection(crud.TRANSACTION, 375, args=None)
+    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=None)
     for artwork in artworks:
         yield 'artwork', {'slug': slugify_title(artwork['title']), 'id': artwork['id']}
 
 @app.route('/series', strict_slashes=False)
 def series_collection():
-    series_collection = crud.get_series_collection(crud.TRANSACTION, 375, args=request.args)
+    series_collection = crud.get_series_collection(crud.transaction(), 375, args=request.args)
     return render_template('series_collection.html', series_collection=series_collection)
 
 @sitemap.register_generator
@@ -81,7 +87,7 @@ def sitemap_series_collection():
 @app.route('/series/<string:id>', defaults={'slug': None})
 @app.route('/series/<slug>/<string:id>')
 def series(slug, id):
-    series = crud.get_series(crud.TRANSACTION, id, 667)
+    series = crud.get_series(crud.transaction(), id, 667)
     if series is None:
         abort(404)
     number_of_tiles = len(series['artworks'])
@@ -90,13 +96,13 @@ def series(slug, id):
 
 @sitemap.register_generator
 def sitemap_series():
-    series_collection = crud.get_series_collection(crud.TRANSACTION, 375, args=None)
+    series_collection = crud.get_series_collection(crud.transaction(), 375, args=None)
     for series in series_collection:
         yield 'series', {'slug': slugify_title(series['title']), 'id': series['id']}
 
 #@app.route('/blog', strict_slashes=False)
 #def blog_collection():
-#    blog_collection = crud.get_blog_collection(crud.TRANSACTION, 375, args=request.args)
+#    blog_collection = crud.get_blog_collection(crud.transaction(), 375, args=request.args)
 #    return render_template('blog_collection.html', blog_collection=blog_collection)
 
 #@app.route('/workshop')
@@ -109,7 +115,7 @@ def sitemap_series():
 
 #@app.route('/blog/<string:id>')
 #def blog(id):
-#    blog = crud.get_blog(crud.TRANSACTION, id, 667)
+#    blog = crud.get_blog(crud.transaction(), id, 667)
 #    return render_template('blog.html', blog=blog)
 
 @app.route('/legal',strict_slashes=False)
