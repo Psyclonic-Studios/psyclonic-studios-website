@@ -141,9 +141,9 @@ def get_contribute_products(transaction, size, args):
         product = product_ref.to_dict()
         product['sku'] = f'sku_{product["id"]}'
         product_artwork_image_ref = product['artworkImage'][0]
-        product['artwork_image'] = get_sized_image_urls(product_artwork_image_ref.get(transaction=transaction).to_dict())
+        product['artwork_image'] = get_sized_image_urls(product_artwork_image_ref.get(transaction=transaction).to_dict(), 1080)
         product_image_ref = product['productImage'][0]
-        product['product_image'] = get_sized_image_urls(product_image_ref.get(transaction=transaction).to_dict())
+        product['product_image'] = get_sized_image_urls(product_image_ref.get(transaction=transaction).to_dict(), 1080)
         contribute_products.append(product)
     return contribute_products
 
