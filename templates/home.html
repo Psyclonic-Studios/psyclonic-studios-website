@@ -12,8 +12,10 @@ Home
         {{ home_text | safe }}
     </div>
     <div class="home-image-holder">
-        {% for url in home_images %}
-        <img src="{{ url }}" class="home-image slider-{{loop.index}}">
+        {% for image in home_images.images %}
+        <img class="home-image slider-{{loop.index}}"
+            src="{{ image.full_size.url }}" srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+        >
         {% endfor %}
     </div>
 </div>

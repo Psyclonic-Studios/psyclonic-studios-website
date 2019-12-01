@@ -14,7 +14,8 @@ Contribute to Psyclonic Studios
   <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_products }}">
     {% for product in contribute_products %}
     <div class="gallery-horizontal-item">
-      <img src="{{ product.artwork_image_url }}" alt="{{ product.title }}">
+            <img src="{{ product.artwork_image.full_size.url }}" srcset="{% for size, image in product.artwork_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+            alt="{{ product.title }}">
       <div class="blur-text-overlay">
         <div>
           {{ product.basePrice | format_money }}

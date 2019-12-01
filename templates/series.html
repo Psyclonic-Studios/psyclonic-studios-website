@@ -16,8 +16,10 @@
 <div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
         {% for artwork in series.artworks_resolved %}
+        {% set image = artwork.images | first %}
         <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-darken-container">
-            <img src="{{ artwork.image_urls | first }}" alt="{{ artwork.title }}" class="hover-darken">
+            <img src="{{ image.full_size.url }}" srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+            alt="{{ artwork.mediaDescription }}" class="hover-darken">
             <span class="blur-text-overlay">{{ artwork.title }}</span>
         </a>
         {% endfor %}

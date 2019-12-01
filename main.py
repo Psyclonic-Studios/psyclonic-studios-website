@@ -20,7 +20,7 @@ def add_header(response):
 
 @app.route('/')
 def home():
-    return render_template('home.html', home_images=crud.get_home_images(crud.transaction(), 999)['image_urls'], home_text=crud.get_home_text())
+    return render_template('home.html', home_images=crud.get_home_images(crud.transaction()), home_text=crud.get_home_text())
 
 @sitemap.register_generator
 def sitemap_home():
@@ -65,7 +65,7 @@ def artwork(slug, id):
     artwork = crud.get_artwork(crud.transaction(), id, 667)
     if artwork is None:
         abort(404)
-    number_of_images = len(artwork['image_urls'])
+    number_of_images = len(artwork['images'])
     canonical_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
     return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images, canonical_url=canonical_url)
 
