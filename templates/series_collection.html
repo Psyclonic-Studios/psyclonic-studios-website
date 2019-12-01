@@ -15,7 +15,7 @@ Gallery
 </div>
 <div class="gallery-grid-container medium-page medium-vertical-margins">
     {% for series in series_collection %}
-    <a href="/series/{{ series.title | slugify }}/{{ series.id }}" class="gallery-grid-item hover-darken-container">
+    <a href="/series/{{ series.id }}/{{ series.title | slugify }}" class="gallery-grid-item hover-darken-container">
             <img src="{{ series.thumbnail_image.full_size.url }}" srcset="{% for size, image in series.thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
             alt="{{ series.description }}" class="hover-darken">
         <span class="blur-text-overlay">{{ series.title }}</span>

@@ -60,7 +60,7 @@ def sitemap_artwork_collection():
     yield 'artwork_collection', {}
 
 @app.route('/artwork/<string:id>', defaults={'slug': None})
-@app.route('/artwork/<slug>/<string:id>')
+@app.route('/artwork/<string:id>/<slug>')
 def artwork(slug, id):
     artwork = crud.get_artwork(crud.transaction(), id, 667)
     if artwork is None:
@@ -85,7 +85,7 @@ def sitemap_series_collection():
     yield 'series_collection', {}
 
 @app.route('/series/<string:id>', defaults={'slug': None})
-@app.route('/series/<slug>/<string:id>')
+@app.route('/series/<string:id>/<slug>')
 def series(slug, id):
     series = crud.get_series(crud.transaction(), id, 667)
     if series is None:

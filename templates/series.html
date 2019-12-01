@@ -3,7 +3,8 @@
 {{ series.title }}
 {% endblock %}
 {% block head %}
-<meta name="description" content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ' - ' ~ series.description) | striptags | truncate(160, True) }}">
+<meta name="description"
+    content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ' - ' ~ series.description) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
 {% endblock %}
 {% block body %}
@@ -17,9 +18,11 @@
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
         {% for artwork in series.artworks_resolved %}
         {% set image = artwork.images | first %}
-        <a href="/artwork/{{ artwork.title | slugify }}/{{ artwork.id }}" class="gallery-horizontal-item hover-darken-container">
-            <img src="{{ image.full_size.url }}" srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
-            alt="{{ artwork.mediaDescription }}" class="hover-darken">
+        <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"
+            class="gallery-horizontal-item hover-darken-container">
+            <img src="{{ image.full_size.url }}"
+                srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+                alt="{{ artwork.mediaDescription }}" class="hover-darken">
             <span class="blur-text-overlay">{{ artwork.title }}</span>
         </a>
         {% endfor %}
