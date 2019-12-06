@@ -63,12 +63,28 @@
     color: var(--primary-colour);
 }
 
+.accent {
+    color: var(--accent-colour);
+}
+
 .highlight-background {
     background: var(--secondary-colour);
 }
 
+.white-background {
+    background: white
+}
+
+.accent-border {
+    border: solid thin var(--accent-colour);
+}
+
 .highlight-border {
     border: solid thin var(--primary-colour);
+}
+
+.small-font {
+    font-size: 0.8em;
 }
 
 .center-children {
@@ -111,9 +127,22 @@
     margin-right: auto;
 }
 
+.small-vertical-margins {
+    margin-top: var(--wide-page-padding);
+    margin-bottom: var(--wide-page-padding);
+}
+
 .medium-vertical-margins {
     margin-top: var(--medium-page-padding);
     margin-bottom: var(--medium-page-padding);
+}
+
+.bordered {
+    padding: var(--medium-page-padding);
+    border-color: var(--secondary-colour);
+    border-width: thin;
+    border-style: solid;
+    border-radius: 2px;
 }
 
 .italic {
@@ -159,6 +188,15 @@ a:hover {
     color: var(--primary-colour);
 }
 
+fieldset {
+    border: 0;
+    display: inline;
+}
+
+input[type="radio"] {
+    margin-top: -1px;
+    vertical-align: middle;
+}
 /* Select */
 select {
     font-size: var(--font-size);
@@ -508,12 +546,22 @@ input {
 
 button {
     border: none;
+    outline: none;
 }
 
 .user-input {
     border: var(--secondary-colour) 2px solid;
     padding: 8px 15px;
     font-size: var(--font-size);
+}
+
+.user-message {
+    width: 90%;
+    height: 10em;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    resize: none;
 }
 
 .email-input {

@@ -4,3 +4,5 @@ Psyclonic Studios Website*.json
 .vscode
 *.DS_Store
 *.log
+token.pickle
+server/secrets.py

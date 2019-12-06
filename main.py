@@ -2,8 +2,11 @@ from flask import Flask, render_template, url_for, request, redirect, jsonify, a
 from flask_sitemap import Sitemap
 from datetime import datetime
 from babel import numbers
-from server import crud
+from server import crud, gmail, trello_helper
 from slugify import slugify
+from jinja2 import Environment, BaseLoader
+from datetime import datetime, timedelta
+from inspect import cleandoc
 
 app = Flask(__name__)
 app.jinja_env.trim_blocks = True
@@ -68,6 +71,70 @@ def artwork(slug, id):
     number_of_images = len(artwork['images'])
     canonical_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
     return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images, canonical_url=canonical_url)
+
+@app.route('/artwork-buy/<string:id>', methods=['POST'])
+def artwork_buy(id):
+    artwork = crud.get_artwork(crud.transaction(), id, 240)
+    artwork_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
+    if artwork is None:
+        abort(404)
+    enquiry_email_template = crud.get_artwork_buy_email_template()
+    
+    enquirer_email_address = request.form.get('email')
+    enquirer_name = request.form.get('name')
+    enquirer_address = f"{request.form.get('city')}, {request.form.get('country')}"
+    enquirer_address_type = request.form.get('address_type')
+    enquirer_message = request.form.get('message')
+    
+    email_subject = f"Psyclonic Studios artwork enquiry: {artwork['title']}"
+    email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, address=enquirer_address, address_type=enquirer_address_type, artwork=artwork, message=enquirer_message, artwork_url=artwork_url)
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_customer=True)
+    email_response = gmail.send_email(email)
+
+    trello_title = f'Buyer - {enquirer_name}'
+    trello_description = cleandoc(f"""
+    ## [Respond to the customer here]({gmail.get_email_link(email_response['id'])})
+    ## Customer details
+    Name: {enquirer_name}
+    Email address: {enquirer_email_address}
+    Address: {enquirer_address} ({enquirer_address_type})
+    Message: {enquirer_message}
+    """)
+    trello_due = datetime.today() + timedelta(3)
+    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.BUYER_LABEL], position='top')
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+
+@app.route('/artwork-enquire/<string:id>', methods=['POST'])
+def artwork_enquire(id):
+    artwork = crud.get_artwork(crud.transaction(), id, 240)
+    artwork_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
+    if artwork is None:
+        abort(404)
+    enquiry_email_template = crud.get_artwork_enquiry_email_template()
+    
+    enquirer_email_address = request.form.get('email')
+    enquirer_name = request.form.get('name')
+    enquirer_message = request.form.get('message')
+    
+    email_subject = f"Psyclonic Studios artwork enquiry: {artwork['title']}"
+    email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, artwork=artwork, message=enquirer_message, artwork_url=artwork_url)
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_customer=True)
+    gmail.send_email(email)
+
+    email_response = gmail.send_email(email)
+
+    trello_title = f'Buyer - {enquirer_name}'
+    trello_description = cleandoc(f"""
+    ## [Respond to the customer here]({gmail.get_email_link(email_response['id'])})
+    ## Customer details
+    Name: {enquirer_name}
+    Email address: {enquirer_email_address}
+    Message: {enquirer_message}
+    """)
+    trello_due = datetime.today() + timedelta(3)
+    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ENQUIRY_LABEL], position='top')
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+
 
 @sitemap.register_generator
 def sitemap_artwork():

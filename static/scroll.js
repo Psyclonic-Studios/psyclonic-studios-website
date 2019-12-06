@@ -30,10 +30,12 @@ function scrollGallery(direction) {
   gallery.scrollBy(averageItemWidth * direction, 0);
 }
 
-scrollNext.addEventListener('click', function () {scrollGallery(1)});
-scrollPrevious.addEventListener('click', function () {scrollGallery(-1)});
+(function () {
+  scrollNext.addEventListener('click', function () { scrollGallery(1) });
+  scrollPrevious.addEventListener('click', function () { scrollGallery(-1) });
 
-gallery.addEventListener('scroll', showScrollButtons);
+  gallery.addEventListener('scroll', showScrollButtons);
 
-window.addEventListener('resize', showScrollButtons);
-window.addEventListener('load', showScrollButtons);
+  window.addEventListener('resize', showScrollButtons);
+  window.addEventListener('load', showScrollButtons);
+})();

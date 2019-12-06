@@ -6,12 +6,12 @@ Subscribe
 <meta name="description" content="{{ subscribe | striptags | truncate(160, True) }}">
 {% endblock %}
 {% block body %}
-<div class="narrow-page medium-vertical-margins">
-    <h1 class="center">Subscribe</h1>
+<div class="narrow-page medium-vertical-margins center">
+    <h1>Subscribe</h1>
     {{ subscribe | safe }}
     <form action="/subscribe" method="POST">
         <div>
-            <input id="subscribe" class="user-input email-input" type="email" name="email" placeholder="Email">
+            <input id="subscribe" class="user-input email-input" type="email" name="email" placeholder="Email" required autocomplete="email">
             <button type="submit" class="hover-accent highlight highlight-background button-wide">Subscribe</button>
         </div>
     </form>

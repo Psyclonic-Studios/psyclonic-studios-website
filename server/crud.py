@@ -2,21 +2,8 @@ from google.cloud import firestore
 from google.cloud import storage
 import os
 import stripe
+from server.secrets import STRIPE_LIVE, STRIPE_TEST
 
-STRIPE_TEST = {
-    'key': '***REMOVED***',
-    'contribution_product_id': 'prod_GChtVcVgeZduno',
-    'donation_product_id': 'prod_GDQq6Q0F7xFAkj',
-    'shipping_product_id': 'prod_GDmkm9fxl6YvCn',
-    'shipping_sku_id': 'sku_GDmkWeFhQhk5HQ'
-}
-STRIPE_LIVE = {
-    'key': '***REMOVED***',
-    'contribution_product_id': 'prod_GDmdnMMP7iFtRg',
-    'donation_product_id': 'prod_GDmaVS6aamK9mF',
-    'shipping_product_id': 'prod_GDmiu3gS8LOGJs',
-    'shipping_sku_id': 'sku_GDmiuiOgMvdxmQ'
-}
 STRIPE_DATA = STRIPE_LIVE
 stripe.api_key = STRIPE_DATA['key']
 
@@ -114,23 +101,19 @@ def get_home_images(transaction):
     home_images['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict()) for image in home_images['images']]
     return home_images
 
+def get_website_component(component):
+    query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', component).limit(1)
+    component = next(query.stream()).to_dict()
+    return component['content']
+
 def get_home_text():
-    home_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Home').limit(1)
-    home_component = next(home_component_query.stream()).to_dict()
-    home = home_component['content']
-    return home
+    return get_website_component('Home')
 
 def get_about():
-    about_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'About').limit(1)
-    about_component = next(about_component_query.stream()).to_dict()
-    about = about_component['content']
-    return about
+    return get_website_component('About')
 
 def get_legal():
-    legal_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Legal').limit(1)
-    legal_component = next(legal_component_query.stream()).to_dict()
-    legal = legal_component['content']
-    return legal
+    return get_website_component('Legal')
 
 @firestore.transactional
 def get_contribute_products(transaction, size, args):
@@ -192,32 +175,29 @@ def get_shipping_sku():
     return shipping_sku
 
 def get_contribute_text():
-    contribute_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Contribute').limit(1)
-    contribute = next(contribute_query.stream()).to_dict()
-    support = contribute['content']
-    return support
+    return get_website_component('Contribute')
 
 def get_subscribe():
-    subscribe_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Subscribe').limit(1)
-    subscribe_component = next(subscribe_component_query.stream()).to_dict()
-    subscribe = subscribe_component['content']
-    return subscribe
+    return get_website_component('Subscribe')
     
 def get_subscribe_success():
-    subscribe_success_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Subscribe success').limit(1)
-    subscribe_success_component = next(subscribe_success_component_query.stream()).to_dict()
-    subscribe_success = subscribe_success_component['content']
-    return subscribe_success
+    return get_website_component('Thankyou subscribe')
 
 def post_email_address(email):
     subscribers = db.collection('subscribers')
-    subscribers.document(email).set({'events': True, 'newsletter': True}, merge=True)
+    subscribers.document(email).set({'subscribe': True}, merge=True)
+
+def get_artwork_buy_email_template():
+    return get_website_component('Artwork buy email')
+
+def get_artwork_enquiry_email_template():
+    return get_website_component('Artwork enquire email')
+
+def get_enquire_thankyou():
+    return get_website_component('Thankyou enquiry')
 
 def get_payment_success():
-    payment_success_component_query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', 'Payment success').limit(1)
-    payment_success_component = next(payment_success_component_query.stream()).to_dict()
-    payment_success = payment_success_component['content']
-    return payment_success
+    return get_website_component('Thankyou payment')
 
 def get_flamelink_file_url(path):
     flamelink_path = 'flamelink/media'
