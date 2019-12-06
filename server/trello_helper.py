@@ -1,8 +1,9 @@
 from trello import TrelloClient, Label
+from server.secrets import TRELLO_API_KEY, TRELLO_SECRET_API_KEY
 
 client = TrelloClient(
-    api_key='***REMOVED***',
-    api_secret='***REMOVED***'
+    api_key=TRELLO_API_KEY,
+    api_secret=TRELLO_SECRET_API_KEY
 )
 
 PSYCLONIC_BOARD_ID = 'DqmfTdPc'
