@@ -27,7 +27,9 @@
         "@type": "Offer",
         "url": "{{ canonical_url }}",
         "priceCurrency": "AUD",
+        {% if artwork.price %}
         "price": "{{ artwork.price }}",
+        {% endif %}
         "itemCondition": "https://schema.org/NewCondition",
         "availability": "https://schema.org/InStock",
         "seller": {
@@ -54,14 +56,18 @@
         <span class="artwork-dimension">{{ dimension.dimension | first | lower }}</span>{{ "×" if not loop.last }}
         {%- endfor -%})
     </p>
-    <p >{{ artwork.price | format_money }}</p>
+    {% if artwork.price %}
+    <p>{{ artwork.price | format_money }}</p>
+    {% endif %}
 </div>
 <div class="gallery-horizontal-container medium-vertical-margins">
-    <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}; {% if number_of_tiles == 1 %}--grid-gap: 0; {% endif %}">
+    <div class="gallery-horizontal wide-page"
+        style="--num-tiles: {{ number_of_tiles }}; {% if number_of_tiles == 1 %}--grid-gap: 0; {% endif %}">
         {% for image in artwork.images %}
         <div class="gallery-horizontal-item">
-            <img src="{{ image.full_size.url }}" srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
-            alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+            <img src="{{ image.full_size.url }}"
+                srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+                alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
         </div>
         {% endfor %}
     </div>
@@ -70,32 +76,39 @@
 </div>
 <div class="narrow-page center medium-vertical-margins">
     {% if artwork.forSale %}
-    <button id="buy-button" type="button" class="hover-accent highlight accent-border white-background button-wide">Buy</button>
+    <button id="buy-button" type="button"
+        class="hover-accent highlight accent-border white-background button-wide">Buy</button>
     {% endif %}
-    <button id="enquire-button" type="button" class="hover-accent highlight accent-border white-background button-wide">Enquire</button>
+    <button id="enquire-button" type="button"
+        class="hover-accent highlight accent-border white-background button-wide">Enquire</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
-            <input id="enquire-name" class="user-input small-vertical-margins" type="text" name="name" placeholder="Name"
-                required autocomplete="name">
+            <input id="enquire-name" class="user-input small-vertical-margins" type="text" name="name"
+                placeholder="Name" required autocomplete="name">
             <input id="enquire-email" class="user-input" type="email" name="email" placeholder="Email" required
                 autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message" type="textarea" name="message" placeholder="Your message" required></textarea>
+            <textarea class="user-input user-message" type="textarea" name="message" placeholder="Your message"
+                required></textarea>
         </div>
         <div class="medium-vertical-margins">
-            <button id="enquire-reset" type="reset" class="hover-accent highlight highlight-background button-wide">Cancel</button>
+            <button id="enquire-reset" type="reset"
+                class="hover-accent highlight highlight-background button-wide">Cancel</button>
             <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
         </div>
     </form>
 </div>
-{% if artwork.forSale %}
+{% if artwork.forSale and artwork.price %}
 <div id="buy-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-buy/{{ artwork.id }}" method="POST">
-    <p class="small-font">Because of the many shapes and sizes of my artworks, packaging can be a little bit tricky! Customised shipping needs to be arranged for each piece, so if you could please submit your contact details, shipping address, and any other shipping requirements, I will send an estimate of the shipping cost to you.</p>
+        <p class="small-font">Because of the many shapes and sizes of my artworks, packaging can be a little bit tricky!
+            Customised shipping needs to be arranged for each piece, so if you could please submit your contact details,
+            shipping address, and any other shipping requirements, I will send an estimate of the shipping cost to you.
+        </p>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
             <input id="buy-name" class="user-input small-vertical-margins" type="text" name="name" placeholder="Name"
@@ -117,10 +130,13 @@
             </fieldset>
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message" type="textarea" name="message" placeholder="Shipping requirements (e.g. required timeframe) or a message to the artist (optional)" autocomplete="off"></textarea>
+            <textarea class="user-input user-message" type="textarea" name="message"
+                placeholder="Shipping requirements (e.g. required timeframe) or a message to the artist (optional)"
+                autocomplete="off"></textarea>
         </div>
         <div class="medium-vertical-margins">
-            <button id="buy-reset" type="reset" class="hover-accent highlight highlight-background button-wide">Cancel</button>
+            <button id="buy-reset" type="reset"
+                class="hover-accent highlight highlight-background button-wide">Cancel</button>
             <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
         </div>
     </form>

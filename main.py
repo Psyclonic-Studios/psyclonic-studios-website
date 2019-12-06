@@ -66,11 +66,18 @@ def sitemap_artwork_collection():
 @app.route('/artwork/<string:id>/<slug>')
 def artwork(slug, id):
     artwork = crud.get_artwork(crud.transaction(), id, 667)
+    print(artwork)
     if artwork is None:
         abort(404)
     number_of_images = len(artwork['images'])
     canonical_url = url_for('artwork', slug=slugify_title(artwork["title"]), id=id, _external=True)
     return render_template('artwork.html', artwork=artwork, number_of_tiles=number_of_images, canonical_url=canonical_url)
+
+@sitemap.register_generator
+def sitemap_artwork():
+    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=None)
+    for artwork in artworks:
+        yield 'artwork', {'slug': slugify_title(artwork['title']), 'id': artwork['id']}
 
 @app.route('/artwork-buy/<string:id>', methods=['POST'])
 def artwork_buy(id):
@@ -98,6 +105,7 @@ def artwork_buy(id):
     Name: {enquirer_name}
     Email address: {enquirer_email_address}
     Address: {enquirer_address} ({enquirer_address_type})
+    Artwork: [{artwork['title']}]({artwork_url})
     Message: {enquirer_message}
     """)
     trello_due = datetime.today() + timedelta(3)
@@ -129,18 +137,12 @@ def artwork_enquire(id):
     ## Customer details
     Name: {enquirer_name}
     Email address: {enquirer_email_address}
+    Artwork: [{artwork['title']}]({artwork_url})
     Message: {enquirer_message}
     """)
     trello_due = datetime.today() + timedelta(3)
     trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ENQUIRY_LABEL], position='top')
     return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
-
-
-@sitemap.register_generator
-def sitemap_artwork():
-    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=None)
-    for artwork in artworks:
-        yield 'artwork', {'slug': slugify_title(artwork['title']), 'id': artwork['id']}
 
 @app.route('/series', strict_slashes=False)
 def series_collection():
@@ -166,6 +168,38 @@ def sitemap_series():
     series_collection = crud.get_series_collection(crud.transaction(), 375, args=None)
     for series in series_collection:
         yield 'series', {'slug': slugify_title(series['title']), 'id': series['id']}
+
+@app.route('/series-enquire/<string:id>', methods=['POST'])
+def series_enquire(id):
+    series = crud.get_series(crud.transaction(), id, 240)
+    series_url = url_for('series', slug=slugify_title(series["title"]), id=id, _external=True)
+    if series is None:
+        abort(404)
+    enquiry_email_template = crud.get_series_enquiry_email_template()
+    
+    enquirer_email_address = request.form.get('email')
+    enquirer_name = request.form.get('name')
+    enquirer_message = request.form.get('message')
+    
+    email_subject = f"Psyclonic Studios series enquiry: {series['title']}"
+    email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, series=series, message=enquirer_message, series_url=series_url)
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_customer=True)
+    gmail.send_email(email)
+
+    email_response = gmail.send_email(email)
+
+    trello_title = f'Buyer - {enquirer_name}'
+    trello_description = cleandoc(f"""
+    ## [Respond to the customer here]({gmail.get_email_link(email_response['id'])})
+    ## Customer details
+    Name: {enquirer_name}
+    Email address: {enquirer_email_address}
+    Series: [{series['title']}]({series_url})
+    Message: {enquirer_message}
+    """)
+    trello_due = datetime.today() + timedelta(3)
+    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ENQUIRY_LABEL], position='top')
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
 
 #@app.route('/blog', strict_slashes=False)
 #def blog_collection():
