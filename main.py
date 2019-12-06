@@ -66,7 +66,6 @@ def sitemap_artwork_collection():
 @app.route('/artwork/<string:id>/<slug>')
 def artwork(slug, id):
     artwork = crud.get_artwork(crud.transaction(), id, 667)
-    print(artwork)
     if artwork is None:
         abort(404)
     number_of_images = len(artwork['images'])
