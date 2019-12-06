@@ -30,5 +30,27 @@
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>
 </div>
+<div class="narrow-page center medium-vertical-margins">
+    <button id="enquire-button" type="button" class="hover-accent highlight accent-border white-background button-wide">Enquire</button>
+</div>
+<div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
+    <form class="bordered" action="/series-enquire/{{ series.id }}" method="POST">
+        <div class="medium-vertical-margins">
+            <h4 class="small-vertical-margins">Contact information</h4>
+            <input id="enquire-name" class="user-input small-vertical-margins" type="text" name="name" placeholder="Name"
+                required autocomplete="name">
+            <input id="enquire-email" class="user-input" type="email" name="email" placeholder="Email" required
+                autocomplete="email">
+        </div>
+        <div class="medium-vertical-margins">
+            <textarea class="user-input user-message" type="textarea" name="message" placeholder="Your message" required></textarea>
+        </div>
+        <div class="medium-vertical-margins">
+            <button id="enquire-reset" type="reset" class="hover-accent highlight highlight-background button-wide">Cancel</button>
+            <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
+        </div>
+    </form>
+</div>
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='enquire_form.js') }}"></script>
 {% endblock %}

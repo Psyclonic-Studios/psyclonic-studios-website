@@ -193,6 +193,9 @@ def get_artwork_buy_email_template():
 def get_artwork_enquiry_email_template():
     return get_website_component('Artwork enquire email')
 
+def get_series_enquiry_email_template():
+    return get_website_component('Series enquire email')
+
 def get_enquire_thankyou():
     return get_website_component('Thankyou enquiry')
 
