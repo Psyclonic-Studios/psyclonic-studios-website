@@ -55,7 +55,7 @@ def refresh_contribute_products():
 
 @app.route('/artwork', strict_slashes=False)
 def artwork_collection():
-    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=request.args)
+    artworks = crud.get_artwork_collection(crud.transaction(), 400, args=request.args)
     return render_template('artwork_collection.html', artworks=artworks)
 
 @sitemap.register_generator
@@ -65,7 +65,7 @@ def sitemap_artwork_collection():
 @app.route('/artwork/<string:id>', defaults={'slug': None})
 @app.route('/artwork/<string:id>/<slug>')
 def artwork(slug, id):
-    artwork = crud.get_artwork(crud.transaction(), id, 667)
+    artwork = crud.get_artwork(crud.transaction(), id, 700)
     if artwork is None:
         abort(404)
     number_of_images = len(artwork['images'])
@@ -74,7 +74,7 @@ def artwork(slug, id):
 
 @sitemap.register_generator
 def sitemap_artwork():
-    artworks = crud.get_artwork_collection(crud.transaction(), 375, args=None)
+    artworks = crud.get_artwork_collection(crud.transaction(), 400, args=None)
     for artwork in artworks:
         yield 'artwork', {'slug': slugify_title(artwork['title']), 'id': artwork['id']}
 
@@ -145,7 +145,7 @@ def artwork_enquire(id):
 
 @app.route('/series', strict_slashes=False)
 def series_collection():
-    series_collection = crud.get_series_collection(crud.transaction(), 375, args=request.args)
+    series_collection = crud.get_series_collection(crud.transaction(), 400, args=request.args)
     return render_template('series_collection.html', series_collection=series_collection)
 
 @sitemap.register_generator
@@ -155,7 +155,7 @@ def sitemap_series_collection():
 @app.route('/series/<string:id>', defaults={'slug': None})
 @app.route('/series/<string:id>/<slug>')
 def series(slug, id):
-    series = crud.get_series(crud.transaction(), id, 667)
+    series = crud.get_series(crud.transaction(), id, 700)
     if series is None:
         abort(404)
     number_of_tiles = len(series['artworks'])
@@ -164,7 +164,7 @@ def series(slug, id):
 
 @sitemap.register_generator
 def sitemap_series():
-    series_collection = crud.get_series_collection(crud.transaction(), 375, args=None)
+    series_collection = crud.get_series_collection(crud.transaction(), 240, args=None)
     for series in series_collection:
         yield 'series', {'slug': slugify_title(series['title']), 'id': series['id']}
 
