@@ -24,7 +24,7 @@ def get_artwork_collection(transaction, size, args):
     for artwork_ref in artworks_query.stream(transaction=transaction):
         artwork = artwork_ref.to_dict()
         image_refs = artwork['images']
-        artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), 400) for image in artwork['images']]
+        artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
         artworks.append(artwork)
     return artworks
 
@@ -33,7 +33,7 @@ def get_artwork(transaction, id, size):
     artwork = content.document(id).get(transaction=transaction).to_dict()
     if not artwork:
         return None
-    artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), 1080) for image in artwork['images']]
+    artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
     return artwork
 
 @firestore.transactional
@@ -45,12 +45,12 @@ def get_series_collection(transaction, size, args):
         series = series_ref.to_dict()
         series_image_refs = series['seriesImages']
         if series_image_refs:
-            series_image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), 400) for image in series_image_refs]
-            series['thumbnail_image'] = get_sized_image_urls(series_image_refs[0].get(transaction=transaction).to_dict(), 400)
+            series_image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in series_image_refs]
+            series['thumbnail_image'] = get_sized_image_urls(series_image_refs[0].get(transaction=transaction).to_dict(), size)
         else:
             artwork = series['artworks'][0].get(transaction=transaction).to_dict()
             artwork_image = artwork['images'][0].get(transaction=transaction).to_dict()
-            artwork_image_url = get_sized_image_urls(artwork_image, 400)
+            artwork_image_url = get_sized_image_urls(artwork_image, size)
             series['thumbnail_image'] = artwork_image_url
         series_collection.append(series)
     return series_collection
@@ -67,7 +67,7 @@ def get_series(transaction, id, size):
     for artwork_ref in series['artworks']:
         artwork = artwork_ref.get(transaction=transaction).to_dict()
         image_refs = artwork['images']
-        image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), 1080) for image in image_refs]
+        image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in image_refs]
         artwork['images'] = image_urls
         artworks_resolved.append(artwork)
     series['artworks_resolved'] = artworks_resolved
@@ -124,9 +124,9 @@ def get_contribute_products(transaction, size, args):
         product = product_ref.to_dict()
         product['sku'] = f'sku_{product["id"]}'
         product_artwork_image_ref = product['artworkImage'][0]
-        product['artwork_image'] = get_sized_image_urls(product_artwork_image_ref.get(transaction=transaction).to_dict(), 1080)
+        product['artwork_image'] = get_sized_image_urls(product_artwork_image_ref.get(transaction=transaction).to_dict(), size)
         product_image_ref = product['productImage'][0]
-        product['product_image'] = get_sized_image_urls(product_image_ref.get(transaction=transaction).to_dict(), 1080)
+        product['product_image'] = get_sized_image_urls(product_image_ref.get(transaction=transaction).to_dict(), size)
         contribute_products.append(product)
     return contribute_products
 
