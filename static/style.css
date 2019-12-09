@@ -603,7 +603,6 @@ button {
     height: auto;
     grid-gap: var(--grid-gap);
     overflow-y: hidden;
-    overflow-x: scroll;
     scroll-snap-type: x mandatory;
     margin-left: auto;
     margin-right: auto;
