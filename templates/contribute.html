@@ -13,19 +13,22 @@ Contribute to Psyclonic Studios
 <div class="gallery-horizontal-container medium-vertical-margins">
   <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_products }}">
     {% for product in contribute_products %}
-    <div class="gallery-horizontal-item">
-            <img src="{{ product.artwork_image.full_size.url }}" srcset="{% for size, image in product.artwork_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
-            alt="{{ product.title }}">
-      <div class="blur-text-overlay">
-        <div>
-          {{ product.basePrice | format_money }}
-        </div>
-        <div class="small-vertical-margins">
-          <button class="text-primary border-accent hover-accent button-narrow" type="button"
-            onclick="addProduct('{{ product.sku }}', -1)">-</button>
-          <span class="quantity" id="{{ product.sku }}">0</span>
-          <button class="text-primary border-accent hover-accent button-narrow" type="button"
-            onclick="addProduct('{{ product.sku }}', 1)">+</button>
+    <div class="gallery-horizontal-item-container">
+      <div class="gallery-horizontal-item">
+        <img src="{{ product.artwork_image.full_size.url }}"
+          srcset="{% for size, image in product.artwork_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+          alt="{{ product.title }}">
+        <div class="blur-text-overlay">
+          <div>
+            {{ product.basePrice | format_money }}
+          </div>
+          <div class="small-vertical-margins">
+            <button class="text-primary border-accent hover-accent button-narrow" type="button"
+              onclick="addProduct('{{ product.sku }}', -1)">-</button>
+            <span class="quantity" id="{{ product.sku }}">0</span>
+            <button class="text-primary border-accent hover-accent button-narrow" type="button"
+              onclick="addProduct('{{ product.sku }}', 1)">+</button>
+          </div>
         </div>
       </div>
     </div>

@@ -64,10 +64,12 @@
     <div class="gallery-horizontal wide-page"
         style="--num-tiles: {{ number_of_tiles }}; {% if number_of_tiles == 1 %}--grid-gap: 0; {% endif %}">
         {% for image in artwork.images %}
-        <div class="gallery-horizontal-item">
-            <img src="{{ image.full_size.url }}"
-                srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
-                alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+        <div class="gallery-horizontal-item-container">
+            <div class="gallery-horizontal-item">
+                <img src="{{ image.full_size.url }}"
+                    srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+                    alt="{{ artwork.mediaDescription }}" class="gallery-horizontal-image">
+            </div>
         </div>
         {% endfor %}
     </div>
