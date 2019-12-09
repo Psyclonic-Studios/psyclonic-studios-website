@@ -6,6 +6,7 @@
 <meta name="description"
     content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
+{% if artwork.forSale %}
 <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
@@ -21,8 +22,7 @@
       "brand": {
         "@type": "Thing",
         "name": "Psyclonic Studios"
-      }
-      {% if artwork.forSale %},
+      },
       "offers": {
         "@type": "Offer",
         "url": "{{ canonical_url }}",
@@ -37,9 +37,9 @@
           "name": "Psyclonic Studios"
         }
       }
-      {% endif %}
     }
 </script>
+{% endif %}
 {% endblock %}
 {% block body %}
 <div class="narrow-page center medium-vertical-margins">

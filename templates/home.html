@@ -4,6 +4,27 @@ Home
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ home_text | striptags | truncate(160, True) }}">
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Psyclonic Studios",
+    "url": "https://www.psyclonicstudios.com.au",
+    "logo": "https://psyclonicstudios.com.au/static/img/psyclonic-logo.png",
+    "founders": [
+        {
+            "@type": "Person",
+            "name": "Anne-Maree Hunter"
+        }
+    ],
+    "email": "contact@psyclonicstudios.com.au",
+    "sameAs": [ 
+    "https://www.facebook.com/psyclonicstudios",
+    "https://www.instagram.com/psyclonicstudios",
+    "http://redbubble.com/people/psyclonicstudio"
+    ]
+}
+</script>
 {% endblock %}
 {% block body %}
 <div class="wide-page home-container">
@@ -13,9 +34,8 @@ Home
     </div>
     <div class="home-image-holder">
         {% for image in home_images.images %}
-        <img class="home-image slider-{{loop.index}}"
-            src="{{ image.full_size.url }}" srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
-        >
+        <img class="home-image slider-{{loop.index}}" src="{{ image.full_size.url }}"
+            srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}">
         {% endfor %}
     </div>
 </div>
