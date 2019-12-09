@@ -77,10 +77,10 @@
 <div class="narrow-page center medium-vertical-margins">
     {% if artwork.forSale %}
     <button id="buy-button" type="button"
-        class="hover-accent highlight accent-border white-background button-wide">Buy</button>
+        class="hover-accent text-primary border-accent background-white button-wide">Buy</button>
     {% endif %}
     <button id="enquire-button" type="button"
-        class="hover-accent highlight accent-border white-background button-wide">Enquire</button>
+        class="hover-accent text-primary border-accent background-white button-wide">Enquire</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
@@ -97,8 +97,8 @@
         </div>
         <div class="medium-vertical-margins">
             <button id="enquire-reset" type="reset"
-                class="hover-accent highlight highlight-background button-wide">Cancel</button>
-            <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
+                class="hover-accent text-primary background-secondary button-wide">Cancel</button>
+            <button type="submit" class="hover-accent text-primary background-secondary button-wide">Submit</button>
         </div>
     </form>
 </div>
@@ -136,8 +136,8 @@
         </div>
         <div class="medium-vertical-margins">
             <button id="buy-reset" type="reset"
-                class="hover-accent highlight highlight-background button-wide">Cancel</button>
-            <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
+                class="hover-accent text-primary background-secondary button-wide">Cancel</button>
+            <button type="submit" class="hover-accent text-primary background-secondary button-wide">Submit</button>
         </div>
     </form>
 </div>

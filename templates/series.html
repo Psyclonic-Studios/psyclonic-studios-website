@@ -31,7 +31,7 @@
     <span class="scroll-button next"></span>
 </div>
 <div class="narrow-page center medium-vertical-margins">
-    <button id="enquire-button" type="button" class="hover-accent highlight accent-border white-background button-wide">Enquire</button>
+    <button id="enquire-button" type="button" class="hover-accent text-primary border-accent background-white button-wide">Enquire</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/series-enquire/{{ series.id }}" method="POST">
@@ -46,8 +46,8 @@
             <textarea class="user-input user-message" type="textarea" name="message" placeholder="Your message" required></textarea>
         </div>
         <div class="medium-vertical-margins">
-            <button id="enquire-reset" type="reset" class="hover-accent highlight highlight-background button-wide">Cancel</button>
-            <button type="submit" class="hover-accent highlight highlight-background button-wide">Submit</button>
+            <button id="enquire-reset" type="reset" class="hover-accent text-primary background-secondary button-wide">Cancel</button>
+            <button type="submit" class="hover-accent text-primary background-secondary button-wide">Submit</button>
         </div>
     </form>
 </div>
