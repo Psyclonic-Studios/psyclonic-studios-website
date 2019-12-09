@@ -601,7 +601,6 @@ button {
     grid-template-columns: var(--grid-gap) repeat(var(--num-tiles), 100%) var(--grid-gap);
     grid-template-rows: 80vh;
     grid-gap: var(--grid-gap);
-    overflow-y: hidden;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     margin-left: auto;
@@ -616,19 +615,26 @@ button {
     content: ' ';
 }
 
+.gallery-horizontal-item-container {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
 .gallery-horizontal-item {
     padding: 0;
     margin: 0;
-    height: 80vh;
-    width: 100%;
-    display: block;
-    scroll-snap-align: center;
+    height: 100%;
+    display: inline-block;
 }
 
 .gallery-horizontal-item img {
     display: block;
     margin: 0 auto;
-    height: 80vh;
+    height: 100%;
     max-width: 100%;
     -o-object-fit: scale-down;
     object-fit: scale-down;
