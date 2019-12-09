@@ -600,7 +600,9 @@ button {
     display: grid;
     grid-template-columns: var(--grid-gap) repeat(var(--num-tiles), 100%) var(--grid-gap);
     grid-template-rows: 80vh;
+    height: auto;
     grid-gap: var(--grid-gap);
+    overflow-y: hidden;
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     margin-left: auto;
