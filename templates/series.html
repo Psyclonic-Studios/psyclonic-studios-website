@@ -24,7 +24,7 @@
                 <img src="{{ image.full_size.url }}"
                     srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
                     alt="{{ artwork.mediaDescription }}" class="hover-darken">
-                <p class="blur-text-overlay">{{ artwork.title }}</p>
+                <span class="blur-text-overlay">{{ artwork.title }}</span>
             </a>
         </div>
         {% endfor %}
