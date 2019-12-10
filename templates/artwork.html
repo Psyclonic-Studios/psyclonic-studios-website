@@ -88,19 +88,19 @@
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
-            <input id="enquire-name" class="user-input small-vertical-margins" type="text" name="name"
+            <input id="enquire-name" class="user-input border-accent small-vertical-margins" type="text" name="name"
                 placeholder="Name" required autocomplete="name">
-            <input id="enquire-email" class="user-input" type="email" name="email" placeholder="Email" required
+            <input id="enquire-email" class="user-input border-accent" type="email" name="email" placeholder="Email" required
                 autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message" type="textarea" name="message" placeholder="Your message"
+            <textarea class="user-input user-message border-accent" type="textarea" name="message" placeholder="Your message"
                 required></textarea>
         </div>
         <div class="medium-vertical-margins">
             <button id="enquire-reset" type="reset"
-                class="hover-accent text-primary background-secondary button-wide">Cancel</button>
-            <button type="submit" class="hover-accent text-primary background-secondary button-wide">Submit</button>
+                class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
+            <button type="submit" class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
 </div>
@@ -113,16 +113,16 @@
         </p>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
-            <input id="buy-name" class="user-input small-vertical-margins" type="text" name="name" placeholder="Name"
+            <input id="buy-name" class="user-input small-vertical-margins border-accent" type="text" name="name" placeholder="Name"
                 required autocomplete="name">
-            <input id="buy-email" class="user-input" type="email" name="email" placeholder="Email" required
+            <input id="buy-email" class="user-input border-accent" type="email" name="email" placeholder="Email" required
                 autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Shipping information</h4>
-            <input id="buy-city" class="user-input small-vertical-margins" type="text" name="city"
+            <input id="buy-city" class="user-input small-vertical-margins border-accent" type="text" name="city"
                 placeholder="City or Suburb" required autocomplete="shipping address-level2">
-            <input id="buy-country" class="user-input small-vertical-margins" type="text" name="country"
+            <input id="buy-country" class="user-input small-vertical-margins border-accent" type="text" name="country"
                 placeholder="Country" required autocomplete="shipping country-name">
             <fieldset id="buy-address_type" class="small-vertical-margins">
                 <input id="residential" type="radio" name="address_type" value="residential" required>
@@ -132,14 +132,14 @@
             </fieldset>
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message" type="textarea" name="message"
+            <textarea class="user-input user-message border-accent" type="textarea" name="message"
                 placeholder="Shipping requirements (e.g. required timeframe) or a message to the artist (optional)"
                 autocomplete="off"></textarea>
         </div>
         <div class="medium-vertical-margins">
             <button id="buy-reset" type="reset"
-                class="hover-accent text-primary background-secondary button-wide">Cancel</button>
-            <button type="submit" class="hover-accent text-primary background-secondary button-wide">Submit</button>
+                class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
+            <button type="submit" class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
 </div>
