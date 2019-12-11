@@ -144,6 +144,12 @@
     </form>
 </div>
 {% endif %}
+{% if artwork.redbubbleLink %}
+<div class="center ultra-narrow-page medium-vertical-margins">
+    <p>or</p>
+    <a href="{{ artwork.redbubbleLink }}" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs, and postcards!</a>
+</div>
+{% endif %}
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='enquire_form.js') }}"></script>
 {% endblock %}
