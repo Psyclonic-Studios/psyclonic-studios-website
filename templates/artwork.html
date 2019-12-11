@@ -82,7 +82,7 @@
         class="hover-accent text-primary border-accent background-white button-wide">Buy</button>
     {% endif %}
     <button id="enquire-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide">Enquire</button>
+        class="hover-accent text-primary border-accent background-white button-wide">Ask the artist</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
@@ -107,9 +107,9 @@
 {% if artwork.forSale and artwork.price %}
 <div id="buy-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-buy/{{ artwork.id }}" method="POST">
-        <p class="small-font">Because of the many shapes and sizes of my artworks, packaging can be a little bit tricky!
-            Customised shipping needs to be arranged for each piece, so if you could please submit your contact details,
-            shipping address, and any other shipping requirements, I will send an estimate of the shipping cost to you.
+        <p class="small-font">Because of the many shapes and sizes of my artworks, packaging some of them can be a little bit tricky!
+            Customised shipping needs to be arranged for this piece, so if you could please submit your contact details,
+            shipping address, and any other shipping requirements, I will send an estimate of the shipping cost to you. (For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically under $50)
         </p>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
