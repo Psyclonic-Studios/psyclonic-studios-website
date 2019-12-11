@@ -76,10 +76,24 @@
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>
 </div>
+{% if artwork.forSale and not artwork.easyShipping %}
+<p class="narrow-page justify small-font">Because of the many shapes and sizes of my artworks, packaging some of them can be a little
+    bit tricky!
+    Customised shipping needs to be arranged for this piece. If you submit your shipping details, I will send an estimate of the shipping cost to you.
+    <br/>
+For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically under
+    $50.
+</p>
+{% endif %}
 <div class="narrow-page center medium-vertical-margins">
     {% if artwork.forSale %}
+    {% if artwork.easyShipping%}
+    <button id="add-to-cart-button" type="button"
+        class="hover-accent text-primary border-accent background-white button-wide">Add to cart</button>
+    {% else %}
     <button id="buy-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide">Buy</button>
+        class="hover-accent text-primary border-accent background-white button-wide">Shipping enquiry</button>
+    {% endif %}
     {% endif %}
     <button id="enquire-button" type="button"
         class="hover-accent text-primary border-accent background-white button-wide">Ask the artist</button>
@@ -90,33 +104,30 @@
             <h4 class="small-vertical-margins">Contact information</h4>
             <input id="enquire-name" class="user-input border-accent small-vertical-margins" type="text" name="name"
                 placeholder="Name" required autocomplete="name">
-            <input id="enquire-email" class="user-input border-accent" type="email" name="email" placeholder="Email" required
-                autocomplete="email">
+            <input id="enquire-email" class="user-input border-accent" type="email" name="email" placeholder="Email"
+                required autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message border-accent" type="textarea" name="message" placeholder="Your message"
-                required></textarea>
+            <textarea class="user-input user-message border-accent" type="textarea" name="message"
+                placeholder="Your message" required></textarea>
         </div>
         <div class="medium-vertical-margins">
             <button id="enquire-reset" type="reset"
                 class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
-            <button type="submit" class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
+            <button type="submit"
+                class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
 </div>
 {% if artwork.forSale and artwork.price %}
 <div id="buy-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-buy/{{ artwork.id }}" method="POST">
-        <p class="small-font">Because of the many shapes and sizes of my artworks, packaging some of them can be a little bit tricky!
-            Customised shipping needs to be arranged for this piece, so if you could please submit your contact details,
-            shipping address, and any other shipping requirements, I will send an estimate of the shipping cost to you. (For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically under $50)
-        </p>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Contact information</h4>
-            <input id="buy-name" class="user-input small-vertical-margins border-accent" type="text" name="name" placeholder="Name"
-                required autocomplete="name">
-            <input id="buy-email" class="user-input border-accent" type="email" name="email" placeholder="Email" required
-                autocomplete="email">
+            <input id="buy-name" class="user-input small-vertical-margins border-accent" type="text" name="name"
+                placeholder="Name" required autocomplete="name">
+            <input id="buy-email" class="user-input border-accent" type="email" name="email" placeholder="Email"
+                required autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
             <h4 class="small-vertical-margins">Shipping information</h4>
@@ -139,7 +150,8 @@
         <div class="medium-vertical-margins">
             <button id="buy-reset" type="reset"
                 class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
-            <button type="submit" class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
+            <button type="submit"
+                class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
 </div>
@@ -147,7 +159,8 @@
 {% if artwork.redbubbleLink %}
 <div class="center ultra-narrow-page medium-vertical-margins">
     <p>or</p>
-    <a href="{{ artwork.redbubbleLink }}" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs, and postcards!</a>
+    <a href="{{ artwork.redbubbleLink }}" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs,
+        and postcards!</a>
 </div>
 {% endif %}
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>

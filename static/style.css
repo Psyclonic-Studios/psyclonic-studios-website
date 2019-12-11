@@ -126,6 +126,10 @@
     text-align: center;
 }
 
+.justify {
+    text-align: justify;
+}
+
 .button-wide {
     padding: 10px 15px;
     font-size: var(--font-size);
