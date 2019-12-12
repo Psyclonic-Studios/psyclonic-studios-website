@@ -53,21 +53,15 @@
         {
             "@type": "ListItem",
             "position": 2,
-            "name": "Series",
-            "item": "{{ url_for('series_collection', _external=True) }}"
+            "name": "Artwork",
+            "item": "{{ url_for('artwork_collection', _external=True) }}"
         },
         {
             "@type": "ListItem",
             "position": 3,
-            "name": "{{ series.title }}",
-            "item": "{{ url_for('series', id='{{ artwork.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
-        },
-        {
-            "@type": "ListItem",
-            "position": 4,
             "name": "{{ artwork.title }}",
             "item": "{{ url_for('artwork', id='{{ artwork.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
-        }
+        },
       ]
     }
 </script>
