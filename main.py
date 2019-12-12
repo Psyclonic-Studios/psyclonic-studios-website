@@ -15,6 +15,8 @@ app.jinja_env.lstrip_blocks = True
 app.config['SITEMAP_URL_SCHEME'] = 'https'
 sitemap = Sitemap(app=app)
 
+app.url_map.strict_slashes = False
+
 @app.after_request
 def add_header(response):
     response.cache_control.public = True
@@ -53,7 +55,7 @@ def refresh_contribute_products():
     crud.sync_contribute_products_to_stripe()
     return ('', 204)
 
-@app.route('/artwork', strict_slashes=False)
+@app.route('/artwork')
 def artwork_collection():
     artworks = crud.get_artwork_collection(crud.transaction(), 400, args=request.args)
     return render_template('artwork_collection.html', artworks=artworks)
@@ -143,7 +145,7 @@ def artwork_enquire(id):
     trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ENQUIRY_LABEL], position='top')
     return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
 
-@app.route('/series', strict_slashes=False)
+@app.route('/series')
 def series_collection():
     series_collection = crud.get_series_collection(crud.transaction(), 400, args=request.args)
     return render_template('series_collection.html', series_collection=series_collection)
@@ -218,7 +220,7 @@ def series_enquire(id):
 #    blog = crud.get_blog(crud.transaction(), id, 667)
 #    return render_template('blog.html', blog=blog)
 
-@app.route('/legal',strict_slashes=False)
+@app.route('/legal')
 def legal():
     return render_template('legal.html', legal=crud.get_legal())
 
