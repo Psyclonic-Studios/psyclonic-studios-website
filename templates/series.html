@@ -6,6 +6,32 @@
 <meta name="description"
     content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ' - ' ~ series.description) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Psyclonic Studios",
+            "item": "{{ url_for('home', _external=True) }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Series",
+            "item": "{{ url_for('series_collection', _external=True) }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "{{ series.title }}",
+            "item": "{{ url_for('series', id='{{ series.id }}', slug='{{ series.title | slugify }}', _external=True) }}"
+        }
+      ]
+    }
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
@@ -34,7 +60,7 @@
 </div>
 <div class="narrow-page center medium-vertical-margins">
     <button id="enquire-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide">Enquire</button>
+        class="hover-accent text-primary border-accent background-white button-wide">Ask the artist</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/series-enquire/{{ series.id }}" method="POST">

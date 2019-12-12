@@ -26,6 +26,18 @@ Home
     ]
 }
 </script>
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Psyclonic Studios",
+        "item": "{{ url_for('home', _external=True) }}"
+      }]
+    }
+</script>
 {% endblock %}
 {% block body %}
 <div class="wide-page home-container">
