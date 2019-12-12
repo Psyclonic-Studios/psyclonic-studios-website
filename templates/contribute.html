@@ -4,6 +4,26 @@ Contribute to Psyclonic Studios
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ support_text | striptags | truncate(160, True) }}">
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Psyclonic Studios",
+            "item": "{{ url_for('home', _external=True) }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contribute",
+            "item": "{{ url_for('contribute', _external=True) }}"
+        }
+      ]
+    }
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins">
