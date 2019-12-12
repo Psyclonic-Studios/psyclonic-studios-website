@@ -60,13 +60,13 @@
             "@type": "ListItem",
             "position": 3,
             "name": "{{ series.title }}",
-            "item": "{{ url_for('series', id='{{ series.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
+            "item": "{{ url_for('series', id='{{ artwork.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
         },
         {
             "@type": "ListItem",
             "position": 4,
             "name": "{{ artwork.title }}",
-            "item": "{{ url_for('artwork', id='{{ series.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
+            "item": "{{ url_for('artwork', id='{{ artwork.id }}', slug='{{ artwork.title | slugify }}', _external=True) }}"
         }
       ]
     }
