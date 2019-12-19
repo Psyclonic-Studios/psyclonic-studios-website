@@ -157,6 +157,7 @@
     padding: 10px 15px;
     font-size: var(--font-size);
     line-height: 1;
+    cursor: pointer;
 }
 
 .button-narrow {
@@ -164,6 +165,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     line-height: 1;
+    cursor: pointer;
 }
 
 .wide-page {
