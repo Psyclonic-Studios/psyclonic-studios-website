@@ -807,7 +807,7 @@ button {
     text-align: center;
 }
 
-/* contribute */
+/* contribute 
 .quantity-container {
     margin-top: 10px;
 }
@@ -823,7 +823,6 @@ button {
         grid-template-columns: repeat(6, 1fr);
     }
 }
-
 #shipping-message {
     font-size: 0.8em;
     display: block;
@@ -836,13 +835,7 @@ button {
     margin-top: 5px;
 }
 
-.error-message {
-    color: red;
-}
-
-#checkout {
-    margin-bottom: 40px;
-}
+*/
 
 /* About */
 .about-page img {
@@ -951,7 +944,6 @@ button {
             "country postcode .";
     }
 }
-
 #name {
     grid-area: name;
 }
@@ -987,6 +979,18 @@ button {
 
 .cart-summary-item td {
     padding: 0.2em 0.3em;
+}
+
+.ignore-disabled:disabled {
+    color: black;
+}
+
+.error {
+    color: #962e14;
+}
+
+#checkout {
+    margin-bottom: 40px;
 }
 
 .submitted,
