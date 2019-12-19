@@ -1,6 +1,8 @@
 'use strict';
 
-var stripe = Stripe('pk_test_54LxtB4vZjsleKrRO5zqpuV1');
+const stripeTest = 'pk_test_54LxtB4vZjsleKrRO5zqpuV1';
+const stripeLive = 'pk_live_JLuWhpvRiItMchspr5Vv5Kia';
+var stripe = Stripe(stripeTest);
 
 function registerElements(elements) {
   var formSelector = '#checkout';
