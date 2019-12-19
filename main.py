@@ -11,6 +11,7 @@ import stripe
 from server.secrets import SESSION_SECRET_KEY
 from server.secrets import STRIPE_LIVE, STRIPE_TEST
 import functools
+import uuid
 
 STRIPE_DATA = STRIPE_TEST
 stripe.api_key = STRIPE_DATA['key']
@@ -309,10 +310,12 @@ def checkout():
             description=describe_cart(cart_items)
         )
     else:
+        idempotency_key = uuid.uuid4()
         intent = stripe.PaymentIntent.create(
             amount=stripe_amount,
             currency='aud',
-            description=describe_cart(cart_items)
+            description=describe_cart(cart_items),
+            idempotency_key=idempotency_key
         )
     session['payment_intent'] = intent.id
     crud.update_order(intent.id, cart, cart_subtotal, shipping_cost, total_cost, False)
