@@ -4,7 +4,7 @@ import os
 import stripe
 from server.secrets import STRIPE_LIVE, STRIPE_TEST
 
-STRIPE_DATA = STRIPE_LIVE
+STRIPE_DATA = STRIPE_TEST
 stripe.api_key = STRIPE_DATA['key']
 
 db = firestore.Client()
@@ -13,7 +13,7 @@ content = db.collection('fl_content')
 storage_client = storage.client.Client()
 bucket = storage_client.get_bucket('psyclonic-studios-website.appspot.com')
 
-def transaction():
+def new_transaction():
     return db.transaction()
 
 @firestore.transactional
@@ -31,6 +31,14 @@ def get_artwork_collection(transaction, size, args):
 @firestore.transactional
 def get_artwork(transaction, id, size):
     artwork = content.document(id).get(transaction=transaction).to_dict()
+    if not artwork:
+        return None
+    artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
+    return artwork
+
+@firestore.transactional
+def get_artwork_from_ref(transaction, ref, size):
+    artwork = ref.get(transaction=transaction).to_dict()
     if not artwork:
         return None
     artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
@@ -101,6 +109,14 @@ def get_home_images(transaction):
     home_images['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict()) for image in home_images['images']]
     return home_images
 
+def get_cost(cost):
+    query = content.where('_fl_meta_.schema', '==', 'costs').where('name', '==', cost).limit(1)
+    cost = next(query.stream()).to_dict()
+    return cost['cost']
+
+def get_international_shipping():
+    return get_cost('International shipping')
+
 def get_website_component(component):
     query = content.where('_fl_meta_.schema', '==', 'websiteComponents').where('component', '==', component).limit(1)
     component = next(query.stream()).to_dict()
@@ -132,7 +148,7 @@ def get_contribute_products(transaction, size, args):
 
 def sync_contribute_products_to_stripe():
     contribution_product_id = STRIPE_DATA['contribution_product_id']
-    contribute_products = get_contribute_products(transaction(), 375, None)
+    contribute_products = get_contribute_products(new_transaction(), 375, None)
     products = {product['sku']: product for product in contribute_products}
     stripe_skus = stripe.SKU.list(product=contribution_product_id, limit=100)['data']
     stripe_sku_list = [sku['id'] for sku in stripe_skus]
@@ -201,6 +217,36 @@ def get_enquire_thankyou():
 
 def get_payment_success():
     return get_website_component('Thankyou payment')
+
+def get_order(id):
+    order = db.collection('orders').document(id).get().to_dict()
+    transaction = new_transaction()
+    artworks = [{'artwork': get_artwork_from_ref(transaction, artwork['artwork'], 300), 'quantity': artwork['quantity']} for artwork in  order['artworks']]
+    order['artworks'] = artworks
+    return order
+
+def finalise_order(payment_intent):
+    orders = db.collection('orders')
+    order = orders.document(payment_intent.id)
+    order.set({
+        'payment_recieved': True,
+        'customer': {
+            'name': payment_intent.shipping.name,
+            'email': payment_intent.receipt_email
+        },
+        'shipping': {
+            'street': payment_intent.shipping.address.line1,
+            'city': payment_intent.shipping.address.city,
+            'state': payment_intent.shipping.address.state,
+            'country': payment_intent.shipping.address.country,
+            'postal_code': payment_intent.shipping.address.postal_code,
+        },
+    }, merge=True)
+
+def update_order(payment_intent_id, cart, subtotal, shipping_cost, total, payment_recieved):
+    orders = db.collection('orders')
+    artworks = [{'artwork': content.document(id), 'quantity': cart[id]} for id in cart]
+    orders.document(payment_intent_id).set({'payment_recieved': False, 'artworks': artworks, 'cost': {'subtotal': subtotal, 'shipping': shipping_cost, 'total': total}}, merge=True)
 
 def get_flamelink_file_url(path):
     flamelink_path = 'flamelink/media'

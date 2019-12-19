@@ -6,10 +6,14 @@ client = TrelloClient(
     api_secret=TRELLO_SECRET_API_KEY
 )
 
-PSYCLONIC_BOARD_ID = 'DqmfTdPc'
-CUSTOMER_LIST_ID = '5de811ce9749334e9e07ca08'
-BUYER_LABEL = Label(client,'5de82868f328f04d1b696bae', '')
-ENQUIRY_LABEL = Label(client,'5de9e194d0b96b70951ad035', '')
+PSYCLONIC_CUSTOMER_BOARD_ID = 'KQYuol12'
+
+AWAITING_RESPONSE_LIST_ID = '5df9b707d14de457c9c131d7'
+PAYMENT_RECIEVED_LIST_ID = '5df9b7375786244287e0bc92'
+
+ONLINE_ORDER_LABEL = Label(client, '5df9b6c2af988c41f25aba6e', '')
+ARTWORK_ENQUIRY_LABEL = Label(client, '5df9b6c2af988c41f25aba6f', '')
+SHIPPING_ENQUIRY_LABEL = Label(client, '5df9b6c2af988c41f25aba70', '')
 
 def create_customer_card(title, **kwargs):
-    client.get_list(CUSTOMER_LIST_ID).add_card(title, **kwargs)
+    client.get_list(PAYMENT_RECIEVED_LIST_ID).add_card(title, **kwargs)
