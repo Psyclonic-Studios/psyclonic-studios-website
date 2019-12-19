@@ -135,10 +135,13 @@ function registerElements(elements) {
       return_url: new URL("payment_success", window.location.origin).href
     }).then(function (result) {
       checkout.classList.remove('submitting');
+      console.log(result)
       if (result.error) {
         // Show error to your customer (e.g., insufficient funds)
         enableInputs();
         errorMessage.innerText = result.error.message
+      } else {
+        window.location.href = new URL("payment_success", window.location.origin).href;
       }
     });
   })
@@ -159,14 +162,14 @@ function registerElements(elements) {
       fontSize: "20px"
     },
     invalid: {
-      color: '#fff',
+      color: '#962e14',
       ':focus': {
         color: '#FA755A',
       },
       '::placeholder': {
         color: '#FFCCA5',
       },
-    },
+    }
   };
 
   var elementClasses = {

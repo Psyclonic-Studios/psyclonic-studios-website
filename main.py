@@ -288,12 +288,10 @@ def cart():
     cart_subtotal = sum(item['artwork']['price'] * item['quantity'] for item in cart_items)
     return render_template('cart.html', cart_items=cart_items, cart_subtotal=cart_subtotal, hide_cart=True)
 
-#@app.route('/checkout', methods=['POST'])
-@app.route('/checkout', methods=['POST','GET'])
+@app.route('/checkout', methods=['POST'])
 @nocache
 def checkout():
-    shipping_country = request.form.get('country','')
-    #shipping_country = request.form.get('country')
+    shipping_country = request.form.get('country')
     shipping_cost = 0 if shipping_country.lower() == 'australia' else crud.get_international_shipping()
 
     cart = session.get('cart', {})
