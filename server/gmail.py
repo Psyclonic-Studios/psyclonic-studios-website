@@ -25,12 +25,9 @@ def compose_email(sender, to, subject, body, cc=None):
     email['subject'] = subject
     return {'raw': base64.urlsafe_b64encode(email.as_bytes()).decode()}
 
-def compose_email_from_me(to, subject, body, cc_customer=False):
-    cc = '<customer@psyclonicstudios.com.au>' if cc_customer else None
+def compose_email_from_me(to, subject, body, cc_me=None):
+    cc = f'<{cc_me}@psyclonicstudios.com.au>' if cc_me else None
     return compose_email(f"Anne-Maree Hunter <annemaree@psyclonicstudios.com.au>", to, subject, body, cc=cc)
-
-def compose_email_to_me_as_customer(sender, subject, body):
-    return compose_email(sender, f"Anne-Maree Hunter <customer@psyclonicstudios.com.au>", subject, body)
 
 def send_email(message):
     try:
