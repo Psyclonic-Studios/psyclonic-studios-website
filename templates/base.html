@@ -24,7 +24,7 @@
 <body>
   {% include 'nav.html' %}
   {% if not hide_cart and 'cart' in session and (session.cart | length) > 0 %}
-  <a id="cart-icon" class="hover-accent center-children" href="/cart">Cart ({{ session.get('cart', []) | length }})</a>
+  <a id="cart-icon" class="button-wide buttonize hover-accent text-primary" href="/cart">Cart ({{ session.get('cart', []) | length }})</a>
   {% endif %}
   <main>
     {% block body %}{% endblock %}
