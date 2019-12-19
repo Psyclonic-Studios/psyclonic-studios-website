@@ -196,6 +196,12 @@ def get_contribute_text():
 def get_subscribe():
     return get_website_component('Subscribe')
     
+def get_contact_message():
+    return get_website_component('Contact message')
+
+def get_contact_email_template():
+    return get_website_component('Contact email template')
+
 def get_subscribe_success():
     return get_website_component('Thankyou subscribe')
 

@@ -1,11 +1,12 @@
 <nav>
-  <a id="menu-header" class="text-primary hover-accent center-children" href="/">
+  <a id="menu-header" class="text-primary hover-accent center-children" href="{{ url_for('home') }}">
     <img src="{{ url_for('static', filename='img/psyclonic-logo.png') }}" id="header-logo">
     Psyclonic Studios</a>
   <input type="checkbox" id="menu-btn" />
   <label id="menu-icon" class="hover-accent text-primary center-children" for="menu-btn">&#9776;</label>
   <ul class="menu">
-    <li><a class="menu-item text-primary hover-accent center-children" href="/series">Gallery</a></li>
-    <li><a class="menu-item text-primary hover-accent center-children" href="/about">About</a></li>
+    <li><a class="menu-item text-primary hover-accent center-children" href="{{ url_for('series_collection') }}">Gallery</a></li>
+    <li><a class="menu-item text-primary hover-accent center-children" href="{{ url_for('about') }}">About</a></li>
+    <li><a class="menu-item text-primary hover-accent center-children" href="{{ url_for('contact') }}">Contact</a></li>
   </ul>
 </nav>

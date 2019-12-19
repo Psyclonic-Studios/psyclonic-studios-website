@@ -244,6 +244,34 @@ def add_subscriber():
     crud.post_email_address(email)
     return render_template('subscribe_success.html', thankyou_text=crud.get_subscribe_success())
 
+@app.route('/contact')
+def contact():
+    return render_template('contact.html', contact_message=crud.get_contact_message())
+
+@sitemap.register_generator
+def sitemap_contact():
+    yield 'contact', {}
+
+@app.route('/contact', methods=['POST'])
+def contact_send_email():
+    enquiry_email_template = crud.get_contact_email_template()
+    
+    enquirer_email_address = request.form.get('email')
+    enquirer_name = request.form.get('name')
+    enquirer_message = request.form.get('message')
+    
+    email_subject = f"Contact Psyclonic Studios"
+    email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, message=enquirer_message)
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_me='contact')
+    email_response = gmail.send_email(email)
+
+    trello_title = f'Contact - {enquirer_name}'
+    trello_description = render_template('trello_contact_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, enquirer_message=enquirer_message)
+    trello_due = datetime.today() + timedelta(3)
+    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+
+
 @app.route('/payment_success', methods=['GET'])
 @nocache
 def payment_success():
