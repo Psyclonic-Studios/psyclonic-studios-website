@@ -29,7 +29,7 @@ Cart
                     <span class="cart-price">{{ artwork.price | format_money }}</span>
                 </td>
                 <td>
-                    <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}">✕</button>
+                    <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}">✕</a>
                 </td>
             </tr>
             {% endfor %}
@@ -289,7 +289,7 @@ Cart
             <option value="Zambia">Zambia</option>
             <option value="Zimbabwe">Zimbabwe</option>
         </datalist>
-        <button class="button-wide border-accent hover-accent text-primary" type="submit">Checkout</button>
+        <button class="button-wide background-white border-accent hover-accent text-primary" type="submit">Checkout</button>
     </form>
     {% else %}
     <div class="center medium-vertical-margins">
