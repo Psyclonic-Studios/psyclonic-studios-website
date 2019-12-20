@@ -125,7 +125,7 @@ def artwork_buy(id):
     
     email_subject = f"Psyclonic Studios artwork enquiry: {artwork['title']}"
     email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, address=enquirer_address, address_type=enquirer_address_type, artwork=artwork, message=enquirer_message, artwork_url=artwork_url)
-    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_me='customer')
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, alias='Customer')
     email_response = gmail.send_email(email)
 
     trello_title = f'Buyer - {enquirer_name}'
@@ -148,13 +148,13 @@ def artwork_enquire(id):
     
     email_subject = f"Psyclonic Studios artwork enquiry: {artwork['title']}"
     email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, artwork=artwork, message=enquirer_message, artwork_url=artwork_url)
-    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_me='customer')
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, alias='Customer')
     email_response = gmail.send_email(email)
 
     trello_title = f'Buyer - {enquirer_name}'
     trello_description = render_template('trello_artwork_enquiry_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, artwork=artwork, artwork_url=artwork_url, enquirer_message=enquirer_message)
     trello_due = datetime.today() + timedelta(3)
-    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ENQUIRY_LABEL], position='top')
+    trello_helper.create_customer_card(trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
     return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
 
 @app.route('/series', strict_slashes=False)
@@ -263,7 +263,7 @@ def contact_send_email():
     
     email_subject = f"Contact Psyclonic Studios"
     email_body = Environment(loader=BaseLoader()).from_string(enquiry_email_template).render(name=enquirer_name, message=enquirer_message)
-    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, cc_me='contact')
+    email = gmail.compose_email_from_me(enquirer_email_address, email_subject, email_body, alias='Customer')
     email_response = gmail.send_email(email)
 
     trello_title = f'Contact - {enquirer_name}'
@@ -310,7 +310,7 @@ def checkout():
             description=describe_cart(cart_items)
         )
     else:
-        idempotency_key = uuid.uuid4()
+        idempotency_key = str(uuid.uuid4())
         intent = stripe.PaymentIntent.create(
             amount=stripe_amount,
             currency='aud',
@@ -339,7 +339,7 @@ def confirm_payment():
 
         order_confirmation_email_subject = "Your order from Psyclonic Studios"
         order_confirmation_email_body = render_template('order_confirmation_email.html',order=final_order)
-        order_confirmation_email = gmail.compose_email_from_me(final_order['customer']['email'], order_confirmation_email_subject, order_confirmation_email_body, cc_me='orders')
+        order_confirmation_email = gmail.compose_email_from_me(final_order['customer']['email'], order_confirmation_email_subject, order_confirmation_email_body, alias='Orders')
         order_confirmation_email_response = gmail.send_email(order_confirmation_email)
 
         trello_title = f"Order - {final_order['customer']['name']}"
