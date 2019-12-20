@@ -15,5 +15,5 @@ ONLINE_ORDER_LABEL = Label(client, '5df9b6c2af988c41f25aba6e', '')
 ARTWORK_ENQUIRY_LABEL = Label(client, '5df9b6c2af988c41f25aba6f', '')
 SHIPPING_ENQUIRY_LABEL = Label(client, '5df9b6c2af988c41f25aba70', '')
 
-def create_customer_card(title, **kwargs):
-    client.get_list(PAYMENT_RECIEVED_LIST_ID).add_card(title, **kwargs)
+def create_customer_card(list_id, title, **kwargs):
+    client.get_list(list_id).add_card(title, **kwargs)
