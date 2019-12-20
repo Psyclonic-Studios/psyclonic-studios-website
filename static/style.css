@@ -373,22 +373,30 @@ nav {
 }
 
 @media (min-width: 430px) {
-    .menu-header {
+    #menu-header {
         padding: 0 10px 0 0;
         font-size: 2em;
     }
 }
 
-#header-logo {
+#header-title {
     display: none;
+}
+@media (min-width: 430px) {
+    #header-title {
+        display: inline;
+    }
+}
+
+#header-logo {
+        display: inline-block;
+        height: calc(var(--header-height) - 20px);
+        padding: 10px 5px;
     filter: invert(80%);
 }
 
 @media (min-width: 430px) {
     #header-logo {
-        display: inline-block;
-        height: calc(var(--header-height) - 20px);
-        padding: 10px 5px;
     }
 }
 
@@ -496,11 +504,18 @@ footer {
 /* Home */
 .home-text-holder {
     position: absolute;
-    margin-top: 170px;
-    margin-left: 110px;
-    max-width: calc(100vw - 140px);
+    margin-top: 95px;
+    margin-left: 70px;
+    width: calc(100vw - 90px);
     color: var(--home-text);
     z-index: 1;
+}
+@media (min-width: 720px) {
+    .home-text-holder {
+    margin-top: 170px;
+    margin-left: 110px;
+    width: 500px;
+    }
 }
 
 .home-text-holder p {
@@ -509,11 +524,18 @@ footer {
 
 .home-logo {
     position: absolute;
+    margin-top: 30px;
+    margin-left: 30px;
+    width: 150px;
+    filter: invert(50%);
+    z-index: 1;
+}
+@media (min-width: 720px) {
+    .home-logo {
     margin-top: 70px;
     margin-left: 50px;
     width: 200px;
-    filter: invert(50%);
-    z-index: 1;
+    }
 }
 
 .home-image-holder::after {

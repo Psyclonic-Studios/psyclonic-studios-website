@@ -116,21 +116,21 @@ For addresses within Australia, shipping is typically under $20. For internation
     {% if artwork.easyShipping and artwork.price %}
     {% if in_cart %}
     <a id="add-to-cart-button" href="{{ url_for('cart') }}"
-        class="hover-accent text-primary border-accent background-white button-wide buttonize">View in cart</a>
+        class="hover-accent text-primary border-accent background-white button-wide buttonize small-vertical-margins">View in cart</a>
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
         <button type="submit"
-        class="hover-accent text-primary border-accent background-white button-wide">Add to cart</button>
+        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
     </form>
     {% endif %}
     {% else %}
     <button id="buy-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide">Shipping enquiry</button>
+        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Shipping enquiry</button>
     {% endif %}
     {% endif %}
     <button id="enquire-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide">Ask the artist</button>
+        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Ask the artist</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
