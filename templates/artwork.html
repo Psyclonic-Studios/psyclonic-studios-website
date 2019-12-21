@@ -119,7 +119,7 @@ For addresses within Australia, shipping is typically under $20. For internation
         class="hover-accent text-primary border-accent background-white button-wide buttonize small-vertical-margins">View in cart</a>
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
-        <button type="submit"
+        <button type="submit" onclick="gtag('event', 'add_to_cart', { label: '{{ artwork.title }}' });"
         class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
     </form>

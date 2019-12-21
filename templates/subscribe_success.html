@@ -4,6 +4,9 @@ Subscribe Success
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ thankyou_text | striptags | truncate(160, True) }}">
+<script>
+    gtag('event', 'sign_up', { method: 'subscribe' });
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">

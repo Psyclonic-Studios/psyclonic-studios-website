@@ -132,7 +132,6 @@ function registerElements(elements) {
         },
         name: additionalData.name
       },
-      return_url: new URL("payment_success", window.location.origin).href
     }).then(function (result) {
       checkout.classList.remove('submitting');
       console.log(result)
@@ -141,6 +140,11 @@ function registerElements(elements) {
         enableInputs();
         errorMessage.innerText = result.error.message
       } else {
+        gtag('event', 'purchase', {
+          'value': result.amount,
+          'transaction_id': result.id,
+          'currency': 'aud'
+        });
         window.location.href = new URL("payment_success", window.location.origin).href;
       }
     });

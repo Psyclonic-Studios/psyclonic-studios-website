@@ -4,6 +4,9 @@ Enquiry Success
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ thankyou_text | striptags | truncate(160, True) }}">
+<script>
+    gtag('event', 'generate_lead', { label: '{{ enquiry_type }}' });
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">

@@ -132,7 +132,7 @@ def artwork_buy(id):
     trello_description = render_template('trello_shipping_enquiry_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, enquirer_address=enquirer_address, artwork=artwork, artwork_url=artwork_url, enquirer_message=enquirer_message)
     trello_due = datetime.today() + timedelta(3)
     trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
-    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou(), enquiry_type='artwork_shipping')
 
 @app.route('/artwork-enquire/<string:id>', methods=['POST'])
 def artwork_enquire(id):
@@ -155,7 +155,7 @@ def artwork_enquire(id):
     trello_description = render_template('trello_artwork_enquiry_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, artwork=artwork, artwork_url=artwork_url, enquirer_message=enquirer_message)
     trello_due = datetime.today() + timedelta(3)
     trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
-    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou(), enquiry_type='artwork_enquiry')
 
 @app.route('/series', strict_slashes=False)
 def series_collection():
@@ -203,7 +203,7 @@ def series_enquire(id):
     trello_description = render_template('trello_series_enquiry_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, series=series, series_url=series_url, enquirer_message=enquirer_message)
     trello_due = datetime.today() + timedelta(3)
     trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
-    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou(), enquiry_type='series_enquiry')
 
 #@app.route('/blog', strict_slashes=False)
 #def blog_collection():
@@ -270,7 +270,7 @@ def contact_send_email():
     trello_description = render_template('trello_contact_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, enquirer_message=enquirer_message)
     trello_due = datetime.today() + timedelta(3)
     trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
-    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou())
+    return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou(), enquiry_type='contact')
 
 @app.route('/payment_success', methods=['GET'])
 @nocache
