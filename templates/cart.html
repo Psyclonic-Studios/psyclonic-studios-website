@@ -10,6 +10,7 @@ Cart
     {% if (cart_items | length) > 0 %}
     <table class="medium-vertical-margins" id="cart-table">
         <tbody id="cart-body">
+
             {% for item in cart_items %}
             {% set artwork = item.artwork %}
             {% set thumbnail_image = artwork.images | first %}
@@ -25,19 +26,24 @@ Cart
                     <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"><span
                             class="cart-title">{{ artwork.title }}</span></a>
                 </td>
-                <td>
+                <td class="left">
                     <span class="cart-price">{{ artwork.price | format_money }}</span>
                 </td>
                 <td>
-                    <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}">✕</a>
+                    <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}"
+                     onclick="gtag('event', 'remove_from_cart', { label: '{{ artwork.title }}' });">✕</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
+        <tfoot>
+                <tr class="cart-summary-item text-secondary-light">
+                    <td class="right" colspan="2">Subtotal:</td>
+                    <td class="left">{{ cart_subtotal | format_money }}</td>
+                    <td></td>
+                </tr>
+        </tfoot>
     </table>
-    <div class="medium-vertical-margins right">
-        <span>Total: {{ cart_subtotal | format_money }}</span>
-    </div>
     <form class="medium-vertical-margins" action="{{ url_for('checkout') }}" method="POST">
         <input name="country" list="countries" class="user-input border-accent small-vertical-margins" type="text"
             placeholder="Shipping country" required="" autocomplete="country-name">
