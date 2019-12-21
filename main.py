@@ -12,6 +12,7 @@ from server.secrets import SESSION_SECRET_KEY
 from server.secrets import STRIPE_LIVE, STRIPE_TEST
 import functools
 import uuid
+import math
 
 STRIPE_DATA = STRIPE_TEST
 stripe.api_key = STRIPE_DATA['key']
@@ -299,7 +300,7 @@ def checkout():
     shipping_country = request.form.get('country')
     shipping_cost = 0
     if not shipping_country.lower() == 'australia':
-        insurance_cost = (cart_subtotal / 500.0 - 1) * 2
+        insurance_cost = math.ceil(cart_subtotal / 500.0 - 1) * 2
         international_shipping_cost = sum(item['quantity'] for item in cart_items) * 20
         shipping_cost += round(insurance_cost + international_shipping_cost, 2)
 
