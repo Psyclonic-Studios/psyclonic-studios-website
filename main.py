@@ -291,13 +291,17 @@ def cart():
 @app.route('/checkout', methods=['POST'])
 @nocache
 def checkout():
-    shipping_country = request.form.get('country')
-    shipping_cost = 0 if shipping_country.lower() == 'australia' else crud.get_international_shipping()
-
     cart = session.get('cart', {})
     transaction = crud.new_transaction()
     cart_items = [{'artwork': crud.get_artwork(transaction, id, 240), 'quantity': cart[id]} for id in cart]
     cart_subtotal = sum(item['artwork']['price'] * item['quantity'] for item in cart_items)
+
+    shipping_country = request.form.get('country')
+    shipping_cost = 0
+    if not shipping_country.lower() == 'australia':
+        insurance_cost = (cart_subtotal / 500.0 - 1) * 2
+        international_shipping_cost = sum(item['quantity'] for item in cart_items) * 20
+        shipping_cost += round(insurance_cost + international_shipping_cost, 2)
 
     total_cost = cart_subtotal + shipping_cost
 
@@ -367,7 +371,7 @@ def page_not_found(error):
 
 @app.template_filter('format_money')
 def format_money(money_str):
-    return numbers.format_currency(money_str, 'AUD', locale='en_AU')
+    return numbers.format_currency(money_str, 'AUD', locale='en_US')
 
 @app.template_filter('slugify')
 def slugify_title(txt):

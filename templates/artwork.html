@@ -82,8 +82,14 @@
         <span class="artwork-dimension">{{ dimension.dimension | first | lower }}</span>{{ "×" if not loop.last }}
         {%- endfor -%})
     </p>
-    {% if artwork.price %}
+    {% if artwork.price and artwork.forSale and artwork.inventory > 0 %}
     <p>{{ artwork.price | format_money }}</p>
+    {% endif %}
+    {% if artwork.price and artwork.forSale and artwork.inventory == 0 %}
+    <p><span style="text-decoration: line-through;">{{ artwork.price | format_money }}</span> Sold out</p>
+    {% endif %}
+    {% if not (artwork.price or artwork.forSale) %}
+    <p>Not for sale</p>
     {% endif %}
 </div>
 <div class="gallery-horizontal-container medium-vertical-margins">
@@ -102,17 +108,25 @@
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>
 </div>
-{% if artwork.forSale and not artwork.easyShipping %}
+{% if artwork.forSale and artwork.inventory > 0 and not artwork.easyShipping %}
 <p class="narrow-page justify small-font">Because of the many shapes and sizes of my artworks, packaging some of them can be a little
     bit tricky!
     Customised shipping needs to be arranged for this piece. If you submit your shipping details, I will send an estimate of the shipping cost to you.
     <br/>
 For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically under
-    $50.
+    $40.
 </p>
 {% endif %}
+{% if artwork.forSale and artwork.inventory > 0 and artwork.easyShipping %}
+<p class="narrow-page center small-font">
+    Free shipping within Australia!
+</p>
+{% endif %}
+<p class="narrow-page center small-font">
+    All prints are sold unframed
+</p>
 <div class="narrow-page center medium-vertical-margins">
-    {% if artwork.forSale %}
+    {% if artwork.forSale and artwork.inventory > 0 %}
     {% if artwork.easyShipping and artwork.price %}
     {% if in_cart %}
     <a id="add-to-cart-button" href="{{ url_for('cart') }}"
@@ -153,7 +167,7 @@ For addresses within Australia, shipping is typically under $20. For internation
         </div>
     </form>
 </div>
-{% if artwork.forSale and artwork.price %}
+{% if artwork.forSale and artwork.inventory > 0 %}
 <div id="buy-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-buy/{{ artwork.id }}" method="POST">
         <div class="medium-vertical-margins">
