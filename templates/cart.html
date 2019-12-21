@@ -26,7 +26,7 @@ Cart
                     <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"><span
                             class="cart-title">{{ artwork.title }}</span></a>
                 </td>
-                <td class="left">
+                <td class="right">
                     <span class="cart-price">{{ artwork.price | format_money }}</span>
                 </td>
                 <td>
@@ -39,7 +39,7 @@ Cart
         <tfoot>
                 <tr class="cart-summary-item text-secondary-light">
                     <td class="right" colspan="2">Subtotal:</td>
-                    <td class="left">{{ cart_subtotal | format_money }}</td>
+                    <td class="right">{{ cart_subtotal | format_money }}</td>
                     <td></td>
                 </tr>
         </tfoot>
