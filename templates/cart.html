@@ -31,7 +31,7 @@ Cart
                 </td>
                 <td>
                     <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}"
-                     onclick="gtag('event', 'remove_from_cart', { label: '{{ artwork.title }}' });">✕</a>
+                     onclick="gtag('event', 'remove_from_cart', { event_label: '{{ artwork.title }}' });">✕</a>
                 </td>
             </tr>
             {% endfor %}

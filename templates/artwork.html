@@ -133,7 +133,7 @@ For addresses within Australia, shipping is typically under $20. For internation
         class="hover-accent text-primary border-accent background-white button-wide buttonize small-vertical-margins">View in cart</a>
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
-        <button type="submit" onclick="gtag('event', 'add_to_cart', { label: '{{ artwork.title }}' });"
+        <button type="submit" onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}' });"
         class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
     </form>
@@ -207,7 +207,7 @@ For addresses within Australia, shipping is typically under $20. For internation
 {% if artwork.redbubbleLink %}
 <div class="center ultra-narrow-page medium-vertical-margins">
     <p>or</p>
-    <a href="{{ artwork.redbubbleLink }}" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs,
+    <a href="{{ artwork.redbubbleLink }}" onclick="gtag('event', 'click', { event_label: 'redbubble_artwork', event_category: 'engagement' });" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs,
         and postcards!</a>
 </div>
 {% endif %}
