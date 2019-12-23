@@ -38,9 +38,20 @@ Gallery
 <div class="gallery-grid-container medium-page medium-vertical-margins">
     {% for series in series_collection %}
     <a href="/series/{{ series.id }}/{{ series.title | slugify }}" class="gallery-grid-item hover-darken-container">
-            <img src="{{ series.thumbnail_image.full_size.url }}" srcset="{% for size, image in series.thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+        <img src="{{ series.thumbnail_image.full_size.url }}"
+            srcset="{% for size, image in series.thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
             alt="{{ series.description }}" class="hover-darken">
         <span class="blur-text-overlay">{{ series.title }}</span>
+    </a>
+    {% endfor %}
+    {% for artwork in non_series_artwork_collection %}
+    {% set thumbnail_image = artwork.images | first %}
+    <a href="{{ url_for('artwork', id=artwork.id, title=artwork.title | slugify) }}"
+        class="gallery-grid-item hover-darken-container">
+        <img src="{{ thumbnail_image.full_size.url }}"
+            srcset="{% for size, image in thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+            alt="{{ artwork.mediaDescription }}" class="hover-darken">
+        <span class="blur-text-overlay">{{ artwork.title }}</span>
     </a>
     {% endfor %}
 </div>
