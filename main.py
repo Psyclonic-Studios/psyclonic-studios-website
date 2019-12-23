@@ -95,11 +95,12 @@ def sitemap_artwork():
 @app.route('/artwork-add-to-cart/', methods=['POST'])
 def artwork_add_to_cart():
     artwork_id = request.form.get('artwork_id')
+    artwork_quantity = int(request.form.get('quantity', 1))
     if 'cart' not in session or type(session['cart']) is not dict:
-        session['cart'] = {artwork_id: 1}
+        session['cart'] = {artwork_id: artwork_quantity}
     else:
         cart = session['cart']
-        cart[artwork_id] = 1
+        cart[artwork_id] = artwork_quantity
         session['cart'] = cart
     return redirect(url_for('cart'))
 
@@ -161,7 +162,8 @@ def artwork_enquire(id):
 @app.route('/series', strict_slashes=False)
 def series_collection():
     series_collection = crud.get_series_collection(crud.new_transaction(), 400, args=request.args)
-    return render_template('series_collection.html', series_collection=series_collection)
+    non_series_artwork_collection = crud.get_non_series_artwork_collection(crud.new_transaction(), 400, args=request.args)
+    return render_template('series_collection.html', series_collection=series_collection, non_series_artwork_collection=non_series_artwork_collection)
 
 @sitemap.register_generator
 def sitemap_series_collection():
