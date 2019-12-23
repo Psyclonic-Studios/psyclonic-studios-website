@@ -266,6 +266,7 @@ input[type="radio"] {
     margin-top: -1px;
     vertical-align: middle;
 }
+
 /* Select */
 select {
     font-size: var(--font-size);
@@ -372,7 +373,7 @@ nav {
     height: var(--header-height);
 }
 
-@media (min-width: 430px) {
+@media (min-width: 480px) {
     #menu-header {
         padding: 0 10px 0 0;
         font-size: 2em;
@@ -382,22 +383,22 @@ nav {
 #header-title {
     display: none;
 }
-@media (min-width: 430px) {
+
+@media (min-width: 480px) {
     #header-title {
         display: inline;
     }
 }
 
 #header-logo {
-        display: inline-block;
-        height: calc(var(--header-height) - 20px);
-        padding: 10px 5px;
+    display: inline-block;
+    height: calc(var(--header-height) - 20px);
+    padding: 10px 5px;
     filter: invert(80%);
 }
 
 @media (min-width: 430px) {
-    #header-logo {
-    }
+    #header-logo {}
 }
 
 #menu-icon {
@@ -510,11 +511,12 @@ footer {
     color: var(--home-text);
     z-index: 1;
 }
+
 @media (min-width: 720px) {
     .home-text-holder {
-    margin-top: 170px;
-    margin-left: 110px;
-    width: 500px;
+        margin-top: 170px;
+        margin-left: 110px;
+        width: 500px;
     }
 }
 
@@ -530,11 +532,12 @@ footer {
     filter: invert(50%);
     z-index: 1;
 }
+
 @media (min-width: 720px) {
     .home-logo {
-    margin-top: 70px;
-    margin-left: 50px;
-    width: 200px;
+        margin-top: 70px;
+        margin-left: 50px;
+        width: 200px;
     }
 }
 
@@ -638,6 +641,19 @@ input {
 button {
     border: none;
     outline: none;
+}
+
+.number-input {
+    width: 1em;
+}
+
+/* remove number input adjustment arrows */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
 }
 
 .user-input {
@@ -877,6 +893,18 @@ button {
     z-index: 1;
 }
 
+#cart-page {
+    padding-left: calc(2*var(--wide-page-padding));
+    padding-right: calc(2*var(--wide-page-padding));
+}
+
+@media (min-width: 560px) {
+    #cart-page {
+        padding-left: var(--medium-page-padding);
+        padding-right: var(--medium-page-padding);
+    }
+}
+
 #cart-table {
     table-layout: auto;
     width: 100%;
@@ -888,7 +916,7 @@ button {
 }
 
 #cart-body td:nth-child(2) {
-    width: 60%;
+    width: 50%;
 }
 
 #cart-body td:nth-child(3) {
@@ -899,8 +927,29 @@ button {
     width: 10%;
 }
 
+#cart-body td:nth-child(5) {
+    width: 10%;
+}
+
 .cart-item td {
-    padding: 0.5em 0.3em;
+    padding: 0.5em 0.2em;
+}
+
+@media (min-width: 560px) {
+    .cart-item td {
+        padding: 0.5em 0.3em;
+    }
+}
+
+#cart-table th {
+    font-weight: normal;
+    padding: 0.2em 0.2em;
+}
+
+@media (min-width: 560px) {
+    #cart-table th {
+        padding: 0.2em 0.3em;
+    }
 }
 
 .cart-image-link {
@@ -957,6 +1006,7 @@ button {
         "city city state"
         "country country postcode";
 }
+
 @media (min-width: 720px) {
     #shipping {
         grid-template-areas:
@@ -966,6 +1016,7 @@ button {
             "country postcode .";
     }
 }
+
 #name {
     grid-area: name;
 }
@@ -1005,6 +1056,7 @@ button {
 
 .ignore-disabled:disabled {
     color: black;
+    background-color: rgb(238, 238, 238);
 }
 
 .error {
@@ -1017,20 +1069,20 @@ button {
 
 .submitted,
 .submitting {
-  opacity: 0.2;
-  pointer-events: none;
+    opacity: 0.2;
+    pointer-events: none;
 }
 
 .submitted.success,
 .submitting.success {
-  pointer-events: all;
+    pointer-events: all;
 }
 
 .submitting.success,
 .submitted.success {
-  opacity: 1;
+    opacity: 1;
 }
 
-.submitted.success > * {
+.submitted.success>* {
     opacity: 1;
 }

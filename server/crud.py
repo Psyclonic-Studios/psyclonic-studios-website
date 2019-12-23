@@ -45,6 +45,18 @@ def get_artwork_from_ref(transaction, ref, size):
     return artwork
 
 @firestore.transactional
+def get_non_series_artwork_collection(transaction, size, args):
+    artworks_query = content.where('_fl_meta_.schema', '==', 'artwork').where('partOfASeries', '==', False)
+    artworks_query = sort_query(artworks_query, args)
+    artworks = []
+    for artwork_ref in artworks_query.stream(transaction=transaction):
+        artwork = artwork_ref.to_dict()
+        image_refs = artwork['images']
+        artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
+        artworks.append(artwork)
+    return artworks
+
+@firestore.transactional
 def get_series_collection(transaction, size, args):
     series_query = content.where('_fl_meta_.schema', '==', 'series')
     series_query = sort_query(series_query, args)
@@ -248,6 +260,10 @@ def finalise_order(payment_intent):
             'postal_code': payment_intent.shipping.address.postal_code,
         },
     }, merge=True)
+
+    artworks = order.get().to_dict()['artworks']
+    for artwork in artworks:
+        artwork['artwork'].update({'inventory': firestore.Increment(-artwork['quantity'])})
 
 def update_order(payment_intent_id, cart, subtotal, shipping_cost, total, payment_recieved):
     orders = db.collection('orders')
