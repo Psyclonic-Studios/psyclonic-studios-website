@@ -5,12 +5,19 @@ Cart
 {% block head %}
 {% endblock %}
 {% block body %}
-<div class="narrow-page center">
+<div class="narrow-page center" id="cart-page">
     <h1>Cart</h1>
     {% if (cart_items | length) > 0 %}
     <table class="medium-vertical-margins" id="cart-table">
+        <thead>
+            <tr>
+                <th colspan="2" class="small-font">Artwork</th>
+                <th class="small-font">Quantity</th>
+                <th class="small-font">Price</th>
+                <th class="small-font"></th>
+            </tr>
+        </thead>
         <tbody id="cart-body">
-
             {% for item in cart_items %}
             {% set artwork = item.artwork %}
             {% set thumbnail_image = artwork.images | first %}
@@ -26,22 +33,30 @@ Cart
                     <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"><span
                             class="cart-title">{{ artwork.title }}</span></a>
                 </td>
-                <td class="right">
+                <td class="center">
+                    <form action="{{ url_for('artwork_add_to_cart') }}" method="POST">
+                        <input name="quantity" type="number" min="1" max="{{ artwork.inventory }}"
+                            class="user-input border-accent number-input center" value="{{ item.quantity }}"
+                            onclick="this.select();" onchange="this.form.checkValididty() && this.form.submit();">
+                        <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
+                    </form>
+                </td>
+                <td class="center">
                     <span class="cart-price">{{ artwork.price | format_money }}</span>
                 </td>
                 <td>
                     <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}"
-                     onclick="gtag('event', 'remove_from_cart', { event_label: '{{ artwork.title }}' });">✕</a>
+                        onclick="gtag('event', 'remove_from_cart', { event_label: '{{ artwork.title }}' });">✕</a>
                 </td>
             </tr>
             {% endfor %}
         </tbody>
         <tfoot>
-                <tr class="cart-summary-item text-secondary-light">
-                    <td class="right" colspan="2">Subtotal:</td>
-                    <td class="right">{{ cart_subtotal | format_money }}</td>
-                    <td></td>
-                </tr>
+            <tr class="cart-summary-item text-secondary-light">
+                <td class="right" colspan="3">Subtotal:</td>
+                <td class="right">{{ cart_subtotal | format_money }}</td>
+                <td></td>
+            </tr>
         </tfoot>
     </table>
     <form class="medium-vertical-margins" action="{{ url_for('checkout') }}" method="POST">
@@ -295,7 +310,8 @@ Cart
             <option value="Zambia">Zambia</option>
             <option value="Zimbabwe">Zimbabwe</option>
         </datalist>
-        <button class="button-wide background-white border-accent hover-accent text-primary" type="submit">Checkout</button>
+        <button class="button-wide background-white border-accent hover-accent text-primary"
+            type="submit">Checkout</button>
     </form>
     {% else %}
     <div class="center medium-vertical-margins">
