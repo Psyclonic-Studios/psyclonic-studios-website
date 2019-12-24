@@ -8,14 +8,26 @@ from jinja2 import Environment, BaseLoader
 from datetime import datetime, timedelta
 from inspect import cleandoc
 import stripe
-from server.secrets import SESSION_SECRET_KEY
-from server.secrets import STRIPE_LIVE, STRIPE_TEST
+import os
+import pickle
 import functools
 import uuid
 import math
 
-STRIPE_DATA = STRIPE_TEST
-stripe.api_key = STRIPE_DATA['key']
+stripe_creds = None
+if os.path.exists('stripe_token.pickle'):
+    with open('stripe_token.pickle', 'rb') as token:
+        stripe_creds = pickle.load(token)
+else:
+    raise ValueError('Cannot find stripe credentials')
+stripe.api_key = stripe_creds['test']
+
+SESSION_SECRET_KEY = None
+if os.path.exists('flask_session_token.pickle'):
+    with open('flask_session_token.pickle', 'rb') as token:
+        SESSION_SECRET_KEY = pickle.load(token)['session_key']
+else:
+    raise ValueError('Cannot find session secret')
 
 app = Flask(__name__)
 app.secret_key = SESSION_SECRET_KEY

@@ -10,9 +10,11 @@ from server import crud
 
 def get_service():
     creds = None
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
+    if os.path.exists('gmail_token.pickle'):
+        with open('gmail_token.pickle', 'rb') as token:
             creds = pickle.load(token)
+    else:
+        raise ValueError('Cannot find gmail credentials')
     service = build('gmail', 'v1', credentials=creds)
     return service
 

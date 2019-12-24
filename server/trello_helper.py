@@ -1,9 +1,17 @@
 from trello import TrelloClient, Label
-from server.secrets import TRELLO_API_KEY, TRELLO_SECRET_API_KEY
+import os
+import pickle
+
+creds = None
+if os.path.exists('trello_token.pickle'):
+    with open('trello_token.pickle', 'rb') as token:
+        creds = pickle.load(token)
+else:
+    raise ValueError('Cannot find trello credentials')
 
 client = TrelloClient(
-    api_key=TRELLO_API_KEY,
-    api_secret=TRELLO_SECRET_API_KEY
+    api_key=creds['public'],
+    api_secret=creds['secret']
 )
 
 PSYCLONIC_CUSTOMER_BOARD_ID = 'KQYuol12'

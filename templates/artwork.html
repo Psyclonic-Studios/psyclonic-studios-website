@@ -73,6 +73,7 @@
     <div>
         {{ artwork.mediaDescription | safe }}
     </div>
+    {% if artwork.dimensions %}
     <p>
         {%- for dimension in artwork.dimensions -%}
         <span class="artwork-measurement">{{ dimension.measurement }}</span><span
@@ -82,6 +83,7 @@
         <span class="artwork-dimension">{{ dimension.dimension | first | lower }}</span>{{ "×" if not loop.last }}
         {%- endfor -%})
     </p>
+    {% endif %}
     {% if artwork.price and artwork.forSale and artwork.inventory > 0 %}
     <p>{{ artwork.price | format_money }}</p>
     {% endif %}
