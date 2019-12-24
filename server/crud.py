@@ -1,11 +1,5 @@
-from google.cloud import firestore
-from google.cloud import storage
+from google.cloud import firestore, storage, exceptions
 import os
-import stripe
-from server.secrets import STRIPE_LIVE, STRIPE_TEST
-
-STRIPE_DATA = STRIPE_TEST
-stripe.api_key = STRIPE_DATA['key']
 
 db = firestore.Client()
 content = db.collection('fl_content')
@@ -158,49 +152,49 @@ def get_contribute_products(transaction, size, args):
         contribute_products.append(product)
     return contribute_products
 
-def sync_contribute_products_to_stripe():
-    contribution_product_id = STRIPE_DATA['contribution_product_id']
-    contribute_products = get_contribute_products(new_transaction(), 375, None)
-    products = {product['sku']: product for product in contribute_products}
-    stripe_skus = stripe.SKU.list(product=contribution_product_id, limit=100)['data']
-    stripe_sku_list = [sku['id'] for sku in stripe_skus]
-    existing_skus = filter(lambda sku: sku in stripe_sku_list, products.keys())
-    new_skus = filter(lambda sku: sku not in stripe_sku_list, products.keys())
-    
-    for sku in existing_skus:
-        product = products[sku]
-        stripe.SKU.modify(
-            sku,
-            currency='aud',
-            inventory={'type': 'infinite'},
-            active=product['available'],
-            price=int(product['basePrice'] * 100),
-            image=product['product_image_url'],
-            product=contribution_product_id,
-            attributes={'name': product['title']}
-        )
-
-    for sku in new_skus:
-        product = products[sku]
-        stripe.SKU.create(
-            id=product['sku'],
-            currency='aud',
-            inventory={'type': 'infinite'},
-            active=product['available'],
-            price=int(product['basePrice'] * 100),
-            image=product['product_image_url'],
-            product=contribution_product_id,
-            attributes={'name': product['title']}
-        )
-    
-def get_donation_skus():
-    donation_product_id = STRIPE_DATA['donation_product_id']
-    donation_skus = stripe.SKU.list(product=donation_product_id)['data']
-    return sorted(donation_skus, key=lambda sku: sku['price'])
-
-def get_shipping_sku():
-    shipping_sku = stripe.SKU.retrieve(STRIPE_DATA['shipping_sku_id'])
-    return shipping_sku
+#def sync_contribute_products_to_stripe():
+#    contribution_product_id = STRIPE_DATA['contribution_product_id']
+#    contribute_products = get_contribute_products(new_transaction(), 375, None)
+#    products = {product['sku']: product for product in contribute_products}
+#    stripe_skus = stripe.SKU.list(product=contribution_product_id, limit=100)['data']
+#    stripe_sku_list = [sku['id'] for sku in stripe_skus]
+#    existing_skus = filter(lambda sku: sku in stripe_sku_list, products.keys())
+#    new_skus = filter(lambda sku: sku not in stripe_sku_list, products.keys())
+#    
+#    for sku in existing_skus:
+#        product = products[sku]
+#        stripe.SKU.modify(
+#            sku,
+#            currency='aud',
+#            inventory={'type': 'infinite'},
+#            active=product['available'],
+#            price=int(product['basePrice'] * 100),
+#            image=product['product_image_url'],
+#            product=contribution_product_id,
+#            attributes={'name': product['title']}
+#        )
+#
+#    for sku in new_skus:
+#        product = products[sku]
+#        stripe.SKU.create(
+#            id=product['sku'],
+#            currency='aud',
+#            inventory={'type': 'infinite'},
+#            active=product['available'],
+#            price=int(product['basePrice'] * 100),
+#            image=product['product_image_url'],
+#            product=contribution_product_id,
+#            attributes={'name': product['title']}
+#        )
+#    
+#def get_donation_skus():
+#    donation_product_id = STRIPE_DATA['donation_product_id']
+#    donation_skus = stripe.SKU.list(product=donation_product_id)['data']
+#    return sorted(donation_skus, key=lambda sku: sku['price'])
+#
+#def get_shipping_sku():
+#    shipping_sku = stripe.SKU.retrieve(STRIPE_DATA['shipping_sku_id'])
+#    return shipping_sku
 
 def get_contribute_text():
     return get_website_component('Contribute')
@@ -246,7 +240,7 @@ def get_order(id):
 def finalise_order(payment_intent):
     orders = db.collection('orders')
     order = orders.document(payment_intent.id)
-    order.set({
+    order.update({
         'payment_recieved': True,
         'customer': {
             'name': payment_intent.shipping.name,
@@ -259,7 +253,8 @@ def finalise_order(payment_intent):
             'country': payment_intent.shipping.address.country,
             'postal_code': payment_intent.shipping.address.postal_code,
         },
-    }, merge=True)
+        'paid_at': firestore.SERVER_TIMESTAMP
+    })
 
     artworks = order.get().to_dict()['artworks']
     for artwork in artworks:
@@ -267,8 +262,16 @@ def finalise_order(payment_intent):
 
 def update_order(payment_intent_id, cart, subtotal, shipping_cost, total, payment_recieved):
     orders = db.collection('orders')
+    order = orders.document(payment_intent_id)
+    try:
+        order_doc = order.get()
+        if 'created_at' not in order_doc.to_dict():
+            order.update({'created_at': firestore.SERVER_TIMESTAMP})
+    except exceptions.NotFound:
+        order.set({'created_at': firestore.SERVER_TIMESTAMP}, merge=True)
     artworks = [{'artwork': content.document(id), 'quantity': cart[id]} for id in cart]
-    orders.document(payment_intent_id).set({'payment_recieved': False, 'artworks': artworks, 'cost': {'subtotal': subtotal, 'shipping': shipping_cost, 'total': total}}, merge=True)
+    order_update = {'payment_recieved': False, 'artworks': artworks, 'cost': {'subtotal': subtotal, 'shipping': shipping_cost, 'total': total}}
+    order.update(order_update)
 
 def get_flamelink_file_url(path):
     flamelink_path = 'flamelink/media'
