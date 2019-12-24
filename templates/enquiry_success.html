@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block title %}
-Subscribe Success
+Enquiry Success
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ thankyou_text | striptags | truncate(160, True) }}">
+<script>
+    gtag('event', 'generate_lead', { event_label: '{{ enquiry_type }}' });
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
+    <h1 class="center">Thank you!</h1>
     {{ thankyou_text | safe }}
 </div>
 {% endblock %}

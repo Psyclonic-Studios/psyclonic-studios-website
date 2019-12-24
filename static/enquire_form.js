@@ -1,3 +1,4 @@
+const addToCartButton = document.getElementById('add-to-cart-button');
 const buyButton = document.getElementById('buy-button');
 const buyForm = document.getElementById('buy-form');
 const buyResetButton = document.getElementById('buy-reset');

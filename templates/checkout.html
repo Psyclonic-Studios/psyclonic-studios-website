@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}
+Checkout
+{% endblock %}
+{% block head %}
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    gtag('event', 'begin_checkout');
+</script>
+
+{% endblock %}
+{% block body %}
+<h1 class="narrow-page center">Checkout</h1>
+<form id="checkout" class="narrow-page medium-vertical-margins" data-secret="{{ client_secret }}">
+    <div class="medium-vertical-margins">
+        <div class="small-vertical-margins">
+            <span>Cart</span>
+        </div>
+        <table id="cart-table">
+            <tbody id="cart-body">
+                {% for item in cart_items %}
+                {% set artwork = item.artwork %}
+                {% set thumbnail_image = artwork.images | first %}
+                <tr class="cart-item border-accent">
+                    <td class="center">
+                        <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"
+                            class="cart-image-link hover-darken-container">
+                            <img src="{{ thumbnail_image.full_size.url }}" alt="{{ artwork.title }}"
+                                class="cart-image hover-darken">
+                        </a>
+                    </td>
+                    <td class="left">
+                        <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}"><span
+                                class="cart-title">{{ artwork.title }}</span></a>
+                    </td>
+                    <td class="right">
+                        <span class="cart-price">{{ artwork.price | format_money }}</span>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr class="cart-summary-item text-secondary-light">
+                    <td class="right" colspan="2">Subtotal:</td>
+                    <td class="right">{{ cart_subtotal | format_money }}</td>
+                </tr>
+                <tr class="cart-summary-item text-secondary-light">
+                    <td class="right" colspan="2">Shipping:</td>
+                    <td class="right">
+                        {% if shipping_cost == 0 %}Free!{% else %}{{ shipping_cost | format_money }}{% endif %}</td>
+                </tr>
+                <tr class="cart-summary-item">
+                    <td class="right" colspan="2">Total:</td>
+                    <td class="right">{{ grand_total | format_money }}</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <div class="medium-vertical-margins">
+        <div class="small-vertical-margins">
+            <span>Shipping details</span>
+        </div>
+        <div id="shipping">
+            <input id="name" class="user-input border-accent small-vertical-margins" type="text" placeholder="Name"
+                required="" autocomplete="name">
+            <input id="email" class="user-input border-accent small-vertical-margins" type="email" placeholder="Email"
+                required="" autocomplete="email">
+            <input id="address" class="user-input border-accent small-vertical-margins" type="text"
+                placeholder="Address" required="" autocomplete="street-address">
+            <input id="city" class="user-input border-accent small-vertical-margins" type="text" placeholder="City"
+                required="" autocomplete="address-level2">
+            <input id="state" class="user-input border-accent small-vertical-margins" type="text" placeholder="State"
+                required="" autocomplete="address-level1">
+            <input id="country" class="user-input border-accent small-vertical-margins ignore-disabled"
+                placeholder="Country" required="" autocomplete="country-name" disabled value="{{ country }}">
+            <input id="postcode" class="user-input border-accent small-vertical-margins" type="tel"
+                placeholder="Postcode/Zip" required="" autocomplete="postal-code">
+        </div>
+    </div>
+    <div class="medium-vertical-margins">
+        <div class="small-vertical-margins">
+            <span>Card details</span>
+        </div>
+        <div id="card">
+            <div id="card-number" class="empty user-input border-accent small-vertical-margins"></div>
+            <div id="card-expiry" class="empty user-input border-accent small-vertical-margins"></div>
+            <div id="card-cvc" class="empty user-input border-accent small-vertical-margins"></div>
+        </div>
+    </div>
+    <div class="error small-font" role="alert">
+        <span class="message"></span>
+    </div>
+    <div class="medium-vertical-margins right">
+        <button type="submit" class="button-wide text-primary background-white border-accent hover-accent">Pay</button>
+    </div>
+</form>
+
+<script src="{{ url_for('static', filename='checkout.js') }}"></script>
+{% endblock %}
