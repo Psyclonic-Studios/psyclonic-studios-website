@@ -1,0 +1,96 @@
+{% extends 'base_email.html' %}
+{% block body %}
+<p style="width: 100%;">
+Hi {{ order.customer.name }},
+<br>
+<br>
+Thank you for your order, it will be sent on it's way soon.
+<br>
+<br>
+Regards,
+<br>
+Anne-Maree Hunter, Psyclonic Studios
+</p>
+<p>
+Your order:
+</p>
+<table style="border-collapse: collapse; margin: 0.3em auto;">
+    <tbody style="width: 100%;">
+        {% for item in order.artworks %}
+        {% set artwork = item.artwork %}
+        {% set thumbnail_image = artwork.images | first %}
+        <tr style="border: thin solid black;">
+            <td style="text-align: center; padding: 0.2em 0.3em;">
+                <a href="{{ url_for('artwork',id=artwork.id) }}">
+                    <img style="width: 3em; height: 4em;" src="{{ thumbnail_image.full_size.url }}" alt="{{ artwork.title }}">
+                </a>
+            </td>
+            <td style="text-align: left; padding: 0.2em 0.3em;">
+                <a href="/artwork/{{ artwork.id }}/{{ artwork.title | slugify }}">{{ artwork.title }}</a>
+            </td>
+            <td style="text-align: right; padding: 0.2em 0.3em;">
+                {{ artwork.price | format_money }}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td style="text-align: right; padding: 0.2em 0.3em;" colspan="2">Subtotal:</td>
+            <td style="text-align: right; padding: 0.2em 0.3em;">{{ order.cost.subtotal | format_money }}</td>
+        </tr>
+        <tr>
+            <td style="text-align: right; padding: 0.2em 0.3em;" colspan="2">Shipping:</td>
+            <td style="text-align: right; padding: 0.2em 0.3em;">
+                {% if order.cost.shipping == 0 %}Free!{% else %}{{ order.cost.shipping | format_money }}{% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right; padding: 0.2em 0.3em;" colspan="2">Total:</td>
+            <td style="text-align: right; padding: 0.2em 0.3em;">{{ order.cost.total | format_money }}</td>
+        </tr>
+    </tfoot>
+</table>
+<p style="width: 100%;">
+Shipping details:
+</p>
+<table style="width: 100%;">
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">Name:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.customer.name }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">Street:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.shipping.street }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">City:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.shipping.city }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">State:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.shipping.state }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">Country:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.shipping.country }}
+        </td>
+    </tr>
+    <tr>
+        <td style="text-align: left; width: 100px; padding: 0.2em 0.3em;">Postal code:</td>
+        <td style="text-align: left; padding: 0.2em 0.3em;">
+            {{ order.shipping.postal_code }}
+        </td>
+    </tr>
+</table>
+
+{% endblock %}

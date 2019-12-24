@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+Contact
+{% endblock %}
+{% block head %}
+<meta name="description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios">
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Psyclonic Studios",
+            "item": "{{ url_for('home', _external=True) }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Contact",
+            "item": "{{ url_for('contact', _external=True) }}"
+        }
+      ]
+    }
+</script>
+{% endblock %}
+{% block body %}
+<div class="narrow-page medium-vertical-margins center">
+    <h1>Contact</h1>
+    {{ contact_message | safe }}
+    <form action="/contact" method="POST">
+        <div class="medium-vertical-margins">
+            <input id="enquire-name" class="user-input border-accent small-vertical-margins" type="text" name="name"
+                placeholder="Name" required autocomplete="name">
+            <input id="enquire-email" class="user-input border-accent" type="email" name="email" placeholder="Email"
+                required autocomplete="email">
+        </div>
+        <div class="medium-vertical-margins">
+            <textarea class="user-input user-message border-accent" type="textarea" name="message"
+                placeholder="Your message" required></textarea>
+        </div>
+        <div class="medium-vertical-margins">
+            <button type="reset"
+                class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
+            <button type="submit"
+                class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

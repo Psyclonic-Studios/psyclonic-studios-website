@@ -1,9 +1,10 @@
 Flask==1.0.2
 jinja2==2.10.3
 Babel==2.7.0
-google-cloud-core==0.29.1
-google-cloud-firestore==1.1.0
+google-cloud-core==1.1.0
+google-cloud-firestore==1.6.0
 google-cloud-storage==1.15.0
+google-api-core==1.15.0
 stripe==2.40.0
 grpcio==1.20.1
 Flask-Sitemap==0.3.0
