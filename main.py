@@ -37,15 +37,6 @@ app.jinja_env.lstrip_blocks = True
 app.config['SITEMAP_URL_SCHEME'] = 'https'
 sitemap = Sitemap(app=app)
 
-<<<<<<< HEAD
-app.url_map.strict_slashes = False
-
-@app.after_request
-def add_header(response):
-    response.cache_control.public = True
-    response.cache_control.max_age = 31536000
-    return response
-=======
 def nocache(f):
     @functools.wraps(f)
     def nocache_route(*args, **kwargs):
@@ -54,7 +45,6 @@ def nocache(f):
         response.headers['Pragma'] = 'no-cache'
         return response
     return nocache_route
->>>>>>> cart
 
 @app.route('/')
 def home():

@@ -505,16 +505,9 @@ footer {
 /* Home */
 .home-text-holder {
     position: absolute;
-<<<<<<< HEAD
-    margin-top: 170px;
-    margin-left: 110px;
-    padding-right: 20px;
-    max-width: 400px;
-=======
     margin-top: 95px;
     margin-left: 70px;
     width: calc(100vw - 90px);
->>>>>>> cart
     color: var(--home-text);
     z-index: 1;
 }
