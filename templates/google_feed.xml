@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Psyclonic Studios Google Shopping Feed</title>
+        <link>https://www.psyclonicstudios.com.au</link>
+        <description>Artworks by Psyclonic Studios (Anne-Maree Hunter)</description>
+        {% for artwork in artworks %}
+        {% if artwork.forSale and artwork.price %}
+        <item>
+            <title>{{ artwork.title }}</title>
+            <link>{{ artwork.url }}</link>
+            <description>{{ artwork.mediaDescription }}</description>
+            {% for image in artwork.images %}
+            {% if loop.first %}
+            <g:image_link>{{ image.full_size.url }}</g:image_link>
+            {% else %}
+            <g:additional_image_link>{{ image.full_size.url }}</g:additional_image_link>
+            {% endif %}
+            {% endfor %}
+            <g:price>{{ artwork.price }}</g:price>
+            <g:condition>new</g:condition>
+            <g:availability>{% if artwork.inventory > 0%}in stock{% else %}out of stock{% endif %}</g:availability>
+            <g:brand>Psyclonic Studios</g:brand>
+            <g:shipping>
+                <g:country>AU</g:country>
+                <g:price>0 AUD</g:price>
+            </g:shipping>
+            <g:shipping>
+                <g:price>{{ ((artwork.price / 100 - 1) | ceil) * 2 + 20}} AUD</g:price>
+            </g:shipping>
+            <g:id>1a</g:id>
+        </item>
+        {% endif %}
+        {% endfor %}
+    </channel>
+</rss>

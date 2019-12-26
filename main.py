@@ -314,7 +314,7 @@ def checkout():
     shipping_country = request.form.get('country')
     shipping_cost = 0
     if not shipping_country.lower() == 'australia':
-        insurance_cost = math.ceil(cart_subtotal / 500.0 - 1) * 2
+        insurance_cost = math.ceil(cart_subtotal / 100.0 - 1) * 2
         international_shipping_cost = sum(item['quantity'] for item in cart_items) * 20
         shipping_cost += round(insurance_cost + international_shipping_cost, 2)
 
@@ -373,7 +373,14 @@ def describe_cart(cart_items):
     num_artworks = sum([item['quantity'] for item in cart_items if 'artwork' in item])
     return f'{num_artworks}✕Artwork'[0:22]
 
-#def cart_metadata(cart_items):
+@app.route('/google_shopping_feed.xml')
+def google_shopping_feed():
+    artworks = crud.get_artwork_collection(crud.new_transaction(), 400, args=request.args)
+    feed = render_template('google_feed.xml', artworks=artworks)
+    response = make_response(feed)
+    response.headers['mimetype'] = 'application/xml'
+    response.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return response
 
 @app.template_filter('format_date')
 def format_date(datetime_str):
@@ -387,6 +394,10 @@ def page_not_found(error):
 @app.template_filter('format_money')
 def format_money(money_str):
     return numbers.format_currency(money_str, 'AUD', locale='en_US')
+
+@app.template_filter('ceil')
+def ceil(num):
+    return math.ceil(num)
 
 @app.template_filter('slugify')
 def slugify_title(txt):

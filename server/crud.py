@@ -263,15 +263,16 @@ def finalise_order(payment_intent):
 def update_order(payment_intent_id, cart, subtotal, shipping_cost, total, payment_recieved):
     orders = db.collection('orders')
     order = orders.document(payment_intent_id)
-    try:
-        order_doc = order.get()
-        if 'created_at' not in order_doc.to_dict():
-            order.update({'created_at': firestore.SERVER_TIMESTAMP})
-    except exceptions.NotFound:
-        order.set({'created_at': firestore.SERVER_TIMESTAMP}, merge=True)
+    #try:
+    #    order_doc = order.get()
+    #    if 'created_at' not in order_doc.to_dict():
+    #        order.update({'created_at': firestore.SERVER_TIMESTAMP})
+    #except exceptions.NotFound:
+    #    order.set({'created_at': firestore.SERVER_TIMESTAMP}, merge=True)
     artworks = [{'artwork': content.document(id), 'quantity': cart[id]} for id in cart]
     order_update = {'payment_recieved': False, 'artworks': artworks, 'cost': {'subtotal': subtotal, 'shipping': shipping_cost, 'total': total}}
-    order.update(order_update)
+    #order.update(order_update)
+    order.set(order_update)
 
 def get_flamelink_file_url(path):
     flamelink_path = 'flamelink/media'
