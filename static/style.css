@@ -902,7 +902,7 @@ input[type=number]::-webkit-outer-spin-button {
     display: inline-block;
     text-align: center;
     position: relative;
-    top: -1em;
+    top: -0.8em;
     left: 0;
     font-size: small;
 }
