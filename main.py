@@ -20,7 +20,7 @@ if os.path.exists('stripe_token.pickle'):
         stripe_creds = pickle.load(token)
 else:
     raise ValueError('Cannot find stripe credentials')
-stripe.api_key = stripe_creds['test']
+stripe.api_key = stripe_creds['live']
 
 SESSION_SECRET_KEY = None
 if os.path.exists('flask_session_token.pickle'):

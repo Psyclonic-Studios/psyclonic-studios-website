@@ -2,7 +2,7 @@
 
 const stripeTest = 'pk_test_54LxtB4vZjsleKrRO5zqpuV1';
 const stripeLive = 'pk_live_JLuWhpvRiItMchspr5Vv5Kia';
-var stripe = Stripe(stripeTest);
+var stripe = Stripe(stripeLive);
 
 function registerElements(elements) {
   var formSelector = '#checkout';
