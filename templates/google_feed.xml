@@ -28,7 +28,9 @@
             <g:shipping>
                 <g:price>{{ ((artwork.price / 100 - 1) | ceil) * 2 + 20}} AUD</g:price>
             </g:shipping>
-            <g:id>1a</g:id>
+            <g:id>{{ artwork.id }}</g:id>
+            <g:google_product_category>9</g:google_product_category>
+            <g:identifier_exists>no</g:identifier_exists>
         </item>
         {% endif %}
         {% endfor %}
