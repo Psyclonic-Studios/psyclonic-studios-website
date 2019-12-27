@@ -4,6 +4,27 @@ Gallery
 {% endblock %}
 {% block head %}
 <meta name="description" content="Artworks by Psyclonic Studios (Anne-Maree Hunter)">
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "name": "Artwork Collection",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Psyclonic Studios",
+            "item": "{{ url_for('home', _external=True) }}"
+        },
+        {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Artwork",
+            "item": "{{ url_for('artwork_collection', _external=True) }}"
+        }
+      ]
+    }
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
