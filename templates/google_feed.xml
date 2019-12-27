@@ -8,7 +8,7 @@
         {% if artwork.forSale and artwork.price %}
         <item>
             <title>{{ artwork.title }}</title>
-            <link>{{ artwork.url }}</link>
+            <link>{{ url_for('artwork', id=artwork.id, title=artwork.title | slugify, _external=True) }}</link>
             <description>{{ artwork.mediaDescription }}</description>
             {% for image in artwork.images %}
             {% if loop.first %}
@@ -21,10 +21,6 @@
             <g:condition>new</g:condition>
             <g:availability>{% if artwork.inventory > 0%}in stock{% else %}out of stock{% endif %}</g:availability>
             <g:brand>Psyclonic Studios</g:brand>
-            <g:shipping>
-                <g:country>AU</g:country>
-                <g:price>0 AUD</g:price>
-            </g:shipping>
             <g:shipping>
                 <g:price>{{ ((artwork.price / 100 - 1) | ceil) * 2 + 20}} AUD</g:price>
             </g:shipping>
