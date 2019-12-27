@@ -412,6 +412,5 @@ jinja_string_env.filters['slugify'] = slugify
 jinja_string_env.filters['format_money'] = format_money
 jinja_string_env.filters['format_date'] = format_date
 
-
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0')

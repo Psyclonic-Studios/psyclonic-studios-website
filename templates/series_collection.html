@@ -46,7 +46,7 @@ Gallery
     {% endfor %}
     {% for artwork in non_series_artwork_collection %}
     {% set thumbnail_image = artwork.images | first %}
-    <a href="{{ url_for('artwork', id=artwork.id, title=artwork.title | slugify) }}"
+    <a href="{{ url_for('artwork', id=artwork.id, slug=artwork.title | slugify) }}"
         class="gallery-grid-item hover-darken-container">
         <img src="{{ thumbnail_image.full_size.url }}"
             srcset="{% for size, image in thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"

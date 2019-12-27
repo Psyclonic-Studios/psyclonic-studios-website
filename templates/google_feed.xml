@@ -8,7 +8,7 @@
         {% if artwork.forSale and artwork.price %}
         <item>
             <title>{{ artwork.title }}</title>
-            <link>{{ url_for('artwork', id=artwork.id, title=artwork.title | slugify, _external=True) }}</link>
+            <link>{{ url_for('artwork', id=artwork.id, slug=artwork.title | slugify, _external=True) }}</link>
             <description>{{ artwork.mediaDescription }}</description>
             {% for image in artwork.images %}
             {% if loop.first %}
