@@ -85,13 +85,13 @@
         {%- endfor -%})
     </p>
     {% endif %}
-    {% if artwork.price and artwork.forSale and artwork.inventory > 0 %}
+    {% if artwork.price and artwork.inventory > 0 %}
     <p>{{ artwork.price | format_money }}</p>
     {% endif %}
-    {% if artwork.price and artwork.forSale and artwork.inventory == 0 %}
+    {% if artwork.price and artwork.inventory == 0 %}
     <p><span style="text-decoration: line-through;">{{ artwork.price | format_money }}</span> Sold out</p>
     {% endif %}
-    {% if not (artwork.price or artwork.forSale) %}
+    {% if not artwork.price %}
     <p>Not for sale</p>
     {% endif %}
 </div>
