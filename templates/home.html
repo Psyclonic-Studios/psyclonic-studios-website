@@ -3,7 +3,6 @@
 Home
 {% endblock %}
 {% block head %}
-<link rel="shortcut icon" href="{{ url_for('static', filename='img/psyclonic-simple-favicon.png') }}">
 <meta name="description" content="{{ home_text | striptags | truncate(160, True) }}">
 <script type="application/ld+json">
 {
