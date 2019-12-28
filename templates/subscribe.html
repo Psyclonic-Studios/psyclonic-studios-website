@@ -29,11 +29,22 @@ Subscribe
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
     <h1>Subscribe</h1>
+    <p class="medium-vertical-margins">
+        Follow me on <a href="https://www.instagram.com/_u/psyclonicstudios/"
+            onclick="gtag('event', 'click', { event_category: 'engagement', event_label: 'instagram' });"
+            target="_blank">Instagram</a> and <a onclick="gtag('event', 'click', {
+    event_category: 'engagement',
+    event_label: 'facebook',
+  });" href="https://www.facebook.com/psyclonicstudios/" target="_blank">Facebook</a> for daily updates on my work!
+    </p>
     {{ subscribe | safe }}
     <form action="/subscribe" method="POST">
+
         <div>
-            <input id="subscribe" class="user-input border-accent email-input small-vertical-margins" type="email" name="email" placeholder="Email" required autocomplete="email">
-            <button type="submit" class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Subscribe</button>
+            <input id="subscribe" class="user-input border-accent email-input small-vertical-margins" type="email"
+                name="email" placeholder="Email" required autocomplete="email">
+            <button type="submit"
+                class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Subscribe</button>
         </div>
     </form>
 </div>
