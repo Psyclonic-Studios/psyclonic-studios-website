@@ -134,8 +134,8 @@ def get_home_text():
 def get_about():
     return get_website_component('About')
 
-def get_legal():
-    return get_website_component('Legal')
+def get_policies():
+    return get_website_component('Policies')
 
 @firestore.transactional
 def get_contribute_products(transaction, size, args):

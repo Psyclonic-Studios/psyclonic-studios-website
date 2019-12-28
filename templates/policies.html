@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-Legal
+Policies
 {% endblock %}
 {% block head %}
 <meta name="description" content="{{ legal | striptags | truncate(160, True) }}">
@@ -19,8 +19,8 @@ Legal
         {
             "@type": "ListItem",
             "position": 2,
-            "name": "Legal",
-            "item": "{{ url_for('legal', _external=True) }}"
+            "name": "Policies",
+            "item": "{{ url_for('policies', _external=True) }}"
         }
       ]
     }
@@ -28,7 +28,7 @@ Legal
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins">
-    <h1 class="center">Legal</h1>
-    {{ legal | safe }}
+    <h1 class="center">Policies</h1>
+    {{ policies | safe }}
 </div>
 {% endblock %}

@@ -238,9 +238,9 @@ def series_enquire(id):
 #    blog = crud.get_blog(crud.new_transaction(), id, 667)
 #    return render_template('blog.html', blog=blog)
 
-@app.route('/legal')
-def legal():
-    return render_template('legal.html', legal=crud.get_legal())
+@app.route('/policies')
+def policies():
+    return render_template('policies.html', policies=crud.get_policies())
 
 @sitemap.register_generator
 def sitemap_legal():
