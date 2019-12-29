@@ -5,7 +5,6 @@ Contact
 {% block head %}
 <meta name="description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios">
 <script type="application/ld+json">
-
     {
       "@context": "https://schema.org",
       "name": "Contact",
@@ -26,6 +25,7 @@ Contact
       ]
     }
 </script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_"></script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
@@ -49,18 +49,25 @@ Contact
                 class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
-    <div class="medium-vertical-margins small-font">
-        Using the form above is the preferred contact method, but you may get <a id="request-contact-info">direct
-            contact information</a> if you require it.
-    </div>
 </div>
+<p class="center narrow-page medium-vertical-margins small-font">
+    Using the form above is the preferred contact method, but you may get <a id="request-contact-info">direct
+        contact information</a> if you require it.
+        <br>
+    (This is protected by reCAPTCHA and the Google
+    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+    <a href="https://policies.google.com/terms">Terms of Service</a> apply)
+</p>
 <script>
     grecaptcha.ready(function () {
         document.getElementById('request-contact-info').addEventListener('click', () => {
             grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'request_contact_info' }).then(function (token) {
-                const form = FormData();
+                const form = new FormData();
                 form.append('recaptchaToken', token);
                 const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    document.write(xhr.response);
+                }
                 xhr.open("POST", '/contact');
                 xhr.send(form);
             });

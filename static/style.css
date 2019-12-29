@@ -817,6 +817,18 @@ input[type=number]::-webkit-outer-spin-button {
     display: inline-block;
 }
 
+/* Contact */
+#contact-details {
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+#contact-details td {
+    padding: 0.2em 0.3em;
+}
+
+.grecaptcha-badge { visibility: hidden; }
+
 /* Blog */
 .blog-header {
     width: calc(100vw - 2*var(--wide-page-padding));
