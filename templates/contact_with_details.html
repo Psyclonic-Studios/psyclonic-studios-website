@@ -5,6 +5,7 @@ Contact
 {% block head %}
 <meta name="description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios">
 <script type="application/ld+json">
+
     {
       "@context": "https://schema.org",
       "name": "Contact",
@@ -25,7 +26,6 @@ Contact
       ]
     }
 </script>
-<script src="https://www.google.com/recaptcha/api.js?render=6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_"></script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">
@@ -49,29 +49,19 @@ Contact
                 class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
+
 </div>
-<p class="center narrow-page medium-vertical-margins small-font">
-    Using the form above is the preferred contact method, but you may get <a id="request-contact-info">direct
-        contact information</a> if you require it.
-        <br>
-    (This is protected by reCAPTCHA and the Google
-    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
-    <a href="https://policies.google.com/terms">Terms of Service</a> apply)
-</p>
-<script>
-    grecaptcha.ready(function () {
-        document.getElementById('request-contact-info').addEventListener('click', () => {
-            grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'request_contact_info' }).then(function (token) {
-                const form = new FormData();
-                form.append('recaptchaToken', token);
-                const xhr = new XMLHttpRequest();
-                xhr.onload = function () {
-                    document.write(xhr.response);
-                }
-                xhr.open("POST", '/contact');
-                xhr.send(form);
-            });
-        });
-    });
-</script>
+<div class="medium-vertical-margins center narrow-page">
+    <table id="contact-details">
+        <tr>
+            <td class="right">Email (preferred):</td>
+            <td class="left"><a
+                    href="mailto:customer@psyclonicstudios.com.au">customer@&#8203;psyclonicstudios.com.au</a></td>
+        </tr>
+        <tr>
+            <td class="right">Phone:</td>
+            <td class="left">+61 418 468 415</td>
+        </tr>
+    </table>
+</div>
 {% endblock %}

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, redirect, jsonify, abort, session, make_response
 from flask_sitemap import Sitemap
+import requests
 from datetime import datetime
 from babel import numbers
 from server import crud, gmail, trello_helper
@@ -260,15 +261,23 @@ def add_subscriber():
     crud.post_email_address(email)
     return render_template('subscribe_success.html', thankyou_text=crud.get_subscribe_success())
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET', 'POST'])
 def contact():
-    return render_template('contact.html', contact_message=crud.get_contact_message())
+    contact_message = crud.get_contact_message()
+    if request.method == 'POST':
+        token = request.form.get('recaptchaToken')
+        recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
+        recaptcha = recaptcha_response.json()
+        print(recaptcha['score'])
+        if recaptcha['action'] == 'request_contact_info' and recaptcha['score'] > 0.5:
+            return render_template('contact_with_details.html', contact_message=contact_message)
+    return render_template('contact.html', contact_message=contact_message)
 
 @sitemap.register_generator
 def sitemap_contact():
     yield 'contact', {}
 
-@app.route('/contact', methods=['POST'])
+@app.route('/contact_send', methods=['POST'])
 def contact_send_email():
     enquiry_email_template = crud.get_contact_email_template()
     
