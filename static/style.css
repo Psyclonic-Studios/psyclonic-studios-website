@@ -248,8 +248,10 @@ a {
     text-decoration: none;
 }
 
+a,
 a:link,
 a:visited {
+    cursor: pointer;
     color: var(--accent-colour-light);
 }
 

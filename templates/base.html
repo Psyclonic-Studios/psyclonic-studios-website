@@ -15,6 +15,7 @@
   <title>{% block title %}{% endblock %} | Psyclonic Studios</title>
   {% block head %}
   {% endblock %}
+  <script src="https://www.google.com/recaptcha/api.js?render=6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_"></script>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width" />
 
@@ -24,7 +25,8 @@
 <body>
   {% include 'nav.html' %}
   {% if not hide_cart and 'cart' in session and (session.cart | length) > 0 %}
-  <a id="cart-icon" class="button-narrow buttonize" href="/cart">Cart<span class="circle-icon background-primary text-accent">{{ session.get('cart', []) | length }}</span></a>
+  <a id="cart-icon" class="button-narrow buttonize" href="/cart">Cart<span
+      class="circle-icon background-primary text-accent">{{ session.get('cart', []) | length }}</span></a>
   {% endif %}
   <main>
     {% block body %}{% endblock %}
