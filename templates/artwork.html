@@ -98,6 +98,11 @@
     {% if not artwork.price %}
     <p>Not for sale</p>
     {% endif %}
+    {% if artwork.inTheCollectionOf %}
+    <p class="small-font">
+        In the collection of {{ artwork.inTheCollectionOf }}
+    </p>
+    {% endif %}
 </div>
 <div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page"
