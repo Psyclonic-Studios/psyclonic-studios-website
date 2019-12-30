@@ -71,11 +71,15 @@
 {% block body %}
 <div class="narrow-page center medium-vertical-margins">
     <h1>{{ artwork.title }} <span class="artwork-year">[{{ artwork.year }}]</span></h1>
-    <div>
+    {% if artwork.editionInformation %}<p class="small-font small-vertical-margins">{{ artwork.editionInformation }}</p>
+    {% endif %}
+    {% if artwork.mediaDescription %}
+    <div class="medium-vertical-margins">
         {{ artwork.mediaDescription | safe }}
     </div>
+    {% endif %}
     {% if artwork.dimensions %}
-    <p>
+    <div class="medium-vertical-margins">
         {%- for dimension in artwork.dimensions -%}
         <span class="artwork-measurement">{{ dimension.measurement }}</span><span
             class="artwork-unit">{{ dimension.unit }}</span>{{ "×" if not loop.last }}
@@ -83,7 +87,7 @@
         &nbsp;({%- for dimension in artwork.dimensions -%}
         <span class="artwork-dimension">{{ dimension.dimension | first | lower }}</span>{{ "×" if not loop.last }}
         {%- endfor -%})
-    </p>
+    </div>
     {% endif %}
     {% if artwork.price and artwork.inventory > 0 %}
     <p>{{ artwork.price | format_money }}</p>
@@ -111,12 +115,20 @@
     <span class="scroll-button previous"></span>
     <span class="scroll-button next"></span>
 </div>
+{% if artwork.artistStatement %}
+<div class="narrow-page medium-vertical-margins justify">
+    {{ artwork.artistStatement | safe }}
+</div>
+{% endif %}
 {% if artwork.forSale and artwork.inventory > 0 and not artwork.easyShipping %}
-<p class="narrow-page justify small-font">Because of the many shapes and sizes of my artworks, packaging some of them can be a little
+<p class="narrow-page justify small-font">Because of the many shapes and sizes of my artworks, packaging some of them
+    can be a little
     bit tricky!
-    Customised shipping needs to be arranged for this piece. If you submit your shipping details, I will send an estimate of the shipping cost to you.
-    <br/>
-For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically under
+    Customised shipping needs to be arranged for this piece. If you submit your shipping details, I will send an
+    estimate of the shipping cost to you.
+    <br />
+    For addresses within Australia, shipping is typically under $20. For international orders, shipping is typically
+    under
     $40.
 </p>
 {% endif %}
@@ -125,29 +137,30 @@ For addresses within Australia, shipping is typically under $20. For internation
     Free shipping within Australia!
 </p>
 {% endif %}
-<p class="narrow-page center small-font">
-    All prints are sold unframed
-</p>
 <div class="narrow-page center medium-vertical-margins">
     {% if artwork.forSale and artwork.inventory > 0 %}
     {% if artwork.easyShipping and artwork.price %}
     {% if in_cart %}
     <a id="add-to-cart-button" href="{{ url_for('cart') }}"
-        class="hover-accent text-primary border-accent background-white button-wide buttonize small-vertical-margins">View in cart</a>
+        class="hover-accent text-primary border-accent background-white button-wide buttonize small-vertical-margins">View
+        in cart</a>
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
         <button type="submit" onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}' });"
-        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to cart</button>
+            class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to
+            cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
     </form>
     {% endif %}
     {% else %}
     <button id="buy-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Shipping enquiry</button>
+        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Shipping
+        enquiry</button>
     {% endif %}
     {% endif %}
     <button id="enquire-button" type="button"
-        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Ask the artist</button>
+        class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Ask the
+        artist</button>
 </div>
 <div id="enquire-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-enquire/{{ artwork.id }}" method="POST">
@@ -210,10 +223,19 @@ For addresses within Australia, shipping is typically under $20. For internation
 {% if artwork.redbubbleLink %}
 <div class="center ultra-narrow-page medium-vertical-margins">
     <p>or</p>
-    <a href="{{ artwork.redbubbleLink }}" onclick="gtag('event', 'click', { event_label: 'redbubble_artwork', event_category: 'engagement' });" target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs,
+    <a href="{{ artwork.redbubbleLink }}"
+        onclick="gtag('event', 'click', { event_label: 'redbubble_artwork', event_category: 'engagement' });"
+        target="_blank">Find "{{ artwork.title }}" printed on T-shirts, travel mugs,
         and postcards!</a>
 </div>
 {% endif %}
+<p class="narrow-page center small-font">
+    All prints are sold unframed
+    {% if artwork.additionalInformation %}
+    <br>
+        {{ artwork.additionalInformation }}
+    {% endif %}
+</p>
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='enquire_form.js') }}"></script>
 {% endblock %}
