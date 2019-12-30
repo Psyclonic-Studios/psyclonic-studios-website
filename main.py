@@ -268,7 +268,6 @@ def contact():
         token = request.form.get('recaptchaToken')
         recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
         recaptcha = recaptcha_response.json()
-        print(recaptcha['score'])
         if recaptcha['action'] == 'request_contact_info' and recaptcha['score'] > 0.5:
             return render_template('contact_with_details.html', contact_message=contact_message)
     return render_template('contact.html', contact_message=contact_message)
