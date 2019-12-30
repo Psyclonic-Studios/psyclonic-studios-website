@@ -19,7 +19,7 @@
 
     --main-padding: 20px;
     --wide-page-padding: 2px;
-    --medium-page-padding: 20px;
+    --medium-page-padding: 10px;
     --narrow-page-width: 800px;
     --ultra-narrow-page-width: 400px;
     --grid-gap: 10px;
@@ -30,6 +30,11 @@
     --slider-hold-time: 4s;
 }
 
+@media (min-width: 560px) {
+    :root {
+        --medium-page-padding: 20px;
+    }
+}
 @media (min-width: 560px) {
     :root {
         --footer-height: 50px;
@@ -761,9 +766,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 @media (min-width: 720px) {
     .gallery-grid-container {
-        display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        grid-auto-rows: min-content;
     }
 }
 

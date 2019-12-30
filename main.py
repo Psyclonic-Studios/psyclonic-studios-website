@@ -81,7 +81,7 @@ def sitemap_about():
 
 @app.route('/artwork')
 def artwork_collection():
-    artworks = crud.get_artwork_collection(crud.new_transaction(), 400, args=request.args)
+    artworks = crud.get_artwork_collection(crud.new_transaction(), 700, args=request.args)
     return render_template('artwork_collection.html', artworks=artworks)
 
 @sitemap.register_generator
@@ -174,8 +174,8 @@ def artwork_enquire(id):
 
 @app.route('/series')
 def series_collection():
-    series_collection = crud.get_series_collection(crud.new_transaction(), 400, args=request.args)
-    non_series_artwork_collection = crud.get_non_series_artwork_collection(crud.new_transaction(), 400, args=request.args)
+    series_collection = crud.get_series_collection(crud.new_transaction(), 700, args=request.args)
+    non_series_artwork_collection = crud.get_non_series_artwork_collection(crud.new_transaction(), 700, args=request.args)
     return render_template('series_collection.html', series_collection=series_collection, non_series_artwork_collection=non_series_artwork_collection)
 
 @sitemap.register_generator
