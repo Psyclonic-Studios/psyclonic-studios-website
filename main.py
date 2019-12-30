@@ -244,8 +244,8 @@ def policies():
     return render_template('policies.html', policies=crud.get_policies())
 
 @sitemap.register_generator
-def sitemap_legal():
-    yield 'legal', {}
+def sitemap_policies():
+    yield 'policies', {}
 
 @app.route('/subscribe')
 def subscribe():

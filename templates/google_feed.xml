@@ -5,7 +5,7 @@
         <link>https://www.psyclonicstudios.com.au</link>
         <description>Artworks by Psyclonic Studios (Anne-Maree Hunter)</description>
         {% for artwork in artworks %}
-        {% if artwork.forSale and artwork.price %}
+        {% if artwork.price %}
         <item>
             <title>{{ artwork.title }}</title>
             <link>{{ url_for('artwork', id=artwork.id, slug=artwork.title | slugify, _external=True) }}</link>
