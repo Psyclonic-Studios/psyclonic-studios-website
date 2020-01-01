@@ -3,11 +3,11 @@
 Gallery
 {% endblock %}
 {% block head %}
-<meta name="description" content="Series by Psyclonic Studios (Anne-Maree Hunter)">
+<meta name="description" content="Artist catalogue of Psyclonic Studios (Anne-Maree Hunter)">
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "name": "Series Collection",
+      "name": "Gallery",
       "@type": "BreadcrumbList",
       "itemListElement": [
         {
@@ -19,8 +19,8 @@ Gallery
         {
             "@type": "ListItem",
             "position": 2,
-            "name": "Series",
-            "item": "{{ url_for('series_collection', _external=True) }}"
+            "name": "Gallery",
+            "item": "{{ url_for('gallery', _external=True) }}"
         }
       ]
     }
@@ -40,7 +40,7 @@ Gallery
     <h2>Series</h2>
     <div class="gallery-grid-container">
         {% for series in series_collection %}
-        <a href="/series/{{ series.id }}/{{ series.title | slugify }}" class="gallery-grid-item hover-darken-container">
+        <a href="{{ url_for('series', id=series.id, slug=series.title | slugify) }}" class="gallery-grid-item hover-darken-container">
             <img src="{{ series.thumbnail_image.full_size.url }}"
                 srcset="{% for size, image in series.thumbnail_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
                 alt="{{ series.description }}" class="hover-darken">

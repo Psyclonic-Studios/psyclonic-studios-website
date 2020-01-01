@@ -81,12 +81,15 @@ def sitemap_about():
 
 @app.route('/artwork')
 def artwork_collection():
-    artworks = crud.get_artwork_collection(crud.new_transaction(), 700, args=request.args)
-    return render_template('artwork_collection.html', artworks=artworks)
-
-@sitemap.register_generator
-def sitemap_artwork_collection():
-    yield 'artwork_collection', {}
+    return redirect(url_for('gallery'))
+#@app.route('/artwork')
+#def artwork_collection():
+#    artworks = crud.get_artwork_collection(crud.new_transaction(), 700, args=request.args)
+#    return render_template('artwork_collection.html', artworks=artworks)
+#
+#@sitemap.register_generator
+#def sitemap_artwork_collection():
+#    yield 'artwork_collection', {}
 
 @app.route('/artwork/<string:id>', defaults={'slug': None})
 @app.route('/artwork/<string:id>/<slug>')
@@ -172,15 +175,29 @@ def artwork_enquire(id):
     trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
     return render_template('enquiry_success.html', thankyou_text=crud.get_enquire_thankyou(), enquiry_type='artwork_enquiry')
 
-@app.route('/series')
-def series_collection():
+@app.route('/gallery')
+def gallery():
     series_collection = crud.get_series_collection(crud.new_transaction(), 700, args=request.args)
     non_series_artwork_collection = crud.get_non_series_artwork_collection(crud.new_transaction(), 700, args=request.args)
-    return render_template('series_collection.html', series_collection=series_collection, non_series_artwork_collection=non_series_artwork_collection)
+    return render_template('gallery.html', series_collection=series_collection, non_series_artwork_collection=non_series_artwork_collection)
 
 @sitemap.register_generator
-def sitemap_series_collection():
-    yield 'series_collection', {}
+def sitemap_gallery():
+    yield 'gallery', {}
+
+@app.route('/series')
+def series_collection():
+    return redirect(url_for('gallery'))
+
+#@app.route('/series')
+#def series_collection():
+#    series_collection = crud.get_series_collection(crud.new_transaction(), 700, args=request.args)
+#    non_series_artwork_collection = crud.get_non_series_artwork_collection(crud.new_transaction(), 700, args=request.args)
+#    return render_template('series_collection.html', series_collection=series_collection, non_series_artwork_collection=non_series_artwork_collection)
+#
+#@sitemap.register_generator
+#def sitemap_series_collection():
+#    yield 'series_collection', {}
 
 @app.route('/series/<string:id>', defaults={'slug': None})
 @app.route('/series/<string:id>/<slug>')
