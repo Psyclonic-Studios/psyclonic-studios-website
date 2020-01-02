@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}
+{%- block title -%}
 {{ artwork.title }}
-{% endblock %}
+{%- endblock -%}
 {% block head %}
 <meta name="description"
     content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
+
+<meta property="og:url" content="{{ canonical_url }}"/>
+<meta property="og:description" content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}"/>
+<meta property="og:image" content="{{ (artwork.images | first).full_size.url }}"/>
+
 {% if artwork.forSale %}
 <script type="application/ld+json">
     {

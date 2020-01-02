@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
-{% block title %}
+{%- block title -%}
 Gallery
-{% endblock %}
+{%- endblock -%}
 {% block head %}
 <meta name="description" content="Artist catalogue of Psyclonic Studios (Anne-Maree Hunter)">
+
+<meta property="og:url" content="{{ url_for('gallery', _external=True) }}"/>
+<meta property="og:description" content="Artist catalogue of Psyclonic Studios (Anne-Maree Hunter)"/>
+{% set series = series_collection | first %}
+<meta property="og:image" content="{{ series.thumbnail_image.full_size.url }}"/>
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",

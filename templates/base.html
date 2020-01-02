@@ -13,13 +13,18 @@
   <!-- End gtag.js -->
 
   <title>{% block title %}{% endblock %} | Psyclonic Studios</title>
-  {% block head %}
-  {% endblock %}
+  
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta name="viewport" content="width=device-width" />
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='img/psyclonic-simple-favicon.png') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+  {% block head %}
+  {% endblock %}
+  <meta property="og:app_id" content="3925994144093215"/>
+  <meta property="og:title" content="{{ self.title() }} | Psyclonic Studios"/>
+
 </head>
 
 <body>

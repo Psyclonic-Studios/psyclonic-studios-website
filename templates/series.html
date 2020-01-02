@@ -1,11 +1,16 @@
 {% extends 'base.html' %}
-{% block title %}
+{%- block title -%}
 {{ series.title }}
-{% endblock %}
+{%- endblock -%}
 {% block head %}
 <meta name="description"
     content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ' - ' ~ series.description) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
+
+<meta property="og:url" content="{{ canonical_url }}"/>
+<meta property="og:description" content="{{ (series.title ~ ' (' ~ series.year ~ ')' ~ ', ' ~ series.description) | striptags | truncate(160, True) }}"/>
+<meta property="og:image" content="{{ ((series.artworks_resolved | first).images | first).full_size.url }}"/>
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",

@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}
+{%- block title -%}
 Contact
-{% endblock %}
+{%- endblock -%}
 {% block head %}
 <meta name="description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios">
+
+<meta property="og:url" content="{{ url_for('contact', _external=True) }}"/>
+<meta property="og:description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios"/>
+<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/psyclonic-studios-website.appspot.com/o/flamelink%2Fmedia%2FiFtGnXrDje0VzWX3XVHp_SLQ.JPG?alt=media&token=5646aa0a-da0f-466c-a792-128f576efffc"/>
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",

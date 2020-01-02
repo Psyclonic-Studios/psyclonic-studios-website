@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
-{% block title %}
+{%- block title -%}
 Subscribe
-{% endblock %}
+{%- endblock -%}
 {% block head %}
 <meta name="description" content="{{ subscribe | striptags | truncate(160, True) }}">
+
+<meta property="og:url" content="{{ url_for('subscribe', _external=True) }}"/>
+<meta property="og:description" content="{{ subscribe | striptags | truncate(160, True) }}"/>
+<meta property="og:image" content="https://storage.googleapis.com/psyclonic-studios-website.appspot.com/flamelink/media/sized/900_9999_99/4kntu8IfehmfIF22sZ3Y_P1141468%20rainbow%20gradient.jpg"/>
+
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
