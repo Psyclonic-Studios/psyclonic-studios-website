@@ -9,7 +9,7 @@
         <item>
             <title>{{ artwork.title }}</title>
             <link>{{ url_for('artwork', id=artwork.id, slug=artwork.title | slugify, _external=True) }}</link>
-            <description>{{ artwork.mediaDescription | e }}{% if artwork.artistStatement %}&lt;br&gt;{{ artwork.artistStatement | e }}{% endif %}</description>
+            <description>{{ artwork.mediaDescription | e }}{% if artwork.artistStatement %}&lt;br /&gt;{{ artwork.artistStatement | e }}{% endif %}</description>
             {% for image in artwork.images %}
             {% if loop.first %}
             <g:image_link>{{ image.full_size.url }}</g:image_link>
