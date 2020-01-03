@@ -400,8 +400,17 @@ def describe_cart(cart_items):
 
 @app.route('/google_shopping_feed.xml')
 def google_shopping_feed():
-    artworks = crud.get_artwork_collection(crud.new_transaction(), 400, args=request.args)
+    artworks = crud.get_artwork_collection(crud.new_transaction(), 700, args=request.args)
     feed = render_template('google_feed.xml', artworks=artworks)
+    response = make_response(feed)
+    response.headers['mimetype'] = 'application/xml'
+    response.headers["Content-Type"] = "text/xml; charset=utf-8"
+    return response
+
+@app.route('/facebook_shopping_feed.xml')
+def facebook_shopping_feed():
+    artworks = crud.get_artwork_collection(crud.new_transaction(), 700, args=request.args)
+    feed = render_template('facebook_feed.xml', artworks=artworks)
     response = make_response(feed)
     response.headers['mimetype'] = 'application/xml'
     response.headers["Content-Type"] = "text/xml; charset=utf-8"

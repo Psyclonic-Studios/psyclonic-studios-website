@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
+    <channel>
+        <title>Psyclonic Studios Google Shopping Feed</title>
+        <link>https://www.psyclonicstudios.com.au</link>
+        <description>Artworks by Psyclonic Studios (Anne-Maree Hunter)</description>
+        {% for artwork in artworks %}
+        {% if artwork.price %}
+        <item>
+            <title>{{ artwork.title }}</title>
+            <link>{{ url_for('artwork', id=artwork.id, slug=artwork.title | slugify, _external=True) }}</link>
+            <description>{{ artwork.mediaDescription | striptags }}{% if artwork.artistStatement %}. {{ artwork.artistStatement | striptags }}{% endif %}</description>
+            <rich_text_description>{{ artwork.mediaDescription | e }}{% if artwork.artistStatement %}&lt;br&gt;{{ artwork.artistStatement | e }}{% endif %}</rich_text_description>
+            {% for image in artwork.images %}
+            {% if loop.first %}
+            <g:image_link>{{ image.full_size.url }}</g:image_link>
+            {% else %}
+            <g:additional_image_link>{{ image.full_size.url }}</g:additional_image_link>
+            {% endif %}
+            {% endfor %}
+            <g:price>{{ artwork.price }} AUD</g:price>
+            <g:condition>new</g:condition>
+            <g:availability>{% if artwork.inventory > 0%}in stock{% else %}out of stock{% endif %}</g:availability>
+            <g:brand>Psyclonic Studios</g:brand>
+            <g:shipping>
+                <g:price>{{ ((artwork.price / 100 - 1) | ceil) * 2 + 20}} AUD</g:price>
+            </g:shipping>
+            <g:id>{{ artwork.id }}</g:id>
+            <g:google_product_category>9</g:google_product_category>
+            <g:identifier_exists>no</g:identifier_exists>
+        </item>
+        {% endif %}
+        {% endfor %}
+    </channel>
+</rss>
