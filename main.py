@@ -31,6 +31,7 @@ else:
     raise ValueError('Cannot find session secret')
 
 app = Flask(__name__)
+app.url_map.strict_slashes = False
 app.secret_key = SESSION_SECRET_KEY
 app.jinja_env.trim_blocks = True
 app.jinja_env.lstrip_blocks = True
