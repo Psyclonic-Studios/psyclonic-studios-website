@@ -38,6 +38,17 @@
       ]
     }
 </script>
+<script>
+    gtag('event', 'view_item_list', {
+        items: [
+            {% for artwork in series.artworks_resolved %}
+            {
+                id: '{{ artwork.id }}'
+            },
+            {% endfor %}
+        ]
+    });
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page medium-vertical-margins center">

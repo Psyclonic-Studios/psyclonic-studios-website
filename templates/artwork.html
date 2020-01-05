@@ -7,11 +7,12 @@
     content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}">
 <link rel="canonical" href="{{ canonical_url }}" />
 
-<meta property="og:url" content="{{ canonical_url }}"/>
-<meta property="og:description" content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}"/>
-<meta property="og:image" content="{{ (artwork.images | first).full_size.url }}"/>
+<meta property="og:url" content="{{ canonical_url }}" />
+<meta property="og:description"
+    content="{{ (artwork.title ~ ' (' ~ artwork.year ~ ')' ~ ', ' ~ artwork.mediaDescription) | striptags | truncate(160, True) }}" />
+<meta property="og:image" content="{{ (artwork.images | first).full_size.url }}" />
 
-{% if artwork.forSale %}
+{% if artwork.price %}
 <script type="application/ld+json">
     {
       "@context": "https://schema.org/",
@@ -36,7 +37,7 @@
         "price": "{{ artwork.price }}",
         {% endif %}
         "itemCondition": "https://schema.org/NewCondition",
-        "availability": "https://schema.org/InStock",
+        "availability": {% if artwork.inventory > 0 %}"https://schema.org/InStock"{% else %}"https://schema.org/SoldOut"{% endif %},
         "seller": {
           "@type": "Organization",
           "name": "Psyclonic Studios"
@@ -44,6 +45,7 @@
       }
     }
 </script>
+{% endif %}
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -71,7 +73,16 @@
       ]
     }
 </script>
-{% endif %}
+<script>
+    gtag('event', 'view_item', {
+        value: '{{ artwork.price }}',
+        items: [
+            {
+                id: '{{ artwork.id }}'
+            }
+        ]
+    });
+</script>
 {% endblock %}
 {% block body %}
 <div class="narrow-page center medium-vertical-margins">
@@ -130,7 +141,7 @@
     {{ artwork.artistStatement | safe }}
 </div>
 {% endif %}
-{% if artwork.forSale and artwork.inventory > 0 and not artwork.easyShipping %}
+{% if artwork.inventory > 0 and not artwork.easyShipping %}
 <p class="narrow-page justify small-font">Because of the many shapes and sizes of my artworks, packaging some of them
     can be a little
     bit tricky!
@@ -142,13 +153,13 @@
     $40.
 </p>
 {% endif %}
-{% if artwork.forSale and artwork.inventory > 0 and artwork.easyShipping %}
+{% if artwork.inventory > 0 and artwork.easyShipping %}
 <p class="narrow-page center small-font">
     Free shipping within Australia!
 </p>
 {% endif %}
 <div class="narrow-page center medium-vertical-margins">
-    {% if artwork.forSale and artwork.inventory > 0 %}
+    {% if artwork.inventory > 0 %}
     {% if artwork.easyShipping and artwork.price %}
     {% if in_cart %}
     <a id="add-to-cart-button" href="{{ url_for('cart') }}"
@@ -156,7 +167,8 @@
         in cart</a>
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
-        <button type="submit" onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}' });"
+        <button type="submit"
+            onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}', value: '{{ artwork.price }}', items: [{ id: '{{ artwork.id }}' }] });"
             class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to
             cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
@@ -193,7 +205,7 @@
         </div>
     </form>
 </div>
-{% if artwork.forSale and artwork.inventory > 0 %}
+{% if artwork.inventory > 0 %}
 <div id="buy-form" class="narrow-page center medium-vertical-margins" hidden>
     <form class="bordered" action="/artwork-buy/{{ artwork.id }}" method="POST">
         <div class="medium-vertical-margins">
@@ -243,7 +255,7 @@
     All prints are sold unframed
     {% if artwork.additionalInformation %}
     <br>
-        {{ artwork.additionalInformation }}
+    {{ artwork.additionalInformation }}
     {% endif %}
 </p>
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>

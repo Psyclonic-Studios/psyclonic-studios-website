@@ -143,7 +143,8 @@ function registerElements(elements) {
         gtag('event', 'purchase', {
           'value': result.amount,
           'transaction_id': result.id,
-          'currency': 'aud'
+          'currency': 'aud',
+          'items': cart_items
         });
         window.location.href = new URL("payment_success", window.location.origin).href;
       }

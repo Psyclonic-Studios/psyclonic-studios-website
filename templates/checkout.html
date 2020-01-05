@@ -7,7 +7,15 @@ Checkout
 <script>
     gtag('event', 'begin_checkout');
 </script>
-
+<script>
+    const cart_items = [
+        {% for item in cart_items %}
+        {
+            id: "{{ item.artwork.id }}"
+        },
+        {% endfor %}
+    ]
+</script>
 {% endblock %}
 {% block body %}
 <h1 class="narrow-page center">Checkout</h1>
