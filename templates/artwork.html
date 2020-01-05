@@ -78,7 +78,8 @@
         value: '{{ artwork.price }}',
         items: [
             {
-                id: '{{ artwork.id }}'
+                'id': '{{ artwork.id }}',
+                'google_business_vertical': 'retail'
             }
         ]
     });
@@ -168,7 +169,7 @@
     {% else %}
     <form id="add-to-cart" action="{{ url_for('artwork_add_to_cart') }}" method="POST">
         <button type="submit"
-            onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}', value: '{{ artwork.price }}', items: [{ id: '{{ artwork.id }}' }] });"
+            onclick="gtag('event', 'add_to_cart', { event_label: '{{ artwork.title }}', value: '{{ artwork.price }}', items: [{ id: '{{ artwork.id }}', 'google_business_vertical': 'retail' }] });"
             class="hover-accent text-primary border-accent background-white button-wide small-vertical-margins">Add to
             cart</button>
         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">

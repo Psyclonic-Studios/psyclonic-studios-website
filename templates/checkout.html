@@ -11,7 +11,8 @@ Checkout
     const cart_items = [
         {% for item in cart_items %}
         {
-            id: "{{ item.artwork.id }}"
+            'id': "{{ item.artwork.id }}",
+            'google_business_vertical': 'retail'
         },
         {% endfor %}
     ]

@@ -43,7 +43,8 @@
         items: [
             {% for artwork in series.artworks_resolved %}
             {
-                id: '{{ artwork.id }}'
+                id: '{{ artwork.id }}',
+                'google_business_vertical': 'retail'
             },
             {% endfor %}
         ]
