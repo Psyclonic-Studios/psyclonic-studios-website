@@ -39,3 +39,16 @@ function scrollGallery(direction) {
   window.addEventListener('resize', showScrollButtons);
   window.addEventListener('load', showScrollButtons);
 })();
+
+// remember scroll position
+(function () {
+  let pathName = document.location.pathname;
+  window.addEventListener('beforeunload', function (e) {
+    let scrollPosition = gallery.scrollLeft;
+    sessionStorage.setItem("scrollPosition_" + pathName, scrollPosition.toString());
+  });
+  let nav_type = window.performance.getEntriesByType("navigation")[0].type;
+  if ((nav_type == 'reload' || nav_type == 'back_forward') && sessionStorage["scrollPosition_" + pathName]) {
+    gallery.scrollLeft = sessionStorage.getItem("scrollPosition_" + pathName);
+  }
+})();
