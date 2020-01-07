@@ -73,8 +73,8 @@ def get_series_collection(transaction, size, args):
 def get_series(transaction, id, size):
     series = content.document(id).get(transaction=transaction).to_dict()
     # todo
-    #series_image_refs = series['seriesImages']
-    #series_image_urls = [get_file_url(get_image_size_path(image.get(transaction=transaction).to_dict(), size)) for image in image_refs]
+    series_image_refs = series['seriesImages']
+    series_image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in series_image_refs]
     if not series:
         return None
     artworks_resolved = []
@@ -85,6 +85,7 @@ def get_series(transaction, id, size):
         artwork['images'] = image_urls
         artworks_resolved.append(artwork)
     series['artworks_resolved'] = artworks_resolved
+    series['series_images'] = series_image_urls
     return series
 
 #

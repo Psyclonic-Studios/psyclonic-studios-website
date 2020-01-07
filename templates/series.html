@@ -60,6 +60,15 @@
 </div>
 <div class="gallery-horizontal-container medium-vertical-margins">
     <div class="gallery-horizontal wide-page" style="--num-tiles: {{ number_of_tiles }}">
+        {% for series_image in series.series_images %}
+        <div class="gallery-horizontal-item-container">
+            <div class="gallery-horizontal-item">
+                <img src="{{ series_image.full_size.url }}"
+                    srcset="{% for size, image in series_image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
+                    alt="{{ series.description }}">
+            </div>
+        </div>
+        {% endfor %}
         {% for artwork in series.artworks_resolved %}
         {% set image = artwork.images | first %}
         <div class="gallery-horizontal-item-container">
