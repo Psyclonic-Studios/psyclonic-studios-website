@@ -359,6 +359,7 @@ def checkout():
             amount=stripe_amount,
             currency='aud',
             description=describe_cart(cart_items),
+            metadata={'channel': 'website'},
             idempotency_key=idempotency_key
         )
     session['payment_intent'] = intent.id
@@ -378,6 +379,8 @@ def confirm_payment():
 
     if event.type == 'payment_intent.succeeded':
         payment_intent = event.data.object
+        if payment_intent.metadata.channel != 'website':
+            return '', 204
         crud.finalise_order(payment_intent)
         final_order = crud.get_order(payment_intent.id)
 
