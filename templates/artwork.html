@@ -24,7 +24,7 @@
         {% endfor %}
        ],
       "description": "{{ artwork.mediaDescription }}",
-      "sku": "sku_{{ artwork.title | slugify }}",
+      "sku": "{{ artwork.title | slugify }}",
       "brand": {
         "@type": "Thing",
         "name": "Psyclonic Studios"

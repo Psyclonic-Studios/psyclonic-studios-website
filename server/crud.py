@@ -28,6 +28,7 @@ def get_artwork(transaction, id, size):
     if not artwork:
         return None
     artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
+    artwork['inventory'] = int(artwork['inventory']) # hack to fix flamelink screwup
     return artwork
 
 @firestore.transactional
