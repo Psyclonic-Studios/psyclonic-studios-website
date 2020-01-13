@@ -19,6 +19,7 @@ def get_artwork_collection(transaction, size, args):
         artwork = artwork_ref.to_dict()
         image_refs = artwork['images']
         artwork['images'] = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in artwork['images']]
+        artwork['inventory'] = int(artwork['inventory']) # hack to fix flamelink screwup
         artworks.append(artwork)
     return artworks
 
