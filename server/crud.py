@@ -74,6 +74,8 @@ def get_series_collection(transaction, size, args):
 def get_series(transaction, id, size):
     series = content.document(id).get(transaction=transaction).to_dict()
     # todo
+    if series is None:
+        return None
     series_image_refs = series['seriesImages']
     series_image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in series_image_refs]
     if not series:
