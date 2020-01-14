@@ -379,7 +379,7 @@ def confirm_payment():
 
     if event.type == 'payment_intent.succeeded':
         payment_intent = event.data.object
-        if payment_intent.metadata.channel != 'website':
+        if 'channel' not in payment_intent.metadata or payment_intent.metadata.channel != 'website':
             return '', 204
         crud.finalise_order(payment_intent)
         final_order = crud.get_order(payment_intent.id)
