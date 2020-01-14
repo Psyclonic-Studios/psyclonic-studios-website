@@ -37,8 +37,9 @@ Cart
                     <form action="{{ url_for('artwork_add_to_cart') }}" method="POST">
                         <input name="quantity" type="number" min="1" max="{{ artwork.inventory }}"
                             class="user-input border-accent number-input center" value="{{ item.quantity }}"
-                            onclick="this.select();" onchange="this.form.checkValididty() && this.form.submit();">
+                            onclick="this.select();" onblur="if(this.form.reportValidity()){ this.form.submit(); } else { this.select(); }" onchange="if(this.form.reportValidity()){ this.form.submit(); } else { this.select(); }">
                         <input name="artwork_id" type="hidden" value="{{ artwork.id }}">
+                    <span class="small-font small-vertical-margins text-secondary-light">(Up to {{ artwork.inventory }})</span>
                     </form>
                 </td>
                 <td class="center">
