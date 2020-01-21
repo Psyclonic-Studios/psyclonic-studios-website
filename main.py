@@ -14,6 +14,7 @@ import pickle
 import functools
 import uuid
 import math
+from urllib.parse import urlparse, urlunparse
 
 stripe_creds = None
 if os.path.exists('stripe_token.pickle'):
@@ -38,6 +39,18 @@ app.jinja_env.lstrip_blocks = True
 
 app.config['SITEMAP_URL_SCHEME'] = 'https'
 sitemap = Sitemap(app=app)
+
+@app.before_request
+def redirect_nonwww():
+    """Redirect requests from naked to www subdomain."""
+    url = request.url
+    urlparts = urlparse(url)
+    DOMAIN_NAME = os.getenv('DOMAIN_NAME','localhost:5000')
+    if urlparts.netloc == DOMAIN_NAME:
+        urlparts_list = list(urlparts)
+        urlparts_list[1] = 'www.' + DOMAIN_NAME
+        new_url = urlunparse(urlparts_list)
+        return redirect(new_url, code=301)
 
 def nocache(f):
     @functools.wraps(f)

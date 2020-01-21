@@ -1,5 +1,7 @@
 runtime: python37
 
+env_variables:
+  DOMAIN_NAME: "psyclonicstudios.com.au"
 handlers:
 - url: /static
   static_dir: static
