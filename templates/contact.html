@@ -5,9 +5,10 @@ Contact
 {% block head %}
 <meta name="description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios">
 
-<meta property="og:url" content="{{ url_for('contact', _external=True) }}"/>
-<meta property="og:description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios"/>
-<meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/psyclonic-studios-website.appspot.com/o/flamelink%2Fmedia%2FiFtGnXrDje0VzWX3XVHp_SLQ.JPG?alt=media&token=5646aa0a-da0f-466c-a792-128f576efffc"/>
+<meta property="og:url" content="{{ url_for('contact', _external=True) }}" />
+<meta property="og:description" content="Contact the artist, Anne-Maree Hunter, at Psyclonic Studios" />
+<meta property="og:image"
+    content="https://firebasestorage.googleapis.com/v0/b/psyclonic-studios-website.appspot.com/o/flamelink%2Fmedia%2FiFtGnXrDje0VzWX3XVHp_SLQ.JPG?alt=media&token=5646aa0a-da0f-466c-a792-128f576efffc" />
 
 <script type="application/ld+json">
     {
@@ -44,11 +45,10 @@ Contact
                 required autocomplete="email">
         </div>
         <div class="medium-vertical-margins">
-            <textarea class="user-input user-message border-accent" type="textarea" name="message"
+            <textarea id="enquire-message" class="user-input user-message border-accent" type="textarea" name="message"
                 placeholder="Your message" required></textarea>
         </div>
         <div class="medium-vertical-margins">
-            <input hidden name="recaptchaToken" id="recaptcha-token">
             <button type="reset"
                 class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
             <button type="submit" id="contact-submit"
@@ -56,7 +56,8 @@ Contact
         </div>
     </form>
     {% if suspected_bot %}
-    <p class="error small-font">Your behaviour has not been human enough, so your message was not sent. Please try sending it again.</p>
+    <p class="error small-font">Your behaviour has not been human enough, so your message was not sent. Please try
+        sending it again.</p>
     {% endif %}
 </div>
 {% if give_details %}
@@ -85,6 +86,18 @@ Contact
     <a href="https://policies.google.com/terms">Terms of Service</a> apply)
 </p>
 <script>
+    function triggerBrowserValidation() {
+        // The only way to trigger HTML5 form validation UI is to fake a user submit
+        // event.
+        var submit = document.createElement('input');
+        var form = document.getElementById('contact-form');
+        submit.type = 'submit';
+        submit.style.display = 'none';
+        form.appendChild(submit);
+        submit.click();
+        submit.remove();
+    }
+
     grecaptcha.ready(function () {
         {% if not give_details %}
         document.getElementById('request-contact-info').addEventListener('click', (event) => {
@@ -100,13 +113,23 @@ Contact
             });
         });
         {% endif %}
-        /*
-        document.getElementById('contact-form').addEventListener('onsubmit', (event) => {
+        document.getElementById('contact-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            triggerBrowserValidation();
             grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'contact_submit' }).then(function (token) {
-                document.getElementById('recaptcha-token').value = token;
+                const form = new FormData();
+                form.append('recaptchaToken', token);
+                form.append('name', document.getElementById('enquire-name').value);
+                form.append('email', document.getElementById('enquire-email').value);
+                form.append('message', document.getElementById('enquire-message').value);
+                const xhr = new XMLHttpRequest();
+                xhr.onload = function () {
+                    document.write(xhr.response);
+                }
+                xhr.open("POST", '/contact_send');
+                xhr.send(form);
             });
         });
-        */
     });
 </script>
 {% endblock %}
