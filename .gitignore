@@ -5,3 +5,4 @@ Psyclonic Studios Website*.json
 *.DS_Store
 *.log
 *.pickle
+*.python-version

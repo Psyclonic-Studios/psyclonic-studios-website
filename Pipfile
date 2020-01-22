@@ -1,0 +1,27 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+google-cloud-core = ">=1.1.0"
+google-cloud-firestore = ">=1.6.0"
+google-cloud-storage = ">=1.15.0"
+google-api-core = ">=1.15.0"
+stripe = "==2.40.0"
+grpcio = "==1.20.1"
+python-slugify = "==4.0.0"
+google-auth-oauthlib = "==0.4.1"
+google-auth = ">=1.6.3"
+google-api-python-client = "==1.7.11"
+google-auth-httplib2 = "==0.0.3"
+py-trello = "==0.15.0"
+Flask = "==1.0.2"
+Jinja2 = "==2.10.3"
+Babel = "==2.7.0"
+Flask-Sitemap = "==0.3.0"
+
+[requires]
+python_version = "3.7"
