@@ -36,7 +36,7 @@ Contact
 <div class="narrow-page medium-vertical-margins center">
     <h1>Contact</h1>
     {{ contact_message | safe }}
-    <form action="/contact_send" method="POST">
+    <form id="contact-form" action="/contact_send" method="POST">
         <div class="medium-vertical-margins">
             <input id="enquire-name" class="user-input border-accent small-vertical-margins" type="text" name="name"
                 placeholder="Name" required autocomplete="name">
@@ -48,24 +48,46 @@ Contact
                 placeholder="Your message" required></textarea>
         </div>
         <div class="medium-vertical-margins">
+            <input hidden name="recaptchaToken" id="recaptcha-token">
             <button type="reset"
                 class="hover-accent text-primary background-white border-accent button-wide">Cancel</button>
-            <button type="submit"
+            <button type="submit" id="contact-submit"
                 class="hover-accent text-primary background-white border-accent button-wide">Submit</button>
         </div>
     </form>
+    {% if suspected_bot %}
+    <p class="error small-font">Your behaviour has not been human enough, so your message was not sent. Please try sending it again.</p>
+    {% endif %}
 </div>
+{% if give_details %}
+<div class="medium-vertical-margins center narrow-page">
+    <table id="contact-details">
+        <tr>
+            <td class="right">Email (preferred):</td>
+            <td class="left"><a
+                    href="mailto:customer@psyclonicstudios.com.au">customer@&#8203;psyclonicstudios.com.au</a></td>
+        </tr>
+        <tr>
+            <td class="right">Phone:</td>
+            <td class="left">+61 418 468 415</td>
+        </tr>
+    </table>
+</div>
+{% else %}
 <p class="center narrow-page medium-vertical-margins small-font">
     Using the form above is the preferred contact method, but you may get <a id="request-contact-info">direct
         contact information</a> if you require it.
-        <br>
-    (This is protected by reCAPTCHA and the Google
+</p>
+{% endif %}
+<p class="center narrow-page medium-vertical-margins small-font">
+    (This page is protected by reCAPTCHA and the Google
     <a href="https://policies.google.com/privacy">Privacy Policy</a> and
     <a href="https://policies.google.com/terms">Terms of Service</a> apply)
 </p>
 <script>
     grecaptcha.ready(function () {
-        document.getElementById('request-contact-info').addEventListener('click', () => {
+        {% if not give_details %}
+        document.getElementById('request-contact-info').addEventListener('click', (event) => {
             grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'request_contact_info' }).then(function (token) {
                 const form = new FormData();
                 form.append('recaptchaToken', token);
@@ -77,6 +99,14 @@ Contact
                 xhr.send(form);
             });
         });
+        {% endif %}
+        /*
+        document.getElementById('contact-form').addEventListener('onsubmit', (event) => {
+            grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'contact_submit' }).then(function (token) {
+                document.getElementById('recaptcha-token').value = token;
+            });
+        });
+        */
     });
 </script>
 {% endblock %}

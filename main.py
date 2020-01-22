@@ -300,8 +300,8 @@ def contact():
         recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
         recaptcha = recaptcha_response.json()
         if recaptcha['action'] == 'request_contact_info' and recaptcha['score'] > 0.5:
-            return render_template('contact_with_details.html', contact_message=contact_message)
-    return render_template('contact.html', contact_message=contact_message)
+            return render_template('contact.html', contact_message=contact_message, give_details=True, suspected_bot=False)
+    return render_template('contact.html', contact_message=contact_message, give_details=False, suspected_bot=False)
 
 @sitemap.register_generator
 def sitemap_contact():
@@ -309,6 +309,11 @@ def sitemap_contact():
 
 @app.route('/contact_send', methods=['POST'])
 def contact_send_email():
+    #token = request.form.get('recaptchaToken')
+    #recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
+    #recaptcha = recaptcha_response.json()
+    #if recaptcha['action'] == 'contact_submit' and recaptcha['score'] < 0.5:
+    #    return render_template('contact.html', contact_message=contact_message, give_details=False, suspected_bot=True)
     enquiry_email_template = crud.get_contact_email_template()
     
     enquirer_email_address = request.form.get('email')
