@@ -217,9 +217,10 @@ def series_collection():
 @app.route('/series/<string:id>/<slug>')
 def series(slug, id):
     series = crud.get_series(crud.new_transaction(), id, 700)
+    print(series['artworks_resolved'])
     if series is None:
         abort(404)
-    number_of_tiles = len(series['artworks'])
+    number_of_tiles = len(series['artworks']) + len(series['series_images'])
     canonical_url = url_for('series', slug=slugify_title(series["title"]), id=id, _external=True)
     return render_template('series.html', series=series, number_of_tiles=number_of_tiles, canonical_url=canonical_url)
 

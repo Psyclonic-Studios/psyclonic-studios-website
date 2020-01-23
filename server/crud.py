@@ -87,6 +87,7 @@ def get_series(transaction, id, size):
         image_refs = artwork['images']
         image_urls = [get_sized_image_urls(image.get(transaction=transaction).to_dict(), size) for image in image_refs]
         artwork['images'] = image_urls
+        artwork['inventory'] = int(artwork['inventory']) # hack to fix flamelink screwup
         artworks_resolved.append(artwork)
     series['artworks_resolved'] = artworks_resolved
     series['series_images'] = series_image_urls
