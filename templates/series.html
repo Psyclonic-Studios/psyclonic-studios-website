@@ -77,7 +77,7 @@
                 <img src="{{ image.full_size.url }}"
                     srcset="{% for size, image in image.sizes.items() %}{{ image.url }} {{ size }}w,{% endfor %}"
                     alt="{{ artwork.mediaDescription }}" class="hover-darken">
-                <span class="blur-text-overlay">{{ artwork.title }}</span>
+                <span class="blur-text-overlay">{{ artwork.title }}<br/><span class="small-font">[{% if artwork.price and artwork.inventory > 0 %}{{ artwork.price | format_money }}{% endif %}{% if artwork.price and artwork.inventory == 0 %}<span style="text-decoration: line-through;">{{ artwork.price | format_money }}</span> Sold out{% endif %}{% if not artwork.price %}Not for sale{% endif %}]</span></span>
             </a>
         </div>
         {% endfor %}
