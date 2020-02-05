@@ -217,7 +217,6 @@ def series_collection():
 @app.route('/series/<string:id>/<slug>')
 def series(slug, id):
     series = crud.get_series(crud.new_transaction(), id, 700)
-    print(series['artworks_resolved'])
     if series is None:
         abort(404)
     number_of_tiles = len(series['artworks']) + len(series['series_images'])
