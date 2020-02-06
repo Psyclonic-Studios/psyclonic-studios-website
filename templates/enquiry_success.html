@@ -5,7 +5,9 @@ Enquiry Success
 {% block head %}
 <meta name="description" content="{{ thankyou_text | striptags | truncate(160, True) }}">
 <script>
-    gtag('event', 'generate_lead', { event_label: '{{ enquiry_type }}' });
+    gtag('event', 'generate_lead', {
+          send_to: 'AW-691717542',
+         event_label: '{{ enquiry_type }}' });
 </script>
 {% endblock %}
 {% block body %}

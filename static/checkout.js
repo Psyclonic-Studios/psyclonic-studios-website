@@ -141,6 +141,7 @@ function registerElements(elements) {
         errorMessage.innerText = result.error.message
       } else {
         gtag('event', 'purchase', {
+          send_to: 'AW-691717542',
           'value': result.amount,
           'transaction_id': result.id,
           'currency': 'aud',
