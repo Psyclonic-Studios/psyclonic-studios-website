@@ -48,7 +48,6 @@ Cart
                 <td>
                     <a class="text-secondary" href="{{ url_for('artwork_remove_from_cart', id=artwork.id) }}"
                         onclick="gtag('event', 'remove_from_cart', {
-          send_to: 'AW-691717542',
                              event_label: '{{ artwork.title }}' });">✕</a>
                 </td>
             </tr>
