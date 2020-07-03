@@ -31,6 +31,12 @@ if os.path.exists('flask_session_token.pickle'):
 else:
     raise ValueError('Cannot find session secret')
 
+RECAPTCHA_SECRET = None
+if os.path.exists('recaptcha_secret.pickle'):
+    with open('recaptcha_secret.pickle', 'rb') as token:
+        RECAPTCHA_SECRET = pickle.load(token)['secret']
+else:
+    raise ValueError('Cannot find recaptcha secret')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.secret_key = SESSION_SECRET_KEY
@@ -297,7 +303,7 @@ def contact():
     contact_message = crud.get_contact_message()
     if request.method == 'POST':
         token = request.form.get('recaptchaToken')
-        recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
+        recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': RECAPTCHA_SECRET, 'response': token})
         recaptcha = recaptcha_response.json()
         if recaptcha['action'] == 'request_contact_info' and recaptcha['score'] > 0.5:
             return render_template('contact.html', contact_message=contact_message, give_details=True, suspected_bot=False)
@@ -310,7 +316,7 @@ def sitemap_contact():
 @app.route('/contact_send', methods=['POST'])
 def contact_send_email():
     token = request.form.get('recaptchaToken')
-    recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': '***REMOVED***', 'response': token})
+    recaptcha_response = requests.post('https://www.google.com/recaptcha/api/siteverify', data={'secret': RECAPTCHA_SECRET, 'response': token})
     recaptcha = recaptcha_response.json()
     if not recaptcha or 'action' not in recaptcha or not recaptcha['action'] == 'contact_submit' or recaptcha['score'] < 0.5:
         contact_message = crud.get_contact_message()
