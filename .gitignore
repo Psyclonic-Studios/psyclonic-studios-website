@@ -2,6 +2,7 @@ Psyclonic Studios Website*.json
 *.pyc
 *__pycache__*
 .vscode
+.idea
 *.DS_Store
 *.log
 *.pickle
