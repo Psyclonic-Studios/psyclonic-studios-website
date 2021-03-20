@@ -19,7 +19,7 @@ google-api-python-client = "==1.7.11"
 google-auth-httplib2 = "==0.0.3"
 py-trello = "==0.15.0"
 Flask = "==1.0.2"
-Jinja2 = "==2.10.3"
+Jinja2 = "==2.11.3"
 Babel = "==2.7.0"
 Flask-Sitemap = "==0.3.0"
 
