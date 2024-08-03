@@ -8,3 +8,4 @@ Psyclonic Studios Website*.json
 *.pickle
 *.python-version
 credentials.json
+secrets
