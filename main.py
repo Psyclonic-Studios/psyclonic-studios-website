@@ -54,15 +54,14 @@ app.jinja_env.lstrip_blocks = True
 app.config["SITEMAP_URL_SCHEME"] = "https"
 sitemap = Sitemap(app=app)
 
-port = 5000
-
+PORT = os.getenv("PORT", 5001)
 
 @app.before_request
 def redirect_nonwww():
     """Redirect requests from naked to www subdomain."""
     url = request.url
     urlparts = urlparse(url)
-    DOMAIN_NAME = os.getenv("DOMAIN_NAME", f"localhost:{port}")
+    DOMAIN_NAME = os.getenv("DOMAIN_NAME", f"localhost:{PORT}")
     if urlparts.netloc == DOMAIN_NAME:
         urlparts_list = list(urlparts)
         urlparts_list[1] = "www." + DOMAIN_NAME
@@ -479,7 +478,12 @@ def contact():
             data={"secret": RECAPTCHA_SECRET, "response": token},
         )
         recaptcha = recaptcha_response.json()
-        if recaptcha["action"] == "request_contact_info" and recaptcha["score"] > 0.5:
+        app.logger.info(f"recaptcha object: {recaptcha}")
+        if (
+            recaptcha["success"]
+            and (recaptcha["action"] == "request_contact_info")
+            and (recaptcha["score"] > 0.5)
+        ):
             return render_template(
                 "contact.html",
                 contact_message=contact_message,
@@ -507,8 +511,10 @@ def contact_send_email():
         data={"secret": RECAPTCHA_SECRET, "response": token},
     )
     recaptcha = recaptcha_response.json()
+    app.logger.info(f"recaptcha object: {recaptcha}")
     if (
         not recaptcha
+        or not recaptcha["success"]
         or "action" not in recaptcha
         or not recaptcha["action"] == "contact_submit"
         or recaptcha["score"] < 0.5
@@ -743,4 +749,4 @@ jinja_string_env.filters["format_money"] = format_money
 jinja_string_env.filters["format_date"] = format_date
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(debug=True, host="0.0.0.0", port=PORT)
