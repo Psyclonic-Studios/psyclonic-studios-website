@@ -218,26 +218,6 @@ def artwork_buy(id):
     )
     email_response = gmail.send_email(email)
 
-    trello_title = f"Buyer - {enquirer_name}"
-    trello_description = render_template(
-        "trello_shipping_enquiry_description.md",
-        gmail_link=gmail.get_email_link(email_response["id"]),
-        enquirer_name=enquirer_name,
-        enquirer_email_address=enquirer_email_address,
-        enquirer_address=enquirer_address,
-        artwork=artwork,
-        artwork_url=artwork_url,
-        enquirer_message=enquirer_message,
-    )
-    trello_due = datetime.today() + timedelta(3)
-    trello_helper.create_customer_card(
-        trello_helper.AWAITING_RESPONSE_LIST_ID,
-        trello_title,
-        desc=trello_description,
-        due=str(trello_due),
-        labels=[trello_helper.ARTWORK_ENQUIRY_LABEL],
-        position="top",
-    )
     return render_template(
         "enquiry_success.html",
         thankyou_text=crud.get_enquire_thankyou(),
@@ -275,25 +255,6 @@ def artwork_enquire(id):
     )
     email_response = gmail.send_email(email)
 
-    trello_title = f"Buyer - {enquirer_name}"
-    trello_description = render_template(
-        "trello_artwork_enquiry_description.md",
-        gmail_link=gmail.get_email_link(email_response["id"]),
-        enquirer_name=enquirer_name,
-        enquirer_email_address=enquirer_email_address,
-        artwork=artwork,
-        artwork_url=artwork_url,
-        enquirer_message=enquirer_message,
-    )
-    trello_due = datetime.today() + timedelta(3)
-    trello_helper.create_customer_card(
-        trello_helper.AWAITING_RESPONSE_LIST_ID,
-        trello_title,
-        desc=trello_description,
-        due=str(trello_due),
-        labels=[trello_helper.ARTWORK_ENQUIRY_LABEL],
-        position="top",
-    )
     return render_template(
         "enquiry_success.html",
         thankyou_text=crud.get_enquire_thankyou(),
@@ -394,25 +355,6 @@ def series_enquire(id):
     )
     email_response = gmail.send_email(email)
 
-    trello_title = f"Enquirer - {enquirer_name}"
-    trello_description = render_template(
-        "trello_series_enquiry_description.md",
-        gmail_link=gmail.get_email_link(email_response["id"]),
-        enquirer_name=enquirer_name,
-        enquirer_email_address=enquirer_email_address,
-        series=series,
-        series_url=series_url,
-        enquirer_message=enquirer_message,
-    )
-    trello_due = datetime.today() + timedelta(3)
-    trello_helper.create_customer_card(
-        trello_helper.AWAITING_RESPONSE_LIST_ID,
-        trello_title,
-        desc=trello_description,
-        due=str(trello_due),
-        labels=[trello_helper.ARTWORK_ENQUIRY_LABEL],
-        position="top",
-    )
     return render_template(
         "enquiry_success.html",
         thankyou_text=crud.get_enquire_thankyou(),
@@ -543,10 +485,6 @@ def contact_send_email():
     )
     email_response = gmail.send_email(email)
 
-    # trello_title = f'Contact - {enquirer_name}'
-    # trello_description = render_template('trello_contact_description.md', gmail_link=gmail.get_email_link(email_response['id']), enquirer_name=enquirer_name, enquirer_email_address=enquirer_email_address, enquirer_message=enquirer_message)
-    # trello_due = datetime.today() + timedelta(3)
-    # trello_helper.create_customer_card(trello_helper.AWAITING_RESPONSE_LIST_ID, trello_title, desc=trello_description, due=str(trello_due), labels=[trello_helper.ARTWORK_ENQUIRY_LABEL], position='top')
     return render_template(
         "enquiry_success.html",
         thankyou_text=crud.get_enquire_thankyou(),
@@ -664,20 +602,6 @@ def confirm_payment():
         )
         order_confirmation_email_response = gmail.send_email(order_confirmation_email)
 
-        trello_title = f"Order - {final_order['customer']['name']}"
-        gmail_link = gmail.get_email_link(order_confirmation_email_response["id"])
-        trello_description = render_template(
-            "trello_order_description.md", order=final_order, gmail_link=gmail_link
-        )
-        trello_due = datetime.today() + timedelta(3)
-        trello_helper.create_customer_card(
-            trello_helper.PAYMENT_RECIEVED_LIST_ID,
-            trello_title,
-            desc=trello_description,
-            due=str(trello_due),
-            labels=[trello_helper.ONLINE_ORDER_LABEL],
-            position="top",
-        )
     else:
         abort(400)
     return "", 204
