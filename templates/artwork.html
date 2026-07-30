@@ -261,4 +261,25 @@
 </p>
 <script type="text/javascript" src="{{ url_for('static', filename='scroll.js') }}"></script>
 <script type="text/javascript" src="{{ url_for('static', filename='enquire_form.js') }}"></script>
+<script>
+    grecaptcha.ready(function () {
+        function attachRecaptcha(formId, action) {
+            var form = document.getElementById(formId);
+            if (!form) return;
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: action }).then(function (token) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'recaptchaToken';
+                    input.value = token;
+                    form.appendChild(input);
+                    form.submit();
+                });
+            });
+        }
+        attachRecaptcha('enquire-form', 'artwork_enquire');
+        attachRecaptcha('buy-form', 'artwork_buy');
+    });
+</script>
 {% endblock %}

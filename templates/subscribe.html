@@ -45,7 +45,7 @@ Subscribe
   });" href="https://www.facebook.com/psyclonicstudios/" target="_blank">Facebook</a> for regular updates on my work!
     </p>
     {{ subscribe | safe }}
-    <form action="/subscribe" method="POST">
+    <form id="subscribe-form" action="/subscribe" method="POST">
 
         <div>
             <input id="subscribe" class="user-input border-accent email-input small-vertical-margins" type="email"
@@ -55,4 +55,22 @@ Subscribe
         </div>
     </form>
 </div>
+<script>
+    grecaptcha.ready(function () {
+        var form = document.getElementById('subscribe-form');
+        if (form) {
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+                grecaptcha.execute('6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_', { action: 'subscribe' }).then(function (token) {
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'recaptchaToken';
+                    input.value = token;
+                    form.appendChild(input);
+                    form.submit();
+                });
+            });
+        }
+    });
+</script>
 {% endblock %}

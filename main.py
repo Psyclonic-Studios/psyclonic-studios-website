@@ -45,6 +45,26 @@ if os.path.exists("recaptcha_secret.pickle"):
         RECAPTCHA_SECRET = pickle.load(token)["secret"]
 else:
     raise ValueError("Cannot find recaptcha secret")
+
+RECAPTCHA_SITE_KEY = "6LdjesoUAAAAACfe0IhuIplHWjEDIXWHj-KfDbn_"
+
+def verify_recaptcha(token, expected_action):
+    """Verify a reCAPTCHA v3 token. Returns (is_valid, score, action)."""
+    recaptcha_response = requests.post(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data={"secret": RECAPTCHA_SECRET, "response": token},
+    )
+    recaptcha = recaptcha_response.json()
+    app.logger.info(f"recaptcha object: {recaptcha}")
+    if (
+        not recaptcha
+        or not recaptcha.get("success")
+        or recaptcha.get("action") != expected_action
+        or recaptcha.get("score", 0) < 0.5
+    ):
+        return False
+    return True
+
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 app.secret_key = SESSION_SECRET_KEY
@@ -186,6 +206,9 @@ def artwork_remove_from_cart(id):
 
 @app.route("/artwork-buy/<string:id>", methods=["POST"])
 def artwork_buy(id):
+    token = request.form.get("recaptchaToken")
+    if not verify_recaptcha(token, "artwork_buy"):
+        abort(400)
     artwork = crud.get_artwork(crud.new_transaction(), id, 240)
     artwork_url = url_for(
         "artwork", slug=slugify_title(artwork["title"]), id=id, _external=True
@@ -227,6 +250,9 @@ def artwork_buy(id):
 
 @app.route("/artwork-enquire/<string:id>", methods=["POST"])
 def artwork_enquire(id):
+    token = request.form.get("recaptchaToken")
+    if not verify_recaptcha(token, "artwork_enquire"):
+        abort(400)
     artwork = crud.get_artwork(crud.new_transaction(), id, 240)
     artwork_url = url_for(
         "artwork", slug=slugify_title(artwork["title"]), id=id, _external=True
@@ -327,6 +353,9 @@ def sitemap_series():
 
 @app.route("/series-enquire/<string:id>", methods=["POST"])
 def series_enquire(id):
+    token = request.form.get("recaptchaToken")
+    if not verify_recaptcha(token, "series_enquire"):
+        abort(400)
     series = crud.get_series(crud.new_transaction(), id, 240)
     series_url = url_for(
         "series", slug=slugify_title(series["title"]), id=id, _external=True
@@ -403,6 +432,9 @@ def sitemap_subscribe():
 
 @app.route("/subscribe", methods=["POST"])
 def add_subscriber():
+    token = request.form.get("recaptchaToken")
+    if not verify_recaptcha(token, "subscribe"):
+        return render_template("subscribe_success.html", thankyou_text="Bot detected. Please try again.")
     email = request.form.get("email")
     crud.post_email_address(email)
     return render_template(
@@ -448,19 +480,7 @@ def sitemap_contact():
 @app.route("/contact_send", methods=["POST"])
 def contact_send_email():
     token = request.form.get("recaptchaToken")
-    recaptcha_response = requests.post(
-        "https://www.google.com/recaptcha/api/siteverify",
-        data={"secret": RECAPTCHA_SECRET, "response": token},
-    )
-    recaptcha = recaptcha_response.json()
-    app.logger.info(f"recaptcha object: {recaptcha}")
-    if (
-        not recaptcha
-        or not recaptcha["success"]
-        or "action" not in recaptcha
-        or not recaptcha["action"] == "contact_submit"
-        or recaptcha["score"] < 0.5
-    ):
+    if not verify_recaptcha(token, "contact_submit"):
         contact_message = crud.get_contact_message()
         return render_template(
             "contact.html",
