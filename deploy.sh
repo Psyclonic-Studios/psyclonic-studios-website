@@ -8,6 +8,6 @@ echo "==> Exporting requirements.txt from uv.lock..."
 uv export --format requirements-txt --no-dev -o requirements.txt
 
 echo "==> Deploying to Google App Engine..."
-gcloud app deploy app.yaml --project psyclonic-studios-website
+gcloud app deploy app.yaml --project psyclonic-studios-website --quiet
 
 echo "==> Done!"
