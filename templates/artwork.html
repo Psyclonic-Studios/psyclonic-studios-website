@@ -263,8 +263,10 @@
 <script type="text/javascript" src="{{ url_for('static', filename='enquire_form.js') }}"></script>
 <script>
     grecaptcha.ready(function () {
-        function attachRecaptcha(formId, action) {
-            var form = document.getElementById(formId);
+        function attachRecaptcha(containerId, action) {
+            var container = document.getElementById(containerId);
+            if (!container) return;
+            var form = container.querySelector('form');
             if (!form) return;
             form.addEventListener('submit', function (event) {
                 event.preventDefault();
