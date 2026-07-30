@@ -1,0 +1,29 @@
+[project]
+name = "psyclonic-studios"
+version = "1.0.0"
+description = "Psyclonic Studios website"
+requires-python = ">=3.10"
+dependencies = [
+    "Flask==1.1.4",
+    "Jinja2==2.11.3",
+    "MarkupSafe==2.0.1",
+    "Babel==2.7.0",
+    "Flask-Sitemap==0.4.0",
+    "stripe==2.40.0",
+    "python-slugify==4.0.0",
+    "google-cloud-core>=1.1.0",
+    "google-cloud-firestore>=1.6.0",
+    "google-cloud-storage>=1.15.0",
+    "google-api-core>=1.15.0",
+    "google-auth>=1.6.3",
+    "google-auth-oauthlib==0.4.1",
+    "google-auth-httplib2==0.0.3",
+    "google-api-python-client==1.7.11",
+    "grpcio>=1.20.1",
+    "requests",
+]
+
+[dependency-groups]
+dev = [
+    "jupyter",
+]

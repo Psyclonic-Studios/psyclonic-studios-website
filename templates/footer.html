@@ -1,31 +1,38 @@
 <footer>
-  <div class="social">
-    <a class="social-icon-logo text-primary hover-accent center-children"
-      href="https://www.instagram.com/_u/psyclonicstudios/"
-      onclick="gtag('event', 'click', {
-         event_category: 'engagement', event_label: 'instagram' });" target="_blank">
-      <img src="/static/social_icons/instagram.svg" alt="Instagram | @psyclonicstudios">
-    </a>
-    <a class="social-icon-logo text-primary hover-accent center-children"
-      href="https://www.redbubble.com/people/psyclonicstudio/shop?artistUserName=psyclonicstudio&iaCode=u-water-bottle" target="_blank" onclick="gtag('event', 'click', {
-    event_category: 'engagement',
-    event_label: 'redbubble',
-  });">
-      <img src="/static/social_icons/redbubble.svg" alt="Redbubble | Psyclonic Studios">
-    </a>
-    <a class="social-icon-logo text-primary hover-accent center-children" onclick="gtag('event', 'click', {
-    event_category: 'engagement',
-    event_label: 'facebook',
-  });" href="https://www.facebook.com/psyclonicstudios/" target="_blank">
-      <img src="/static/social_icons/facebook.svg" alt="Facebook | Psyclonic Studios">
-    </a>
-    <a class="social-icon-logo text-primary hover-accent center-children" onclick="gtag('event', 'click', {
-    event_category: 'engagement',
-    event_label: 'youtube',
-  });" href="https://www.youtube.com/channel/UC9CrAXYWpm8R86MtoPY1z5w" target="_blank">
-      <img src="/static/social_icons/youtube.svg" alt="YouTube | Psyclonic Studios">
-    </a>
+  <div class="footer-grid">
+    <div class="social">
+      <a class="social-icon-logo text-primary hover-accent center-children"
+        href="https://www.instagram.com/_u/psyclonicstudios/"
+        onclick="gtag('event', 'click', {
+           event_category: 'engagement', event_label: 'instagram' });" target="_blank">
+        <img src="/static/social_icons/instagram.svg" alt="Instagram | @psyclonicstudios">
+      </a>
+      <a class="social-icon-logo text-primary hover-accent center-children"
+        href="https://www.redbubble.com/people/psyclonicstudio/shop?artistUserName=psyclonicstudio&iaCode=u-water-bottle" target="_blank" onclick="gtag('event', 'click', {
+      event_category: 'engagement',
+      event_label: 'redbubble',
+    });">
+        <img src="/static/social_icons/redbubble.svg" alt="Redbubble | Psyclonic Studios">
+      </a>
+      <a class="social-icon-logo text-primary hover-accent center-children" onclick="gtag('event', 'click', {
+      event_category: 'engagement',
+      event_label: 'facebook',
+    });" href="https://www.facebook.com/psyclonicstudios/" target="_blank">
+        <img src="/static/social_icons/facebook.svg" alt="Facebook | Psyclonic Studios">
+      </a>
+      <a class="social-icon-logo text-primary hover-accent center-children" onclick="gtag('event', 'click', {
+      event_category: 'engagement',
+      event_label: 'youtube',
+    });" href="https://www.youtube.com/channel/UC9CrAXYWpm8R86MtoPY1z5w" target="_blank">
+        <img src="/static/social_icons/youtube.svg" alt="YouTube | Psyclonic Studios">
+      </a>
+    </div>
+    <a class="subscribe text-primary hover-accent center-children" href="/subscribe">Subscribe</a>
+    <a class="copyright text-primary hover-accent center-children" href="{{ url_for('policies') }}">Returns & Refunds</a>
   </div>
-  <a class="subscribe text-primary hover-accent center-children" href="/subscribe">Subscribe</a>
-  <a class="copyright text-primary hover-accent center-children" href="{{ url_for('policies') }}">Returns & Refunds</a>
+  <p class="recaptcha-disclaimer">
+    This site is protected by reCAPTCHA and the Google
+    <a href="https://policies.google.com/privacy">Privacy Policy</a> and
+    <a href="https://policies.google.com/terms">Terms of Service</a> apply.
+  </p>
 </footer>
