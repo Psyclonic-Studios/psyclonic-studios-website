@@ -16,6 +16,9 @@
 # Also apply .gitignore patterns
 #!include:.gitignore
 
+# But we need pickle credential files for the app to start
+!*.pickle
+
 # Python pycache:
 __pycache__/
 *.pyc
