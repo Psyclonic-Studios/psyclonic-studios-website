@@ -15,7 +15,10 @@
 
 # Python pycache:
 __pycache__/
+*.pyc
 Pipfile*
+.venv/
+.uv-cache/
 
 # Ignored by the build system
 /setup.cfg
