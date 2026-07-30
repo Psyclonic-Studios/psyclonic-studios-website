@@ -13,6 +13,9 @@
 .git
 .gitignore
 
+# Also apply .gitignore patterns
+#!include:.gitignore
+
 # Python pycache:
 __pycache__/
 *.pyc
